@@ -10,14 +10,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
-      /*
-      comment this out to remove TLS
-       */
       .requiresChannel()
       .anyRequest()
       .requiresSecure()
       .and()
-
       .authorizeRequests()
       .anyRequest()
       .permitAll();

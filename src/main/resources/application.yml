@@ -1,15 +1,30 @@
 server:
-  port: 8081
-  ssl:
-    key-store: ----
-    key-store-password: ----
-    key-store-type: ----
-    key-alias: ----
-    key-password: ----
+  port: 8080
 
+#ssl configuration
+  ssl:
+    key-store: ${KEY_STORE}
+    key-store-password: ${KEY_STORE_PASS}
+    key-store-type: ${KEY_STORE_TYPE}
+    key-alias: ${KEY_ALIAS}
+    key-password: ${KEY_PASSWORD}
+
+# actuator configuration
 management:
+  endpoint:
+    health:
+      show-details: always
+  health:
+    mongo:
+      enabled: true
   endpoints:
     web:
       base-path: /
   server:
     port: 9000
+
+#db connection
+spring:
+  data:
+    mongodb:
+      uri: ${CONNECTION_STRING}
