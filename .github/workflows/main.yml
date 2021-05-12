@@ -46,7 +46,7 @@ jobs:
     
     - uses: azure/docker-login@v1
       with:
-        login-server: sessionize.azurecr.io/
+        login-server: sessionize.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
