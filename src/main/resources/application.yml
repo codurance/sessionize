@@ -1,13 +1,19 @@
 server:
   port: 8080
 
-#ssl configuration
+  #ssl configuration
   ssl:
-    key-store: ${KEY_STORE}
-    key-store-password: ${KEY_STORE_PASS}
-    key-store-type: ${KEY_STORE_TYPE}
-    key-alias: ${KEY_ALIAS}
-    key-password: ${KEY_PASSWORD}
+    key-alias: sslCert
+    key-store-type: AzureKeyVault
+    trust-store-type: AzureKeyVault
+    azure:
+      keyvault:
+        uri: https://keyvaulttest-keyvault.vault.azure.net/
+#    key-store: ${KEY_STORE}
+#    key-store-password: ${KEY_STORE_PASS}
+#    key-store-type: ${KEY_STORE_TYPE}
+#    key-alias: ${KEY_ALIAS}
+#    key-password: ${KEY_PASSWORD}
 
 # actuator configuration
 management:
