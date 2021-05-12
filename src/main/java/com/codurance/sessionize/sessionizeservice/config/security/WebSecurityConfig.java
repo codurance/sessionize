@@ -1,4 +1,4 @@
-package com.codurance.sessionize.sessionizeservice.config;
+package com.codurance.sessionize.sessionizeservice.config.security;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
