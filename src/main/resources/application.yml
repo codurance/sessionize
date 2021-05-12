@@ -2,17 +2,6 @@ server:
   port: 8080
 
   #ssl configuration
-  ssl:
-    key-alias: sslCert
-    key-store-type: AzureKeyVault
-    trust-store-type: AzureKeyVault
-
-azure:
-  keyvault:
-    uri: https://keyvaulttest-keyvault.vault.azure.net/
-    tenant-id: 469e2ea8-cb8e-4ac3-b57c-58ced6674ad5
-    client-id: e0dabddc-2a41-400c-8eaf-b04f5b9d5a88
-    client-secret: jpal8vjA-t_t~ldkT-KH2~r.0T1A_P6XqI
 #    key-store: ${KEY_STORE}
 #    key-store-password: ${KEY_STORE_PASS}
 #    key-store-type: ${KEY_STORE_TYPE}
@@ -30,11 +19,9 @@ management:
   endpoints:
     web:
       base-path: /
-  server:
-    port: 9000
 
 #db connection
-spring:
-  data:
-    mongodb:
-      uri: ${CONNECTION_STRING}
+#spring:
+#  data:
+#    mongodb:
+#      uri: ${CONNECTION_STRING}
