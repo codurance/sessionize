@@ -2,13 +2,6 @@ server:
   port: 8080
 
   #ssl configuration
-  ssl:
-    key-alias: sslCert
-    key-store-type: AzureKeyVault
-    trust-store-type: AzureKeyVault
-    azure:
-      keyvault:
-        uri: https://keyvaulttest-keyvault.vault.azure.net/
 #    key-store: ${KEY_STORE}
 #    key-store-password: ${KEY_STORE_PASS}
 #    key-store-type: ${KEY_STORE_TYPE}
@@ -26,11 +19,9 @@ management:
   endpoints:
     web:
       base-path: /
-  server:
-    port: 9000
 
 #db connection
 spring:
   data:
     mongodb:
-      uri: ${CONNECTION_STRING}
+      uri: ${MONGODB_CONNECTION_STRING}
