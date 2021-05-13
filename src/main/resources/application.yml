@@ -21,7 +21,7 @@ management:
       base-path: /
 
 #db connection
-#spring:
-#  data:
-#    mongodb:
-#      uri: ${CONNECTION_STRING}
+spring:
+  data:
+    mongodb:
+      uri: ${MONGODB_CONNECTION_STRING}
