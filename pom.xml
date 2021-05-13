@@ -49,28 +49,28 @@
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>com.microsoft.azure</groupId>
-			<artifactId>azure-support</artifactId>
-			<version>0.1.8</version>
-		</dependency>
-		<dependency>
-			<groupId>com.azure.spring</groupId>
-			<artifactId>azure-spring-boot-starter-keyvault-certificates</artifactId>
-			<version>3.0.0-beta.6</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.microsoft.azure</groupId>-->
+<!--			<artifactId>azure-support</artifactId>-->
+<!--			<version>0.1.8</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>com.azure.spring</groupId>-->
+<!--			<artifactId>azure-spring-boot-starter-keyvault-certificates</artifactId>-->
+<!--			<version>3.0.0-beta.6</version>-->
+<!--		</dependency>-->
 	</dependencies>
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>com.azure.spring</groupId>
-				<artifactId>azure-spring-boot-bom</artifactId>
-				<version>${azure.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+<!--	<dependencyManagement>-->
+<!--		<dependencies>-->
+<!--			<dependency>-->
+<!--				<groupId>com.azure.spring</groupId>-->
+<!--				<artifactId>azure-spring-boot-bom</artifactId>-->
+<!--				<version>${azure.version}</version>-->
+<!--				<type>pom</type>-->
+<!--				<scope>import</scope>-->
+<!--			</dependency>-->
+<!--		</dependencies>-->
+<!--	</dependencyManagement>-->
 	<build>
 		<plugins>
 			<plugin>
