@@ -55,11 +55,12 @@ jobs:
     - name: 'Deploy to Azure Container Instances'
       uses: 'azure/aci-deploy@v1'
       with:
-        resource-group: Sessionize
+        secure-environment-variables: MONGODB_CONNECTION_STRING=${{ secrets.MONGODB_CONNECTION_STRING }}
+        resource-group: Sessionize-test
         dns-name-label: url-for-container
         image: sessionize.azurecr.io/sessionizer:1.0.0
         registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
         registry-username: ${{ secrets.REGISTRY_USERNAME }}
         registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-        name: sessionizer
+        name: sessionizetest
         location: 'west europe'
