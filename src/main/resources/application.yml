@@ -24,4 +24,4 @@ management:
 spring:
   data:
     mongodb:
-      uri: ${MONGODB_CONNECTION_STRING}
+      uri: ${APPSETTING_MONGODB_CONNECTION_STRING}

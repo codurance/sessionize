@@ -56,6 +56,7 @@ jobs:
       uses: 'azure/aci-deploy@v1'
       with:
         secure-environment-variables: MONGODB_CONNECTION_STRING=${{ secrets.MONGODB_CONNECTION_STRING }}
+        environment-variables: MONGODB_CONNECTION_STRING=${{ secrets.MONGODB_CONNECTION_STRING }}
         resource-group: Sessionize-test
         dns-name-label: sessionize-test
         image: sessionizetest.azurecr.io/sessionizer:1.0.0
