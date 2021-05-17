@@ -4,6 +4,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import static org.springframework.http.HttpMethod.POST;
+
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -14,6 +16,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //      .anyRequest()
 //      .requiresSecure()
 //      .and()
+      .csrf()
+      .disable()
       .authorizeRequests()
       .anyRequest()
       .permitAll();
