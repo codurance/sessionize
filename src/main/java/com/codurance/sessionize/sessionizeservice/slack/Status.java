@@ -1,4 +1,4 @@
-package com.codurance.sessionize.sessionizeservice.config.slack;
+package com.codurance.sessionize.sessionizeservice.slack;
 
 public class Status {
 

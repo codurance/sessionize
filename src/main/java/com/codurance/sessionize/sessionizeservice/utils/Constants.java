@@ -1,4 +1,4 @@
-package com.codurance.sessionize.sessionizeservice.config.utils;
+package com.codurance.sessionize.sessionizeservice.utils;
 
 public class Constants {
 

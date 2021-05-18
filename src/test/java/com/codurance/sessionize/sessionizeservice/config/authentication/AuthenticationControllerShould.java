@@ -13,10 +13,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
 
 import java.io.IOException;
-import static com.codurance.sessionize.sessionizeservice.config.utils.Constants.AUTH_HEADER;
-import static com.codurance.sessionize.sessionizeservice.config.utils.Constants.AUTH_URL;
-import static com.codurance.sessionize.sessionizeservice.config.utils.Constants.OK;
-import static com.codurance.sessionize.sessionizeservice.config.utils.Constants.UNAUTHORIZED;
+import static com.codurance.sessionize.sessionizeservice.utils.Constants.AUTH_HEADER;
+import static com.codurance.sessionize.sessionizeservice.utils.Constants.AUTH_URL;
+import static com.codurance.sessionize.sessionizeservice.utils.Constants.OK;
+import static com.codurance.sessionize.sessionizeservice.utils.Constants.UNAUTHORIZED;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -1,4 +1,4 @@
-package com.codurance.sessionize.sessionizeservice.config.authentication;
+package com.codurance.sessionize.sessionizeservice.authentication;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

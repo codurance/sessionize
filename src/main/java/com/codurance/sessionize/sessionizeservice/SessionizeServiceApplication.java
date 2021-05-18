@@ -1,6 +1,7 @@
 package com.codurance.sessionize.sessionizeservice;
 
-import com.codurance.sessionize.sessionizeservice.config.slack.SlackRestClient;
+import com.codurance.sessionize.sessionizeservice.authentication.TokenVerification;
+import com.codurance.sessionize.sessionizeservice.slack.SlackRestClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -16,5 +17,8 @@ public class SessionizeServiceApplication {
 	public SlackRestClient statusRestClient() {
 		return new SlackRestClient();
 	}
+
+	@Bean
+	public TokenVerification tokenVerification() {return new TokenVerification(); }
 
 }
