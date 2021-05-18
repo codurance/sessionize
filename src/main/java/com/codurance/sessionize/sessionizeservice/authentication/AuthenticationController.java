@@ -1,6 +1,5 @@
 package com.codurance.sessionize.sessionizeservice.authentication;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,11 +27,8 @@ public class AuthenticationController {
     boolean isValid = tokenVerification.isValid(authorizationHeader);
 
     if (isValid) {
-      return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+      return new ResponseEntity<>(HttpStatus.OK);
     }
-    return new ResponseEntity<>(HttpStatus.OK);
-
+    return new ResponseEntity(HttpStatus.UNAUTHORIZED);
   }
-
-
 }

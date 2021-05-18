@@ -1,10 +1,8 @@
-package com.codurance.sessionize.sessionizeservice.config.authentication;
+package com.codurance.sessionize.sessionizeservice.authentication;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.junit.jupiter.api.AfterEach;
@@ -44,20 +42,16 @@ public class AuthenticationControllerShould {
   @Test
   public void return_401_unauthorized_if_user_is_not_permitted_to_login() throws IOException {
 
-    ObjectMapper om = new ObjectMapper();
-    JsonNode body = om.readTree("{\"email\":\"\"}");
-
     wireMockServer
       .stubFor(
-        post(urlEqualTo(AUTH_URL))
+        get(urlEqualTo(AUTH_URL))
       .willReturn(aResponse()
       .withHeader(AUTH_HEADER, "Bearer token")
       .withStatus(UNAUTHORIZED)
-      .withJsonBody(body)
       ));
 
     CloseableHttpClient httpClient = HttpClients.createDefault();
-    HttpPost request = new HttpPost(BASE_URL + AUTH_URL);
+    HttpGet request = new HttpGet(BASE_URL + AUTH_URL);
     HttpResponse response = httpClient.execute(request);
 
     assertEquals(UNAUTHORIZED, response.getStatusLine().getStatusCode());
@@ -66,20 +60,17 @@ public class AuthenticationControllerShould {
   @Test
   public void return_200_with_email_on_successful_login() throws IOException {
 
-    ObjectMapper om = new ObjectMapper();
-    JsonNode body = om.readTree("{\"email\":\"foobar@gmail.com\"}");
 
     wireMockServer
       .stubFor(
-        post(urlEqualTo(AUTH_URL))
+        get(urlEqualTo(AUTH_URL))
           .willReturn(aResponse()
             .withHeader(AUTH_HEADER, "Bearer token")
             .withStatus(OK)
-            .withJsonBody(body)
           ));
 
     CloseableHttpClient httpClient = HttpClients.createDefault();
-    HttpPost request = new HttpPost(BASE_URL + AUTH_URL);
+    HttpGet request = new HttpGet(BASE_URL + AUTH_URL);
     HttpResponse response = httpClient.execute(request);
 
     assertEquals(OK, response.getStatusLine().getStatusCode());
