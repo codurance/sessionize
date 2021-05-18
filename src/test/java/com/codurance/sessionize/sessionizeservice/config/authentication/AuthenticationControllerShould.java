@@ -3,8 +3,6 @@ package com.codurance.sessionize.sessionizeservice.config.authentication;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
-import com.github.tomakehurst.wiremock.client.MappingBuilder;
-import com.github.tomakehurst.wiremock.stubbing.StubMapping;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -14,9 +12,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
 
-
 import java.io.IOException;
-
+import static com.codurance.sessionize.sessionizeservice.config.utils.Constants.AUTH_HEADER;
+import static com.codurance.sessionize.sessionizeservice.config.utils.Constants.AUTH_URL;
+import static com.codurance.sessionize.sessionizeservice.config.utils.Constants.OK;
+import static com.codurance.sessionize.sessionizeservice.config.utils.Constants.UNAUTHORIZED;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @AutoConfigureWireMock(port = 8080)
 public class AuthenticationControllerShould {
 
+  private static final String BASE_URL = "http://localhost:8080";
 
 
   WireMockServer wireMockServer = new WireMockServer(options().port(8080));
@@ -39,12 +40,6 @@ public class AuthenticationControllerShould {
     wireMockServer.stop();
   }
 
-  public MappingBuilder POST(WireMockServer wireMockServer, String endpoint) {
-    return (MappingBuilder) wireMockServer
-      .stubFor(
-        post(urlEqualTo("/auth")));
-  }
-
 
   @Test
   public void return_401_unauthorized_if_user_is_not_permitted_to_login() throws IOException {
@@ -54,18 +49,18 @@ public class AuthenticationControllerShould {
 
     wireMockServer
       .stubFor(
-        post(urlEqualTo("/auth"))
+        post(urlEqualTo(AUTH_URL))
       .willReturn(aResponse()
-      .withHeader("Authorization", "Bearer token")
-      .withStatus(401)
+      .withHeader(AUTH_HEADER, "Bearer token")
+      .withStatus(UNAUTHORIZED)
       .withJsonBody(body)
       ));
 
     CloseableHttpClient httpClient = HttpClients.createDefault();
-    HttpPost request = new HttpPost(("http://localhost:8080/auth"));
+    HttpPost request = new HttpPost(BASE_URL + AUTH_URL);
     HttpResponse response = httpClient.execute(request);
 
-    assertEquals(401, response.getStatusLine().getStatusCode());
+    assertEquals(UNAUTHORIZED, response.getStatusLine().getStatusCode());
   }
 
   @Test
@@ -76,18 +71,18 @@ public class AuthenticationControllerShould {
 
     wireMockServer
       .stubFor(
-        post(urlEqualTo("/auth"))
+        post(urlEqualTo(AUTH_URL))
           .willReturn(aResponse()
-            .withHeader("Authorization", "Bearer token")
-            .withStatus(200)
+            .withHeader(AUTH_HEADER, "Bearer token")
+            .withStatus(OK)
             .withJsonBody(body)
           ));
 
     CloseableHttpClient httpClient = HttpClients.createDefault();
-    HttpPost request = new HttpPost(("http://localhost:8080/auth"));
+    HttpPost request = new HttpPost(BASE_URL + AUTH_URL);
     HttpResponse response = httpClient.execute(request);
 
-    assertEquals(200, response.getStatusLine().getStatusCode());
+    assertEquals(OK, response.getStatusLine().getStatusCode());
   }
 
 
