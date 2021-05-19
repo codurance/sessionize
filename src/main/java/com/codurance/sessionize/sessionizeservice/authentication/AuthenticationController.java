@@ -1,9 +1,8 @@
 package com.codurance.sessionize.sessionizeservice.authentication;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 
 import static com.codurance.sessionize.sessionizeservice.utils.Constants.AUTH_HEADER;
 import static com.codurance.sessionize.sessionizeservice.utils.Constants.AUTH_URL;
@@ -20,9 +19,11 @@ public class AuthenticationController {
 
 
   @GetMapping(AUTH_URL)
-  public void authenticate(@RequestHeader(AUTH_HEADER) String authorizationHeader) {
-    //TODO: this controller need to be converted to user controller, we don't need to check for authentication directly anymore
-
+  public ResponseEntity authenticate(@RequestHeader(AUTH_HEADER) String authorizationHeader) {
+    try {
+      return tokenVerification.isValid(authorizationHeader) ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity(HttpStatus.UNAUTHORIZED);
+    } catch (Exception e) {
+      return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+    }
   }
-
 }
