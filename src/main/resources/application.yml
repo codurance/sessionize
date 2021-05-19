@@ -24,7 +24,7 @@ management:
 spring:
   data:
     mongodb:
-      uri: ${APPSETTING_MONGODB_CONNECTION_STRING}
+      uri: ${MONGODB_CONNECTION_STRING}
 
 #google client ID
 google:
