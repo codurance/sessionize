@@ -41,13 +41,18 @@ public class TokenVerification implements HandlerInterceptor {
 
     }
 
+
     public boolean isValid(String token) throws GeneralSecurityException, IOException {
-        HttpTransport transport = new NetHttpTransport();
-        JsonFactory jsonFactory = new GsonFactory();
-        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
-                .setAudience(Collections.singletonList(googleClientId))
-                .build();
-        GoogleIdToken idToken = verifier.verify(token);
-        return idToken != null;
+      GoogleIdToken idToken = verifyGoogleIdToken(token);
+      return idToken != null;
     }
+
+  public GoogleIdToken verifyGoogleIdToken(String token) throws GeneralSecurityException, IOException {
+    HttpTransport transport = new NetHttpTransport();
+    JsonFactory jsonFactory = new GsonFactory();
+    GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
+            .setAudience(Collections.singletonList(googleClientId))
+            .build();
+    return verifier.verify(token);
+  }
 }
