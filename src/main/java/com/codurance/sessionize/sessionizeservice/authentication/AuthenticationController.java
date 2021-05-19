@@ -28,16 +28,21 @@ public class AuthenticationController {
     try {
       GoogleIdToken token = tokenVerification.verifyGoogleIdToken(authorizationHeader);
 
-
-      boolean isValid = token == null;
+      boolean isValid = token != null;
 
       if (isValid) {
-        token.getPayload().getEmail();
+        GoogleIdToken.Payload payload = token.getPayload();
+        String picture = (String) payload.get("picture");
+        String firstName = (String) payload.get("given_name");
+        String lastName = (String) payload.get("family_name");
+        User user = new User(payload.getEmail(), picture, firstName ,lastName);
+
       }
 
 
       return isValid ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity(HttpStatus.UNAUTHORIZED);
     } catch (Exception e) {
+      e.printStackTrace();
       return new ResponseEntity(HttpStatus.UNAUTHORIZED);
     }
   }
