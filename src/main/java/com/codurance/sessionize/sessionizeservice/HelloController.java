@@ -18,15 +18,23 @@ public class HelloController {
 
     @PostMapping("/isNewUser")
     public boolean isNewUser(@RequestBody SlackUserIdentity user) {
-        logger.info(user.id);
-        logger.info(user.name);
-        logger.info(user.email);
-        return true;
+        try {
+            logger.info(user.getId());
+            logger.info(user.getName());
+            logger.info(user.getEmail());
+            return true;
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+        }
     }
 
     private class SlackUserIdentity {
         String id;
         String name;
         String email;
+
+        public String getId() { return id; }
+        public String getName() { return name; }
+        public String getEmail() { return email; }
     }
 }
