@@ -11,4 +11,9 @@ public class HelloController {
     return "Hello, World!";
   }
 
+  @PostMapping("/isNewUser")
+  public boolean isNewUser() {
+    return true;
+  }
+
 }
