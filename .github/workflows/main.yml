@@ -55,7 +55,7 @@ jobs:
     - name: 'Deploy to Azure Container Instances'
       uses: 'azure/aci-deploy@v1'
       with:
-        environment-variables: MONGODB_CONNECTION_STRING=${{ secrets.MONGODB_CONNECTION_STRING }}
+        environment-variables: MONGODB_CONNECTION_STRING=${{ secrets.MONGODB_CONNECTION_STRING }} GOOGLE_CLIENT_ID=${{secrets.GOOGLE_CLIENT_ID}}
         resource-group: Sessionize-test
         dns-name-label: sessionize-test
         image: sessionizetest.azurecr.io/sessionizer:1.0.0
