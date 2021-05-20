@@ -38,7 +38,6 @@ public class TokenVerification implements HandlerInterceptor {
            response.setStatus(UNAUTHORIZED);
            return false;
          }
-
     }
 
 

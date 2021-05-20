@@ -12,7 +12,7 @@ import static com.codurance.sessionize.sessionizeservice.utils.Constants.AUTH_HE
 import static com.codurance.sessionize.sessionizeservice.utils.Constants.AUTH_URL;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class AuthenticationController {
 
   TokenVerification tokenVerification;

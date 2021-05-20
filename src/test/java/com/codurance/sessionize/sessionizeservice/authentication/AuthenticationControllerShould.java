@@ -11,6 +11,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
@@ -33,14 +34,12 @@ public class AuthenticationControllerShould {
 
   private static final String BASE_URL = "http://localhost:8080";
 
-
   WireMockServer wireMockServer = new WireMockServer(options().port(8080));
   TokenVerification mockTokenVerification = mock(TokenVerification.class);
 
   @BeforeEach
   public void setup() {
     wireMockServer.start();
-
   }
 
   @AfterEach
@@ -115,6 +114,16 @@ public class AuthenticationControllerShould {
     assertThat(expectedUser).isEqualToComparingFieldByField(user);
   }
 
+  @Test
+  public void return_401_on_incorrect_authentication() throws IOException, GeneralSecurityException {
+
+    AuthenticationController controller = new AuthenticationController(mockTokenVerification);
+    when(mockTokenVerification.verifyGoogleIdToken(anyString())).thenReturn(
+            null
+    );
+    ResponseEntity<User> response = controller.authenticate("bla");
+    assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+  }
 
 
 }
