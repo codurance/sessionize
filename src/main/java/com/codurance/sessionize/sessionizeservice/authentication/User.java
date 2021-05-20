@@ -2,6 +2,8 @@ package com.codurance.sessionize.sessionizeservice.authentication;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 
+import java.util.Objects;
+
 
 public class User {
   private String email;

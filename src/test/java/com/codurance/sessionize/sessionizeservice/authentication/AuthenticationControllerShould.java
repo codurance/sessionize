@@ -1,6 +1,8 @@
 package com.codurance.sessionize.sessionizeservice.authentication;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.json.webtoken.JsonWebSignature;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -9,15 +11,22 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
+import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
+
 import static com.codurance.sessionize.sessionizeservice.utils.Constants.AUTH_HEADER;
 import static com.codurance.sessionize.sessionizeservice.utils.Constants.AUTH_URL;
 import static com.codurance.sessionize.sessionizeservice.utils.Constants.OK;
 import static com.codurance.sessionize.sessionizeservice.utils.Constants.UNAUTHORIZED;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @AutoConfigureWireMock(port = 8080)
 public class AuthenticationControllerShould {
@@ -26,6 +35,7 @@ public class AuthenticationControllerShould {
 
 
   WireMockServer wireMockServer = new WireMockServer(options().port(8080));
+  TokenVerification mockTokenVerification = mock(TokenVerification.class);
 
   @BeforeEach
   public void setup() {
@@ -74,6 +84,35 @@ public class AuthenticationControllerShould {
     HttpResponse response = httpClient.execute(request);
 
     assertEquals(OK, response.getStatusLine().getStatusCode());
+  }
+
+  @Test
+  public void return_correct_user_on_authentication() throws IOException, GeneralSecurityException {
+
+    AuthenticationController controller = new AuthenticationController(mockTokenVerification);
+
+    JsonWebSignature.Header header = new JsonWebSignature.Header();
+    GoogleIdToken.Payload payload = new GoogleIdToken.Payload();
+    payload.setEmail("foobar@codurance.com");
+    payload.set("family_name", "Foo");
+    payload.set("given_name", "Bar");
+    payload.set("picture", "http://url");
+    byte[] signatureBytes = new byte[0];
+    byte[] signedContentBytes = new byte[0];
+    User expectedUser = new User(payload);
+
+    when(mockTokenVerification.verifyGoogleIdToken(anyString())).thenReturn(
+      new GoogleIdToken(
+        header,
+        payload,
+        signatureBytes,
+        signedContentBytes
+      ));
+
+    ResponseEntity<User> response = controller.authenticate("bla");
+    User user = response.getBody();
+
+    assertThat(expectedUser).isEqualToComparingFieldByField(user);
   }
 
 

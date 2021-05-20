@@ -29,9 +29,7 @@ public class AuthenticationController {
 
     try {
       GoogleIdToken token = tokenVerification.verifyGoogleIdToken(authorizationHeader);
-
       boolean isValid = token != null;
-
       if (isValid) {
         User user = new User(token.getPayload());
         ResponseEntity entity = new ResponseEntity(user, HttpStatus.OK);
