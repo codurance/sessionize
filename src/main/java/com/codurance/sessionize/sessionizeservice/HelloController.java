@@ -25,6 +25,7 @@ public class HelloController {
             return true;
         } catch (Exception ex) {
             logger.error(ex.getMessage());
+            return true;
         }
     }
 
