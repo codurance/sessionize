@@ -22,20 +22,9 @@ public class HelloController {
             logger.info(user.getId());
             logger.info(user.getName());
             logger.info(user.getEmail());
-            return true;
         } catch (Exception ex) {
             logger.error(ex.getMessage());
-            return true;
         }
-    }
-
-    private class SlackUserIdentity {
-        String id;
-        String name;
-        String email;
-
-        public String getId() { return id; }
-        public String getName() { return name; }
-        public String getEmail() { return email; }
+        return true;
     }
 }
