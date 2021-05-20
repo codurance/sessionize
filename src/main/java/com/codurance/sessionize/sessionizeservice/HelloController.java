@@ -1,6 +1,5 @@
 package com.codurance.sessionize.sessionizeservice;
 
-import com.codurance.sessionize.sessionizeservice.authentication.AuthenticationController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
