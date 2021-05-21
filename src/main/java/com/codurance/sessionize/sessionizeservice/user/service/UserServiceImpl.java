@@ -1,5 +1,9 @@
-package com.codurance.sessionize.sessionizeservice.user;
+package com.codurance.sessionize.sessionizeservice.user.service;
 
+import com.codurance.sessionize.sessionizeservice.user.User;
+import com.codurance.sessionize.sessionizeservice.user.UserDTO;
+import com.codurance.sessionize.sessionizeservice.user.WebUserDTO;
+import com.codurance.sessionize.sessionizeservice.user.repository.CustomUserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,5 +1,9 @@
-package com.codurance.sessionize.sessionizeservice.user;
+package com.codurance.sessionize.sessionizeservice.user.service;
 
+import com.codurance.sessionize.sessionizeservice.user.User;
+import com.codurance.sessionize.sessionizeservice.user.UserDTO;
+import com.codurance.sessionize.sessionizeservice.user.WebUserDTO;
+import com.codurance.sessionize.sessionizeservice.user.repository.CustomUserRepository;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import org.junit.jupiter.api.Test;
 
@@ -25,9 +29,9 @@ public class UserServiceImplShould {
 
     when(customUserRepository.findByEmailOrCreate(any(User.class))).thenReturn(new User(
       "foobar@codurance.com",
-      "Foo",
+      "http://url",
       "Bar",
-      "http://url"
+      "Foo"
     ));
     UserDTO expectedUser = userService.signInOrRegister(receivedUser);
 

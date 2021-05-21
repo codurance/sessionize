@@ -1,10 +1,14 @@
 package com.codurance.sessionize.sessionizeservice.user;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.UUID;
 
+@Getter
+@Setter
 @Document(collection = "users")
 public class User {
 
@@ -23,21 +27,5 @@ public class User {
     this.pictureURL = pictureURL;
     this.firstName = firstName;
     this.lastName = lastName;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public String getPictureURL() {
-    return pictureURL;
-  }
-
-  public String getFirstName() {
-    return firstName;
-  }
-
-  public String getLastName() {
-    return lastName;
   }
 }

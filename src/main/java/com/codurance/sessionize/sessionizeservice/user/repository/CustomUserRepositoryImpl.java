@@ -1,4 +1,6 @@
-package com.codurance.sessionize.sessionizeservice.user;
+package com.codurance.sessionize.sessionizeservice.user.repository;
+
+import com.codurance.sessionize.sessionizeservice.user.User;
 
 public class CustomUserRepositoryImpl implements CustomUserRepository {
 
