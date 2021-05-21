@@ -1,5 +1,6 @@
 package com.codurance.sessionize.sessionizeservice.authentication;
 
+import com.codurance.sessionize.sessionizeservice.user.WebUserDTO;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,14 +25,14 @@ public class AuthenticationController {
 
 
   @GetMapping(value = AUTH_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<User> authenticate(@RequestHeader(AUTH_HEADER) String authorizationHeader) {
+  public ResponseEntity<WebUserDTO> authenticate(@RequestHeader(AUTH_HEADER) String authorizationHeader) {
 
 
     try {
       GoogleIdToken token = tokenVerification.verifyGoogleIdToken(authorizationHeader);
       boolean isValid = token != null;
       if (isValid) {
-        User user = new User(token.getPayload());
+        WebUserDTO user = new WebUserDTO(token.getPayload());
         ResponseEntity entity = new ResponseEntity(user, HttpStatus.OK);
         return entity;
       }

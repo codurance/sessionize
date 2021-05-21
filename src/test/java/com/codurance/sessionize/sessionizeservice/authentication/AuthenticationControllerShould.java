@@ -1,5 +1,7 @@
 package com.codurance.sessionize.sessionizeservice.authentication;
 
+import com.codurance.sessionize.sessionizeservice.user.User;
+import com.codurance.sessionize.sessionizeservice.user.WebUserDTO;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.json.webtoken.JsonWebSignature;
@@ -98,7 +100,7 @@ public class AuthenticationControllerShould {
     payload.set("picture", "http://url");
     byte[] signatureBytes = new byte[0];
     byte[] signedContentBytes = new byte[0];
-    User expectedUser = new User(payload);
+    WebUserDTO expectedUser = new WebUserDTO(payload);
 
     when(mockTokenVerification.verifyGoogleIdToken(anyString())).thenReturn(
       new GoogleIdToken(
@@ -108,8 +110,8 @@ public class AuthenticationControllerShould {
         signedContentBytes
       ));
 
-    ResponseEntity<User> response = controller.authenticate("bla");
-    User user = response.getBody();
+    ResponseEntity<WebUserDTO> response = controller.authenticate("bla");
+    WebUserDTO user = response.getBody();
 
     assertThat(expectedUser).isEqualToComparingFieldByField(user);
   }
@@ -121,7 +123,7 @@ public class AuthenticationControllerShould {
     when(mockTokenVerification.verifyGoogleIdToken(anyString())).thenReturn(
             null
     );
-    ResponseEntity<User> response = controller.authenticate("bla");
+    ResponseEntity<WebUserDTO> response = controller.authenticate("bla");
     assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
   }
 
