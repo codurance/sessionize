@@ -27,6 +27,7 @@ public class AuthenticationController {
   @GetMapping(value = AUTH_URL, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<WebUserDTO> authenticate(@RequestHeader(AUTH_HEADER) String authorizationHeader) {
 
+    //TODO: swap over with service layer
 
     try {
       GoogleIdToken token = tokenVerification.verifyGoogleIdToken(authorizationHeader);
