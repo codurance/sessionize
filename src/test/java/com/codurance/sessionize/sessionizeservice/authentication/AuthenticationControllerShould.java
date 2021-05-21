@@ -1,7 +1,8 @@
 package com.codurance.sessionize.sessionizeservice.authentication;
 
-import com.codurance.sessionize.sessionizeservice.user.User;
+import com.codurance.sessionize.sessionizeservice.user.UserDTO;
 import com.codurance.sessionize.sessionizeservice.user.WebUserDTO;
+import com.codurance.sessionize.sessionizeservice.user.service.UserService;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.json.webtoken.JsonWebSignature;
@@ -12,6 +13,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +40,7 @@ public class AuthenticationControllerShould {
 
   WireMockServer wireMockServer = new WireMockServer(options().port(8080));
   TokenVerification mockTokenVerification = mock(TokenVerification.class);
+  UserService userService = mock(UserService.class);
 
   @BeforeEach
   public void setup() {
@@ -90,7 +93,7 @@ public class AuthenticationControllerShould {
   @Test
   public void return_correct_user_on_authentication() throws IOException, GeneralSecurityException {
 
-    AuthenticationController controller = new AuthenticationController(mockTokenVerification);
+    AuthenticationController controller = new AuthenticationController(mockTokenVerification, userService);
 
     JsonWebSignature.Header header = new JsonWebSignature.Header();
     GoogleIdToken.Payload payload = new GoogleIdToken.Payload();
@@ -100,7 +103,7 @@ public class AuthenticationControllerShould {
     payload.set("picture", "http://url");
     byte[] signatureBytes = new byte[0];
     byte[] signedContentBytes = new byte[0];
-    WebUserDTO expectedUser = new WebUserDTO(payload);
+    WebUserDTO webUserDTO = new WebUserDTO(payload);
 
     when(mockTokenVerification.verifyGoogleIdToken(anyString())).thenReturn(
       new GoogleIdToken(
@@ -110,20 +113,26 @@ public class AuthenticationControllerShould {
         signedContentBytes
       ));
 
-    ResponseEntity<WebUserDTO> response = controller.authenticate("bla");
-    WebUserDTO user = response.getBody();
+    UserDTO userDTO = new UserDTO();
+    userDTO.setEmail("foobar@codurance.com");
+    userDTO.setFirstName("Bar");
+    userDTO.setPictureURL("http://url");
 
-    assertThat(expectedUser).isEqualToComparingFieldByField(user);
+    when(userService.signInOrRegister(ArgumentMatchers.any(WebUserDTO.class))).thenReturn(userDTO);
+    ResponseEntity<UserDTO> response = controller.authenticate("token");
+    UserDTO user = response.getBody();
+
+    assertThat(userDTO).isEqualToComparingFieldByField(user);
   }
 
   @Test
   public void return_401_on_incorrect_authentication() throws IOException, GeneralSecurityException {
 
-    AuthenticationController controller = new AuthenticationController(mockTokenVerification);
+    AuthenticationController controller = new AuthenticationController(mockTokenVerification, userService);
     when(mockTokenVerification.verifyGoogleIdToken(anyString())).thenReturn(
             null
     );
-    ResponseEntity<WebUserDTO> response = controller.authenticate("bla");
+    ResponseEntity<UserDTO> response = controller.authenticate("token");
     assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
   }
 
