@@ -8,10 +8,6 @@ public class SlackUserDTO {
     String lastName;
     boolean optOut;
 
-    public SlackUserDTO() {
-        this.optOut = false;
-    }
-
     public String getSlackId() {
         return slackId;
     }

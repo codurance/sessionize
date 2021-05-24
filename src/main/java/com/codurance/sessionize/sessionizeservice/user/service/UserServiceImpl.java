@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService {
   public void slackRegister(SlackUserDTO slackUserDTO) {
     ModelMapper mapper = new ModelMapper();
     User user = mapper.map(slackUserDTO, User.class);
+    user.setOptOut(false);
     userRepository.save(user);
   }
 

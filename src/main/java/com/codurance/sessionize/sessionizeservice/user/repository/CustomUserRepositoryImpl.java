@@ -14,6 +14,7 @@ public class CustomUserRepositoryImpl implements CustomUserRepository {
   public User findByEmailOrCreate(User user) {
     String email = user.getEmail();
     if (!userRepository.existsByEmail(email)) {
+      user.setOptOut(false);
       return userRepository.save(user);
     }
     return userRepository.findUserByEmail(email);

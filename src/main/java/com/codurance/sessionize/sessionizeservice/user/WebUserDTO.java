@@ -24,6 +24,5 @@ public class WebUserDTO {
     this.pictureURL = (String) payload.get("picture");
     this.firstName = (String) payload.get("given_name");
     this.lastName = (String) payload.get("family_name");
-    this.optOut = false;
   }
 }
