@@ -1,5 +1,7 @@
-package com.codurance.sessionize.sessionizeservice.authentication;
+package com.codurance.sessionize.sessionizeservice.user.controller;
 
+import com.codurance.sessionize.sessionizeservice.infrastructure.security.TokenVerification;
+import com.codurance.sessionize.sessionizeservice.user.controller.AuthenticationController;
 import com.codurance.sessionize.sessionizeservice.user.UserDTO;
 import com.codurance.sessionize.sessionizeservice.user.WebUserDTO;
 import com.codurance.sessionize.sessionizeservice.user.service.UserService;
@@ -21,10 +23,10 @@ import org.springframework.http.ResponseEntity;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-import static com.codurance.sessionize.sessionizeservice.utils.Constants.AUTH_HEADER;
-import static com.codurance.sessionize.sessionizeservice.utils.Constants.AUTH_URL;
-import static com.codurance.sessionize.sessionizeservice.utils.Constants.OK;
-import static com.codurance.sessionize.sessionizeservice.utils.Constants.UNAUTHORIZED;
+import static com.codurance.sessionize.sessionizeservice.infrastructure.constants.HttpConstants.AUTH_HEADER;
+import static com.codurance.sessionize.sessionizeservice.infrastructure.constants.HttpConstants.AUTH_URL;
+import static com.codurance.sessionize.sessionizeservice.infrastructure.constants.HttpConstants.OK;
+import static com.codurance.sessionize.sessionizeservice.infrastructure.constants.HttpConstants.UNAUTHORIZED;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -100,7 +102,7 @@ public class AuthenticationControllerShould {
     payload.setEmail("foobar@codurance.com");
     payload.set("family_name", "Foo");
     payload.set("given_name", "Bar");
-    payload.set("picture", "http://url");
+    payload.set("picture", "https://url");
     byte[] signatureBytes = new byte[0];
     byte[] signedContentBytes = new byte[0];
     WebUserDTO webUserDTO = new WebUserDTO(payload);

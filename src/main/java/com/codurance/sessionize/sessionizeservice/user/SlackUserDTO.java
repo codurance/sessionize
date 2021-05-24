@@ -1,6 +1,6 @@
-package com.codurance.sessionize.sessionizeservice;
+package com.codurance.sessionize.sessionizeservice.user;
 
-public class SlackUserIdentity {
+public class SlackUserDTO {
     String id;
     String name;
     String email;

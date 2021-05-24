@@ -1,5 +1,6 @@
-package com.codurance.sessionize.sessionizeservice.authentication;
+package com.codurance.sessionize.sessionizeservice.user.controller;
 
+import com.codurance.sessionize.sessionizeservice.infrastructure.security.TokenVerification;
 import com.codurance.sessionize.sessionizeservice.user.UserDTO;
 import com.codurance.sessionize.sessionizeservice.user.WebUserDTO;
 import com.codurance.sessionize.sessionizeservice.user.service.UserService;
@@ -12,8 +13,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.codurance.sessionize.sessionizeservice.utils.Constants.AUTH_HEADER;
-import static com.codurance.sessionize.sessionizeservice.utils.Constants.AUTH_URL;
+import static com.codurance.sessionize.sessionizeservice.infrastructure.constants.HttpConstants.AUTH_HEADER;
+import static com.codurance.sessionize.sessionizeservice.infrastructure.constants.HttpConstants.AUTH_URL;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -45,4 +46,5 @@ public class AuthenticationController {
       return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
   }
+
 }

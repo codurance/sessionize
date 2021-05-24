@@ -1,4 +1,4 @@
-package com.codurance.sessionize.sessionizeservice.authentication;
+package com.codurance.sessionize.sessionizeservice.infrastructure.security;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 
-import static com.codurance.sessionize.sessionizeservice.utils.Constants.UNAUTHORIZED;
+import static com.codurance.sessionize.sessionizeservice.infrastructure.constants.HttpConstants.UNAUTHORIZED;
 
 public class TokenVerification implements HandlerInterceptor {
 

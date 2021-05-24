@@ -1,4 +1,4 @@
-package com.codurance.sessionize.sessionizeservice.slack;
+package com.codurance.sessionize.sessionizeservice.infrastructure.health;
 
 public class Status {
 

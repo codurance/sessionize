@@ -12,7 +12,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class UserServiceImplShould {
+public class UserServiceShould {
 
   CustomUserRepository customUserRepository = mock(CustomUserRepository.class);
   UserServiceImpl userService = new UserServiceImpl(customUserRepository);

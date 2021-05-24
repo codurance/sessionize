@@ -1,5 +1,6 @@
 package com.codurance.sessionize.sessionizeservice;
 
+import com.codurance.sessionize.sessionizeservice.user.SlackUserDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,7 @@ public class HelloController {
     }
 
     @PostMapping("/isNewUser")
-    public boolean isNewUser(@RequestBody SlackUserIdentity user) {
+    public boolean isNewUser(@RequestBody SlackUserDTO user) {
         try {
             logger.info(user.getId());
             logger.info(user.getName());

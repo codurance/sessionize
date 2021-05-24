@@ -1,6 +1,6 @@
-package com.codurance.sessionize.sessionizeservice.utils;
+package com.codurance.sessionize.sessionizeservice.infrastructure.constants;
 
-public class Constants {
+public class HttpConstants {
 
   public static final int UNAUTHORIZED = 401;
   public static final int OK = 200;

@@ -1,7 +1,7 @@
 package com.codurance.sessionize.sessionizeservice;
 
-import com.codurance.sessionize.sessionizeservice.authentication.TokenVerification;
-import com.codurance.sessionize.sessionizeservice.slack.SlackRestClient;
+import com.codurance.sessionize.sessionizeservice.infrastructure.security.TokenVerification;
+import com.codurance.sessionize.sessionizeservice.infrastructure.health.SlackRestClient;
 import com.codurance.sessionize.sessionizeservice.user.repository.CustomUserRepository;
 import com.codurance.sessionize.sessionizeservice.user.repository.CustomUserRepositoryImpl;
 import com.codurance.sessionize.sessionizeservice.user.repository.UserRepository;

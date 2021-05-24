@@ -1,5 +1,6 @@
-package com.codurance.sessionize.sessionizeservice.user;
+package com.codurance.sessionize.sessionizeservice.user.repository;
 
+import com.codurance.sessionize.sessionizeservice.user.User;
 import com.codurance.sessionize.sessionizeservice.user.repository.CustomUserRepository;
 import com.codurance.sessionize.sessionizeservice.user.repository.CustomUserRepositoryImpl;
 import com.codurance.sessionize.sessionizeservice.user.repository.UserRepository;
@@ -8,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.*;
 
-public class CustomUserRepositoryImplShould {
+public class CustomUserRepositoryShould {
 
 
   UserRepository userRepository = mock(UserRepository.class);

@@ -1,4 +1,4 @@
-package com.codurance.sessionize.sessionizeservice.slack;
+package com.codurance.sessionize.sessionizeservice.infrastructure.health;
 
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;

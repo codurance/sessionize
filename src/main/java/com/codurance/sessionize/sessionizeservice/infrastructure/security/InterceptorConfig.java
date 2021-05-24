@@ -1,5 +1,5 @@
-package com.codurance.sessionize.sessionizeservice.config;
-import com.codurance.sessionize.sessionizeservice.authentication.TokenVerification;
+package com.codurance.sessionize.sessionizeservice.infrastructure.security;
+import com.codurance.sessionize.sessionizeservice.infrastructure.security.TokenVerification;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
