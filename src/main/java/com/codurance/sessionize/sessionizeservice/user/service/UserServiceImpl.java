@@ -31,16 +31,16 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public boolean isNewUser(String email) {
-    return !userRepository.existsByEmail(email);
+  public void slackRegister(SlackUserDTO slackUserDTO) {
+    ModelMapper mapper = new ModelMapper();
+    User user = mapper.map(slackUserDTO, User.class);
+    userRepository.save(user);
   }
 
   @Override
-  public void slackRegister(SlackUserDTO slackUserDTO) {
-      ModelMapper mapper = new ModelMapper();
-      User user = mapper.map(slackUserDTO, User.class);
-      userRepository.save(user);
-    }
+  public boolean isNewUser(String email) {
+    return !userRepository.existsByEmail(email);
+  }
 
   @Override
   public void updateSlackIdFor(SlackUserDTO slackUserDTO) {
@@ -51,6 +51,14 @@ public class UserServiceImpl implements UserService {
     User existingUser = userRepository.findUserByEmail(email);
     existingUser.setSlackId(slackId);
     userRepository.save(existingUser);
+  }
+
+  @Override
+  public boolean optOut(String email) {
+    User user = userRepository.findUserByEmail(email);
+    user.setOptOut(true);
+    User updatedUser = userRepository.save(user);
+    return updatedUser.isOptOut();
   }
 
 }

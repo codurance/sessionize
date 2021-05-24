@@ -7,10 +7,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface UserService {
-
   UserDTO webSignInOrRegister(WebUserDTO webUserDTO);
-  void slackRegister(SlackUserDTO slackUserDTO);
   boolean isNewUser(String email);
+  void slackRegister(SlackUserDTO slackUserDTO);
   void updateSlackIdFor(SlackUserDTO slackUserDTO);
-
+  boolean optOut(String email);
 }

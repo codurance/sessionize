@@ -17,14 +17,6 @@ public class User {
   private String pictureURL;
   private String firstName;
   private String lastName;
+  private boolean optOut;
 
-  public User() {
-  }
-
-  public User(String email, String pictureURL, String firstName, String lastName) {
-    this.email = email;
-    this.pictureURL = pictureURL;
-    this.firstName = firstName;
-    this.lastName = lastName;
-  }
 }

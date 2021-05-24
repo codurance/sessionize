@@ -14,7 +14,9 @@ public class CustomUserRepositoryShould {
 
   @Test
   public void not_save_already_existing_user() {
-    User incomingUser = new User("testy@mctestface.com", "foo", "bar", "baz");
+    User incomingUser = new User();
+    incomingUser.setEmail("testy@mctestface.com");
+
 
     when(userRepository.existsByEmail(incomingUser.getEmail())).thenReturn(true);
     when(userRepository.findUserByEmail(incomingUser.getEmail())).thenReturn(incomingUser);
@@ -27,7 +29,8 @@ public class CustomUserRepositoryShould {
 
   @Test
   public void save_if_user_doesnt_exist() {
-    User incomingUser = new User("testy@mctestface.com", "foo", "bar", "baz");
+    User incomingUser = new User();
+    incomingUser.setEmail("testy@mctestface.com");
 
     when(userRepository.existsByEmail(incomingUser.getEmail())).thenReturn(false);
     when(userRepository.findUserByEmail(incomingUser.getEmail())).thenReturn(incomingUser);

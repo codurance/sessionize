@@ -30,12 +30,13 @@ public class UserServiceShould {
     payload.set("picture", "http://url");
     WebUserDTO receivedUser = new WebUserDTO(payload);
 
-    when(customUserRepository.findByEmailOrCreate(any(User.class))).thenReturn(new User(
-      "foobar@codurance.com",
-      "http://url",
-      "Bar",
-      "Foo"
-    ));
+    User user = new User();
+    user.setEmail("foobar@codurance.com");
+    user.setLastName("Foo");
+    user.setFirstName( "Bar");
+    user.setPictureURL("http://url");
+
+    when(customUserRepository.findByEmailOrCreate(any(User.class))).thenReturn(user);
     UserDTO expectedUser = userService.webSignInOrRegister(receivedUser);
 
     assertThat(expectedUser).isEqualToComparingFieldByField(receivedUser);
@@ -69,6 +70,17 @@ public class UserServiceShould {
     userService.updateSlackIdFor(stubSlackUserDTO);
 
     verify(userRepository, times(1)).save(any(User.class));
+  }
+
+  @Test
+  void opt_out_user() {
+    User user = new User();
+    user.setEmail("foobar@gmail.com");
+
+    when(userRepository.findUserByEmail("foobar@gmail.com")).thenReturn(user);
+    when(userRepository.save(user)).thenReturn(user);
+
+    assertTrue(userService.optOut("foobar@gmail.com"));
   }
 
 

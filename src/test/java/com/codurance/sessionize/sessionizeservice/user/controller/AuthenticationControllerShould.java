@@ -174,8 +174,4 @@ public class AuthenticationControllerShould {
     ResponseEntity<UserDTO> response = controller.authenticate(slackUserDTO);
     assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
   }
-
-
-
-
 }

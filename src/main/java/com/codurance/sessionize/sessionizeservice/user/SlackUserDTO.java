@@ -6,6 +6,11 @@ public class SlackUserDTO {
     String email;
     String firstName;
     String lastName;
+    boolean optOut;
+
+    public SlackUserDTO() {
+        this.optOut = false;
+    }
 
     public String getSlackId() {
         return slackId;
@@ -37,5 +42,13 @@ public class SlackUserDTO {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public boolean isOptOut() {
+        return optOut;
+    }
+
+    public void setOptOut(boolean optOut) {
+        this.optOut = optOut;
     }
 }

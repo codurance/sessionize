@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 
@@ -19,17 +20,20 @@ import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
-@AutoConfigureWireMock(port = 8080)
+import static org.mockito.Mockito.when;
 
+@AutoConfigureWireMock(port = 8080)
 public class PreferencesControllerShould {
 
   private static final String BASE_URL = "http://localhost:8080";
 
+  PreferencesController preferencesController;
   WireMockServer wireMockServer = new WireMockServer(options().port(8080));
   UserService mockUserService = mock(UserService.class);
 
   @BeforeEach
   public void setup() {
+    preferencesController = new PreferencesController(mockUserService);
     wireMockServer.start();
   }
 
@@ -52,6 +56,22 @@ public class PreferencesControllerShould {
     HttpResponse response = httpClient.execute(request);
 
     assertEquals(HttpStatus.OK.value(), response.getStatusLine().getStatusCode());
+  }
+
+  @Test
+  void return_200_if_user_opted_out_successfully() {
+    String stubEmail = "foobar@gmail.com";
+    when(mockUserService.optOut(stubEmail)).thenReturn(true);
+    ResponseEntity entity = preferencesController.optOut(stubEmail);
+    assertEquals(HttpStatus.OK, entity.getStatusCode());
+  }
+
+  @Test
+  void return_500_if_issue_when_opting_out() {
+    String stubEmail = "foobar@gmail.com";
+    when(mockUserService.optOut(stubEmail)).thenReturn(false);
+    ResponseEntity entity = preferencesController.optOut(stubEmail);
+    assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, entity.getStatusCode());
   }
 
 }
