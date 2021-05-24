@@ -47,7 +47,7 @@ public class AuthenticationController {
     }
   }
 
-  @GetMapping(value = SLACK + AUTH_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(value = SLACK + AUTH_URL, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<UserDTO> authenticate(@RequestBody SlackUserDTO slackUserDTO) {
 
     try {
@@ -58,9 +58,9 @@ public class AuthenticationController {
       logger.error(ex.getMessage());
     }
 
-    //
-
-    return new ResponseEntity<UserDTO>(HttpStatus.CREATED);
+    //TODO: return 201 if can create, otherwise 204. Not the best practice but saves us time instead of
+    //hitting the Core API to see if exists then hitting a POST or PUT depending
+    return new ResponseEntity<>(HttpStatus.CREATED);
   }
 
 }
