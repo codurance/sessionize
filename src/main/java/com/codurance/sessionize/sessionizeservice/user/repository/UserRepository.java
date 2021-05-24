@@ -9,6 +9,8 @@ public interface UserRepository extends MongoRepository<User, String> {
 
   User findUserByEmail(String email);
   boolean existsByEmail(String email);
+  
+
 
   @Override
   User save(User user);

@@ -37,7 +37,7 @@ public class AuthenticationController {
     try {
       GoogleIdToken token = tokenVerification.verifyGoogleIdToken(authorizationHeader);
       if (token != null) {
-        UserDTO userDTO = userService.signInOrRegister(new WebUserDTO(token.getPayload()));
+        UserDTO userDTO = userService.webSignInOrRegister(new WebUserDTO(token.getPayload()));
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
       }
       return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -50,17 +50,12 @@ public class AuthenticationController {
   @PostMapping(value = SLACK + AUTH_URL, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<UserDTO> authenticate(@RequestBody SlackUserDTO slackUserDTO) {
 
-    try {
-      logger.info(slackUserDTO.getId());
-      logger.info(slackUserDTO.getName());
-      logger.info(slackUserDTO.getEmail());
-    } catch (Exception ex) {
-      logger.error(ex.getMessage());
+    if (userService.isNewUser(slackUserDTO.getEmail())) {
+      userService.slackRegister(slackUserDTO);
+      return new ResponseEntity<>(HttpStatus.CREATED);
+    } else {
+      userService.updateSlackIdFor(slackUserDTO);
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-    //TODO: return 201 if can create, otherwise 204. Not the best practice but saves us time instead of
-    //hitting the Core API to see if exists then hitting a POST or PUT depending
-    return new ResponseEntity<>(HttpStatus.CREATED);
   }
-
 }

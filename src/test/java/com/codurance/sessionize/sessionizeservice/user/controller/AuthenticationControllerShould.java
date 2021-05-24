@@ -1,6 +1,7 @@
 package com.codurance.sessionize.sessionizeservice.user.controller;
 
 import com.codurance.sessionize.sessionizeservice.infrastructure.security.TokenVerification;
+import com.codurance.sessionize.sessionizeservice.user.SlackUserDTO;
 import com.codurance.sessionize.sessionizeservice.user.UserDTO;
 import com.codurance.sessionize.sessionizeservice.user.WebUserDTO;
 import com.codurance.sessionize.sessionizeservice.user.service.UserService;
@@ -9,6 +10,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.json.webtoken.JsonWebSignature;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.junit.jupiter.api.AfterEach;
@@ -38,7 +40,7 @@ public class AuthenticationControllerShould {
 
   WireMockServer wireMockServer = new WireMockServer(options().port(8080));
   TokenVerification mockTokenVerification = mock(TokenVerification.class);
-  UserService userService = mock(UserService.class);
+  UserService mockUserService = mock(UserService.class);
 
   @BeforeEach
   public void setup() {
@@ -52,7 +54,7 @@ public class AuthenticationControllerShould {
 
 
   @Test
-  public void return_401_unauthorized_if_user_is_not_permitted_to_login() throws IOException {
+  public void auth_endpoint_can_return_401() throws IOException {
 
     wireMockServer
       .stubFor(
@@ -70,7 +72,7 @@ public class AuthenticationControllerShould {
   }
 
   @Test
-  public void return_200_with_email_on_successful_login() throws IOException {
+  public void auth_endpoint_can_return_200() throws IOException {
 
 
     wireMockServer
@@ -89,9 +91,26 @@ public class AuthenticationControllerShould {
   }
 
   @Test
+  public void slack_auth_endpoint_can_return_201() throws IOException {
+
+    wireMockServer
+      .stubFor(
+        post(urlEqualTo(SLACK + AUTH_URL))
+          .willReturn(aResponse()
+            .withStatus(HttpStatus.CREATED.value())
+          ));
+
+    CloseableHttpClient httpClient = HttpClients.createDefault();
+    HttpPost request = new HttpPost(BASE_URL + SLACK + AUTH_URL);
+    HttpResponse response = httpClient.execute(request);
+
+    assertEquals(HttpStatus.CREATED.value(), response.getStatusLine().getStatusCode());
+  }
+
+  @Test
   public void return_correct_user_on_authentication() throws IOException, GeneralSecurityException {
 
-    AuthenticationController controller = new AuthenticationController(mockTokenVerification, userService);
+    AuthenticationController controller = new AuthenticationController(mockTokenVerification, mockUserService);
 
     JsonWebSignature.Header header = new JsonWebSignature.Header();
     GoogleIdToken.Payload payload = new GoogleIdToken.Payload();
@@ -116,7 +135,7 @@ public class AuthenticationControllerShould {
     userDTO.setFirstName("Bar");
     userDTO.setPictureURL("http://url");
 
-    when(userService.signInOrRegister(ArgumentMatchers.any(WebUserDTO.class))).thenReturn(userDTO);
+    when(mockUserService.webSignInOrRegister(ArgumentMatchers.any(WebUserDTO.class))).thenReturn(userDTO);
     ResponseEntity<UserDTO> response = controller.authenticate("token");
     UserDTO user = response.getBody();
 
@@ -126,7 +145,7 @@ public class AuthenticationControllerShould {
   @Test
   public void return_401_on_incorrect_authentication() throws IOException, GeneralSecurityException {
 
-    AuthenticationController controller = new AuthenticationController(mockTokenVerification, userService);
+    AuthenticationController controller = new AuthenticationController(mockTokenVerification, mockUserService);
     when(mockTokenVerification.verifyGoogleIdToken(anyString())).thenReturn(
             null
     );
@@ -135,21 +154,28 @@ public class AuthenticationControllerShould {
   }
 
   @Test
-  public void return_201_created_if_user_received_from_slack_successfully_created() throws IOException {
+  public void return_204_and_and_calls_to_update_slack_id_if_user_exists() throws IOException, GeneralSecurityException {
 
-    wireMockServer
-      .stubFor(
-        get(urlEqualTo(SLACK + AUTH_URL))
-          .willReturn(aResponse()
-            .withStatus(HttpStatus.CREATED.value())
-          ));
-
-    CloseableHttpClient httpClient = HttpClients.createDefault();
-    HttpGet request = new HttpGet(BASE_URL + SLACK + AUTH_URL);
-    HttpResponse response = httpClient.execute(request);
-
-    assertEquals(HttpStatus.CREATED.value(), response.getStatusLine().getStatusCode());
+    AuthenticationController controller = new AuthenticationController(mockTokenVerification, mockUserService);
+    SlackUserDTO slackUserDTO = new SlackUserDTO();
+    slackUserDTO.setEmail("foobar@foobar.com");
+    when(mockUserService.isNewUser(slackUserDTO.getEmail())).thenReturn(true);
+    ResponseEntity<UserDTO> response = controller.authenticate(slackUserDTO);
+    assertEquals(HttpStatus.CREATED, response.getStatusCode());
   }
+
+  @Test
+  public void return_201_and_and_calls_to_save_slack_user_if_doesnt_exist() throws IOException, GeneralSecurityException {
+
+    AuthenticationController controller = new AuthenticationController(mockTokenVerification, mockUserService);
+    SlackUserDTO slackUserDTO = new SlackUserDTO();
+    slackUserDTO.setEmail("foobar@foobar.com");
+    when(mockUserService.isNewUser(slackUserDTO.getEmail())).thenReturn(false);
+    ResponseEntity<UserDTO> response = controller.authenticate(slackUserDTO);
+    assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+  }
+
+
 
 
 }
