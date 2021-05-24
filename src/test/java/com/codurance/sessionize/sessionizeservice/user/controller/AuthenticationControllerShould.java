@@ -1,7 +1,6 @@
 package com.codurance.sessionize.sessionizeservice.user.controller;
 
 import com.codurance.sessionize.sessionizeservice.infrastructure.security.TokenVerification;
-import com.codurance.sessionize.sessionizeservice.user.controller.AuthenticationController;
 import com.codurance.sessionize.sessionizeservice.user.UserDTO;
 import com.codurance.sessionize.sessionizeservice.user.WebUserDTO;
 import com.codurance.sessionize.sessionizeservice.user.service.UserService;
@@ -23,10 +22,7 @@ import org.springframework.http.ResponseEntity;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-import static com.codurance.sessionize.sessionizeservice.infrastructure.constants.HttpConstants.AUTH_HEADER;
-import static com.codurance.sessionize.sessionizeservice.infrastructure.constants.HttpConstants.AUTH_URL;
-import static com.codurance.sessionize.sessionizeservice.infrastructure.constants.HttpConstants.OK;
-import static com.codurance.sessionize.sessionizeservice.infrastructure.constants.HttpConstants.UNAUTHORIZED;
+import static com.codurance.sessionize.sessionizeservice.infrastructure.constants.HttpConstants.*;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -63,14 +59,14 @@ public class AuthenticationControllerShould {
         get(urlEqualTo(AUTH_URL))
       .willReturn(aResponse()
       .withHeader(AUTH_HEADER, "Bearer token")
-      .withStatus(UNAUTHORIZED)
+      .withStatus(HttpStatus.UNAUTHORIZED.value())
       ));
 
     CloseableHttpClient httpClient = HttpClients.createDefault();
     HttpGet request = new HttpGet(BASE_URL + AUTH_URL);
     HttpResponse response = httpClient.execute(request);
 
-    assertEquals(UNAUTHORIZED, response.getStatusLine().getStatusCode());
+    assertEquals(HttpStatus.UNAUTHORIZED.value(), response.getStatusLine().getStatusCode());
   }
 
   @Test
@@ -82,14 +78,14 @@ public class AuthenticationControllerShould {
         get(urlEqualTo(AUTH_URL))
           .willReturn(aResponse()
             .withHeader(AUTH_HEADER, "Bearer token")
-            .withStatus(OK)
+            .withStatus(HttpStatus.OK.value())
           ));
 
     CloseableHttpClient httpClient = HttpClients.createDefault();
     HttpGet request = new HttpGet(BASE_URL + AUTH_URL);
     HttpResponse response = httpClient.execute(request);
 
-    assertEquals(OK, response.getStatusLine().getStatusCode());
+    assertEquals(HttpStatus.OK.value(), response.getStatusLine().getStatusCode());
   }
 
   @Test
@@ -136,6 +132,23 @@ public class AuthenticationControllerShould {
     );
     ResponseEntity<UserDTO> response = controller.authenticate("token");
     assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+  }
+
+  @Test
+  public void return_201_created_if_user_received_from_slack_successfully_created() throws IOException {
+
+    wireMockServer
+      .stubFor(
+        get(urlEqualTo(SLACK + AUTH_URL))
+          .willReturn(aResponse()
+            .withStatus(HttpStatus.CREATED.value())
+          ));
+
+    CloseableHttpClient httpClient = HttpClients.createDefault();
+    HttpGet request = new HttpGet(BASE_URL + SLACK + AUTH_URL);
+    HttpResponse response = httpClient.execute(request);
+
+    assertEquals(HttpStatus.CREATED.value(), response.getStatusLine().getStatusCode());
   }
 
 

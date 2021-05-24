@@ -1,6 +1,7 @@
 package com.codurance.sessionize.sessionizeservice.user.controller;
 
 import com.codurance.sessionize.sessionizeservice.infrastructure.security.TokenVerification;
+import com.codurance.sessionize.sessionizeservice.user.SlackUserDTO;
 import com.codurance.sessionize.sessionizeservice.user.UserDTO;
 import com.codurance.sessionize.sessionizeservice.user.WebUserDTO;
 import com.codurance.sessionize.sessionizeservice.user.service.UserService;
@@ -13,17 +14,16 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.codurance.sessionize.sessionizeservice.infrastructure.constants.HttpConstants.AUTH_HEADER;
-import static com.codurance.sessionize.sessionizeservice.infrastructure.constants.HttpConstants.AUTH_URL;
+import static com.codurance.sessionize.sessionizeservice.infrastructure.constants.HttpConstants.*;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class AuthenticationController {
 
-  private static Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
+  private static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
 
-  private TokenVerification tokenVerification;
-  private UserService userService;
+  private final TokenVerification tokenVerification;
+  private final UserService userService;
 
   @Autowired
   public AuthenticationController(TokenVerification tokenVerification, UserService userService) {
@@ -45,6 +45,21 @@ public class AuthenticationController {
       logger.error(e.getMessage());
       return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
+  }
+
+  @GetMapping(value = SLACK + AUTH_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<UserDTO> authenticate(@RequestBody SlackUserDTO slackUserDTO) {
+
+    try {
+      logger.info(slackUserDTO.getId());
+      logger.info(slackUserDTO.getName());
+      logger.info(slackUserDTO.getEmail());
+    } catch (Exception ex) {
+      logger.error(ex.getMessage());
+    }
+    return true;
+
+    return new ResponseEntity<UserDTO>(HttpStatus.CREATED);
   }
 
 }
