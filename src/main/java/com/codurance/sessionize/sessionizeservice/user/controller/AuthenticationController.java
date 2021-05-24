@@ -57,7 +57,8 @@ public class AuthenticationController {
     } catch (Exception ex) {
       logger.error(ex.getMessage());
     }
-    return true;
+
+    //
 
     return new ResponseEntity<UserDTO>(HttpStatus.CREATED);
   }
