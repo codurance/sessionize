@@ -20,13 +20,10 @@ public class PreferencesController {
     this.userService = userService;
   }
 
-  @PutMapping(value = SLACK + OPT_OUT)
+  @PutMapping(value = {SLACK + OPT_OUT, OPT_OUT})
   public ResponseEntity<HttpStatus> optOut(@RequestParam String email) {
     return userService.optOut(email) ?
       new ResponseEntity<>(HttpStatus.OK) :
       new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
   }
-
-
-
 }
