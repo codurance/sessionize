@@ -2,8 +2,8 @@ package com.codurance.sessionize.sessionizeservice;
 
 import com.codurance.sessionize.sessionizeservice.infrastructure.security.TokenVerification;
 import com.codurance.sessionize.sessionizeservice.infrastructure.health.SlackRestClient;
-import com.codurance.sessionize.sessionizeservice.preferences.repository.PreferencesRepository;
-import com.codurance.sessionize.sessionizeservice.preferences.repository.PreferencesRepositoryImpl;
+import com.codurance.sessionize.sessionizeservice.preferences.repository.CustomPreferencesRepository;
+import com.codurance.sessionize.sessionizeservice.preferences.repository.CustomPreferencesRepositoryImpl;
 import com.codurance.sessionize.sessionizeservice.preferences.service.PreferencesService;
 import com.codurance.sessionize.sessionizeservice.preferences.service.PreferencesServiceImpl;
 import com.codurance.sessionize.sessionizeservice.user.repository.CustomUserRepository;
@@ -36,13 +36,13 @@ public class SessionizeServiceApplication {
 	}
 
 	@Bean
-	public PreferencesService preferencesService(PreferencesRepository preferencesRepository, ModelMapper modelMapper) {
-		return new PreferencesServiceImpl(preferencesRepository, modelMapper);
+	public PreferencesService preferencesService(CustomPreferencesRepository customPreferencesRepository, ModelMapper modelMapper) {
+		return new PreferencesServiceImpl(customPreferencesRepository, modelMapper);
 	}
 
 	@Bean
-	public PreferencesRepository preferencesRepository(UserRepository userRepository) {
-		return new PreferencesRepositoryImpl(userRepository);
+	public CustomPreferencesRepository preferencesRepository(UserRepository userRepository) {
+		return new CustomPreferencesRepositoryImpl(userRepository);
 	}
 
 	@Bean

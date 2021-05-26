@@ -1,5 +1,6 @@
 package com.codurance.sessionize.sessionizeservice.user;
 
+import com.codurance.sessionize.sessionizeservice.preferences.Languages;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -18,5 +19,6 @@ public class User {
   private String firstName;
   private String lastName;
   private boolean optOut;
+  private Languages languages;
 
 }

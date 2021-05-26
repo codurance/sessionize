@@ -2,7 +2,6 @@ package com.codurance.sessionize.sessionizeservice.preferences.controller;
 
 import com.codurance.sessionize.sessionizeservice.preferences.LanguagesDTO;
 import com.codurance.sessionize.sessionizeservice.preferences.service.PreferencesService;
-import org.apache.http.Header;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

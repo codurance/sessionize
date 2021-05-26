@@ -2,7 +2,6 @@ package com.codurance.sessionize.sessionizeservice.infrastructure.mapper;
 
 import com.codurance.sessionize.sessionizeservice.preferences.Languages;
 import com.codurance.sessionize.sessionizeservice.preferences.LanguagesDTO;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
