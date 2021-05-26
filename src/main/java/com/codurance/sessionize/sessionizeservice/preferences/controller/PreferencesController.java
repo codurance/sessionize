@@ -25,7 +25,7 @@ public class PreferencesController {
   }
 
   @PutMapping(value =  PREFERRED_LANGUAGES)
-  public ResponseEntity<> languagePreferences(@RequestBody String languages) {
-    return new ResponseEntity<>();
+  public ResponseEntity<String> languagePreferences(@RequestBody String languages) {
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 }
