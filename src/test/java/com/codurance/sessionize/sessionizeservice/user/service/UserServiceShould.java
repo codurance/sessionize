@@ -72,16 +72,4 @@ public class UserServiceShould {
     verify(userRepository, times(1)).save(any(User.class));
   }
 
-  @Test
-  void opt_out_user() {
-    User user = new User();
-    user.setEmail("foobar@gmail.com");
-
-    when(userRepository.findUserByEmail("foobar@gmail.com")).thenReturn(user);
-    when(userRepository.save(user)).thenReturn(user);
-
-    assertTrue(userService.optOut("foobar@gmail.com"));
-  }
-
-
 }

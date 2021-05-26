@@ -1,5 +1,7 @@
-package com.codurance.sessionize.sessionizeservice.user.controller;
+package com.codurance.sessionize.sessionizeservice.preferences.controller;
 
+import com.codurance.sessionize.sessionizeservice.preferences.controller.PreferencesController;
+import com.codurance.sessionize.sessionizeservice.preferences.service.PreferencesService;
 import com.codurance.sessionize.sessionizeservice.user.service.UserService;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import org.apache.http.HttpResponse;
@@ -29,11 +31,11 @@ public class PreferencesControllerShould {
 
   PreferencesController preferencesController;
   WireMockServer wireMockServer = new WireMockServer(options().port(8080));
-  UserService mockUserService = mock(UserService.class);
+  PreferencesService mockPreferencesService = mock(PreferencesService.class);
 
   @BeforeEach
   public void setup() {
-    preferencesController = new PreferencesController(mockUserService);
+    preferencesController = new PreferencesController(mockPreferencesService);
     wireMockServer.start();
   }
 
@@ -61,7 +63,7 @@ public class PreferencesControllerShould {
   @Test
   void return_200_if_user_opted_out_successfully() {
     String stubEmail = "foobar@gmail.com";
-    when(mockUserService.optOut(stubEmail)).thenReturn(true);
+    when(mockPreferencesService.optOut(stubEmail)).thenReturn(true);
     ResponseEntity entity = preferencesController.optOut(stubEmail);
     assertEquals(HttpStatus.OK, entity.getStatusCode());
   }
@@ -69,7 +71,7 @@ public class PreferencesControllerShould {
   @Test
   void return_500_if_issue_when_opting_out() {
     String stubEmail = "foobar@gmail.com";
-    when(mockUserService.optOut(stubEmail)).thenReturn(false);
+    when(mockPreferencesService.optOut(stubEmail)).thenReturn(false);
     ResponseEntity entity = preferencesController.optOut(stubEmail);
     assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, entity.getStatusCode());
   }

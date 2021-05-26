@@ -54,12 +54,4 @@ public class UserServiceImpl implements UserService {
     userRepository.save(existingUser);
   }
 
-  @Override
-  public boolean optOut(String email) {
-    User user = userRepository.findUserByEmail(email);
-    user.setOptOut(true);
-    User updatedUser = userRepository.save(user);
-    return updatedUser.isOptOut();
-  }
-
 }

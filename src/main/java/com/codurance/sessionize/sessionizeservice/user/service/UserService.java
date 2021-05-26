@@ -11,5 +11,4 @@ public interface UserService {
   boolean isNewUser(String email);
   void slackRegister(SlackUserDTO slackUserDTO);
   void updateSlackIdFor(SlackUserDTO slackUserDTO);
-  boolean optOut(String email);
 }
