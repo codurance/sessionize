@@ -6,6 +6,7 @@ import com.codurance.sessionize.sessionizeservice.preferences.repository.CustomP
 import com.codurance.sessionize.sessionizeservice.preferences.repository.CustomPreferencesRepositoryImpl;
 import com.codurance.sessionize.sessionizeservice.preferences.service.PreferencesService;
 import com.codurance.sessionize.sessionizeservice.preferences.service.PreferencesServiceImpl;
+import com.codurance.sessionize.sessionizeservice.pairings.PairingRepository;
 import com.codurance.sessionize.sessionizeservice.user.repository.CustomUserRepository;
 import com.codurance.sessionize.sessionizeservice.user.repository.CustomUserRepositoryImpl;
 import com.codurance.sessionize.sessionizeservice.user.repository.UserRepository;
@@ -50,4 +51,6 @@ public class SessionizeServiceApplication {
 		return new ModelMapper();
 	}
 
+	@Bean
+	public PairingRepository pairingRepository() {return new PairingRepository();}
 }
