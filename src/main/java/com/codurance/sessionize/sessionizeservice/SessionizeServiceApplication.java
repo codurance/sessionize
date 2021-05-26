@@ -51,5 +51,6 @@ public class SessionizeServiceApplication {
 		return new ModelMapper();
 	}
 
-	public PairingRepository pairingRepository() {return null;}
+	@Bean
+	public PairingRepository pairingRepository() {return new PairingRepository();}
 }
