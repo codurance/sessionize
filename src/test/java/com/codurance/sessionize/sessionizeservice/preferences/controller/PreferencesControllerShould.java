@@ -1,5 +1,6 @@
 package com.codurance.sessionize.sessionizeservice.preferences.controller;
 
+import com.codurance.sessionize.sessionizeservice.preferences.LanguagesDTO;
 import com.codurance.sessionize.sessionizeservice.preferences.controller.PreferencesController;
 import com.codurance.sessionize.sessionizeservice.preferences.service.PreferencesService;
 import com.codurance.sessionize.sessionizeservice.user.service.UserService;
@@ -11,6 +12,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +23,7 @@ import static com.codurance.sessionize.sessionizeservice.infrastructure.constant
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @AutoConfigureWireMock(port = 8080)
 public class PreferencesControllerShould {
@@ -74,6 +75,14 @@ public class PreferencesControllerShould {
     when(mockPreferencesService.optOut(stubEmail)).thenReturn(false);
     ResponseEntity entity = preferencesController.optOut(stubEmail);
     assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, entity.getStatusCode());
+  }
+
+  @Test
+  void save_the_language_preferences_for_a_user_through_slack() {
+    LanguagesDTO languagesDTO = new LanguagesDTO();
+    String slackUser = "slackUser";
+    preferencesController.languagePreferences(slackUser, languagesDTO);
+    Mockito.verify(mockPreferencesService, times(1)).setLanguages(languagesDTO, slackUser);
   }
 
 }

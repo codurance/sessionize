@@ -1,7 +1,11 @@
 package com.codurance.sessionize.sessionizeservice.preferences.controller;
 
+import com.codurance.sessionize.sessionizeservice.preferences.LanguagesDTO;
 import com.codurance.sessionize.sessionizeservice.preferences.service.PreferencesService;
+import org.apache.http.Header;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,9 +15,10 @@ import static com.codurance.sessionize.sessionizeservice.infrastructure.constant
 @CrossOrigin(origins = "*")
 public class PreferencesController {
 
-  private final PreferencesService preferencesService;
+    PreferencesService preferencesService;
 
-  public PreferencesController(PreferencesService preferencesService) {
+    @Autowired
+    public PreferencesController(PreferencesService preferencesService) {
     this.preferencesService = preferencesService;
   }
 
@@ -24,8 +29,9 @@ public class PreferencesController {
       new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
-  @PutMapping(value =  PREFERRED_LANGUAGES)
-  public ResponseEntity<String> languagePreferences(@RequestBody String languages) {
-    return new ResponseEntity<>(HttpStatus.OK);
+  @PutMapping( value = {SLACK + PREFERRED_LANGUAGES}, consumes = MediaType.APPLICATION_JSON_VALUE)
+  public void languagePreferences(@RequestHeader("slack-user") String slackUser, @RequestBody LanguagesDTO languages) {
+    preferencesService.setLanguages(languages, slackUser);
   }
+
 }

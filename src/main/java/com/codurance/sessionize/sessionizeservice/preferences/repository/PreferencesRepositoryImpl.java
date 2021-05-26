@@ -2,11 +2,13 @@ package com.codurance.sessionize.sessionizeservice.preferences.repository;
 
 import com.codurance.sessionize.sessionizeservice.user.User;
 import com.codurance.sessionize.sessionizeservice.user.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class PreferencesRepositoryImpl implements PreferencesRepository {
 
-  final private UserRepository userRepository;
+  private final UserRepository userRepository;
 
+  @Autowired
   public PreferencesRepositoryImpl(UserRepository userRepository) {
     this.userRepository = userRepository;
   }
