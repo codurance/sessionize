@@ -1,6 +1,7 @@
 package com.codurance.sessionize.sessionizeservice;
 
 import com.codurance.sessionize.sessionizeservice.authentication.TokenVerification;
+import com.codurance.sessionize.sessionizeservice.pairings.PairingRepository;
 import com.codurance.sessionize.sessionizeservice.slack.SlackRestClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,5 +21,10 @@ public class SessionizeServiceApplication {
 
 	@Bean
 	public TokenVerification tokenVerification() {return new TokenVerification(); }
+
+	@Bean
+	public PairingRepository pairingRepository() {return null;}
+
+
 
 }

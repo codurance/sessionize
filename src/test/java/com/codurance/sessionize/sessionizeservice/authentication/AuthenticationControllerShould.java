@@ -68,8 +68,6 @@ public class AuthenticationControllerShould {
 
   @Test
   public void return_200_with_email_on_successful_login() throws IOException {
-
-
     wireMockServer
       .stubFor(
         get(urlEqualTo(AUTH_URL))
