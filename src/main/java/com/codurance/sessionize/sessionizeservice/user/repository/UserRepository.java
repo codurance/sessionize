@@ -10,7 +10,6 @@ public interface UserRepository extends MongoRepository<User, String> {
   User findUserByEmail(String email);
   User findUserBySlackId(String slackId);
   boolean existsByEmail(String email);
-  
 
 
   @Override

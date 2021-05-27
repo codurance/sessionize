@@ -15,16 +15,17 @@ public class UserServiceImpl implements UserService {
 
   private final CustomUserRepository customUserRepository;
   private final UserRepository userRepository;
+  private final ModelMapper mapper;
 
   @Autowired
-  public UserServiceImpl(CustomUserRepository customUserRepository, UserRepository userRepository) {
+  public UserServiceImpl(CustomUserRepository customUserRepository, UserRepository userRepository, ModelMapper mapper) {
     this.customUserRepository = customUserRepository;
     this.userRepository = userRepository;
+    this.mapper = mapper;
   }
 
   @Override
   public UserDTO webSignInOrRegister(WebUserDTO webUserDTO) {
-    ModelMapper mapper = new ModelMapper();
     User user = mapper.map(webUserDTO, User.class);
     User persistedUser = customUserRepository.findByEmailOrCreate(user);
     return mapper.map(persistedUser, UserDTO.class);
@@ -32,7 +33,6 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void slackRegister(SlackUserDTO slackUserDTO) {
-    ModelMapper mapper = new ModelMapper();
     User user = mapper.map(slackUserDTO, User.class);
     user.setOptOut(false);
     userRepository.save(user);
