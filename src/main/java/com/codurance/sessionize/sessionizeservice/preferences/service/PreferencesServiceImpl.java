@@ -1,8 +1,8 @@
 package com.codurance.sessionize.sessionizeservice.preferences.service;
 
 import com.codurance.sessionize.sessionizeservice.infrastructure.mapper.LanguageMap;
-import com.codurance.sessionize.sessionizeservice.preferences.Languages;
-import com.codurance.sessionize.sessionizeservice.preferences.LanguagesDTO;
+import com.codurance.sessionize.sessionizeservice.preferences.LanguagesPreferences;
+import com.codurance.sessionize.sessionizeservice.preferences.LanguagesPreferencesDTO;
 import com.codurance.sessionize.sessionizeservice.preferences.repository.CustomPreferencesRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +24,9 @@ public class PreferencesServiceImpl implements PreferencesService {
   }
 
   @Override
-  public void setLanguages(LanguagesDTO languagesDTO, String user) {
+  public void setLanguagesForSlack(LanguagesPreferencesDTO languagesPreferencesDTO, String user) {
     modelMapper.addMappings(new LanguageMap());
-    Languages languages = modelMapper.map(languagesDTO, Languages.class);
-    customPreferencesRepository.saveLanguagesForSlack(languages, user);
+    LanguagesPreferences languagesPreferences = modelMapper.map(languagesPreferencesDTO, LanguagesPreferences.class);
+    customPreferencesRepository.saveLanguagesForSlack(languagesPreferences, user);
   }
 }

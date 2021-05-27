@@ -19,7 +19,13 @@ public class InterceptorConfig implements WebMvcConfigurer {
   public void addInterceptors(InterceptorRegistry registry) {
     registry.addInterceptor(tokenVerification)
             .addPathPatterns("/**")
-            .excludePathPatterns(AUTH_URL, SLACK + AUTH_URL, SLACK + OPT_OUT, SLACK + PREFERRED_LANGUAGES);
+            .excludePathPatterns(
+              AUTH,
+              SLACK + AUTH,
+              SLACK + OPT_OUT,
+              SLACK + PREFERENCES + LANGUAGES,
+              SLACK + LANGUAGES
+            );
   }
 }
 

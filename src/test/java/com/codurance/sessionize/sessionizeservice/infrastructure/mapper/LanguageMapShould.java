@@ -1,7 +1,8 @@
 package com.codurance.sessionize.sessionizeservice.infrastructure.mapper;
 
-import com.codurance.sessionize.sessionizeservice.preferences.Languages;
-import com.codurance.sessionize.sessionizeservice.preferences.LanguagesDTO;
+import com.codurance.sessionize.sessionizeservice.preferences.Language;
+import com.codurance.sessionize.sessionizeservice.preferences.LanguagesPreferences;
+import com.codurance.sessionize.sessionizeservice.preferences.LanguagesPreferencesDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -21,23 +22,23 @@ public class LanguageMapShould {
   @Test
   void validate_if_language_mapping_object_is_valid() {
 
-    LanguagesDTO languagesDTO = prepateLanguagesDTO();
-    Languages languages = modelMapper.map(languagesDTO, Languages.class);
+    LanguagesPreferencesDTO languagesPreferencesDTO = prepateLanguagesDTO();
+    LanguagesPreferences languagesPreferences = modelMapper.map(languagesPreferencesDTO, LanguagesPreferences.class);
 
     modelMapper.validate();
 
-    assertEquals(languagesDTO.getPrimaryLanguage(), languages.getPrimary().getName());
-    assertEquals(languagesDTO.getSecondaryLanguage(), languages.getSecondary().getName());
-    assertEquals(languagesDTO.getTertiaryLanguage(), languages.getTertiary().getName());
+    assertEquals(languagesPreferencesDTO.getPrimaryLanguage(), languagesPreferences.getPrimary());
+    assertEquals(languagesPreferencesDTO.getSecondaryLanguage(), languagesPreferences.getSecondary());
+    assertEquals(languagesPreferencesDTO.getTertiaryLanguage(), languagesPreferences.getTertiary());
 
   }
 
-  private LanguagesDTO prepateLanguagesDTO() {
-    LanguagesDTO languagesDTO = new LanguagesDTO();
-    languagesDTO.setPrimaryLanguage("Foo");
-    languagesDTO.setSecondaryLanguage("Bar");
-    languagesDTO.setTertiaryLanguage("Baz");
-    return languagesDTO;
+  private LanguagesPreferencesDTO prepateLanguagesDTO() {
+    LanguagesPreferencesDTO languagesPreferencesDTO = new LanguagesPreferencesDTO();
+    languagesPreferencesDTO.setPrimaryLanguage(new Language("FOO", "Foo"));
+    languagesPreferencesDTO.setSecondaryLanguage(new Language("BAR", "Bar"));
+    languagesPreferencesDTO.setTertiaryLanguage(new Language("BAZ", "Baz"));
+    return languagesPreferencesDTO;
   }
 
 

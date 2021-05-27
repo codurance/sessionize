@@ -1,16 +1,16 @@
 package com.codurance.sessionize.sessionizeservice.infrastructure.mapper;
 
-import com.codurance.sessionize.sessionizeservice.preferences.Languages;
-import com.codurance.sessionize.sessionizeservice.preferences.LanguagesDTO;
+import com.codurance.sessionize.sessionizeservice.preferences.LanguagesPreferences;
+import com.codurance.sessionize.sessionizeservice.preferences.LanguagesPreferencesDTO;
 import org.modelmapper.PropertyMap;
 
-public class LanguageMap extends PropertyMap<LanguagesDTO, Languages> {
+public class LanguageMap extends PropertyMap<LanguagesPreferencesDTO, LanguagesPreferences> {
 
 
   @Override
   protected void configure() {
-    map(source.getPrimaryLanguage(), destination.getPrimary().getName());
-    map(source.getSecondaryLanguage(), destination.getSecondary().getName());
-    map(source.getTertiaryLanguage(), destination.getTertiary().getName());
+    map(source.getPrimaryLanguage(), destination.getPrimary());
+    map(source.getSecondaryLanguage(), destination.getSecondary());
+    map(source.getTertiaryLanguage(), destination.getTertiary());
   }
 }

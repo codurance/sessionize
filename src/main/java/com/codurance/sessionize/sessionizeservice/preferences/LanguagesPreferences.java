@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Languages {
+public class LanguagesPreferences {
 
   Language primary;
   Language secondary;

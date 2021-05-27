@@ -1,7 +1,10 @@
 package com.codurance.sessionize.sessionizeservice.pairings;
 
-public class PairingRepository {
-    public Pairing getPairings(String tokenId){
-        return new Pairing();
-    };
+import org.springframework.stereotype.Component;
+
+@Component
+public interface PairingRepository {
+
+  public Pairing getPairings(String tokenId);
+
 }

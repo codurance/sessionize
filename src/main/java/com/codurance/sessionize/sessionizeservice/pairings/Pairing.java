@@ -1,9 +1,14 @@
 package com.codurance.sessionize.sessionizeservice.pairings;
 
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+@Getter
+@Setter
 public class Pairing {
     private String familyName;
     private String givenName;
