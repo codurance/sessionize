@@ -61,13 +61,13 @@ public class PreferencesControllerShould {
   void call_the_opt_out_endpoint_without_token_and_with_a_email_as_request_param() throws IOException {
     wireMockServer
       .stubFor(
-        put(urlEqualTo(SLACK + OPT_OUT + "?email=andras.dako@gmail.com"))
+        put(urlEqualTo(SLACK + AVAILABILITY + "?email=andras.dako@gmail.com"))
           .willReturn(aResponse()
             .withStatus(HttpStatus.OK.value())
           ));
 
     CloseableHttpClient httpClient = HttpClients.createDefault();
-    HttpPut request = new HttpPut(BASE_URL + SLACK + OPT_OUT + "?email=andras.dako@gmail.com");
+    HttpPut request = new HttpPut(BASE_URL + SLACK + AVAILABILITY + "?email=andras.dako@gmail.com");
     HttpResponse response = httpClient.execute(request);
 
     assertEquals(HttpStatus.OK.value(), response.getStatusLine().getStatusCode());
@@ -93,19 +93,11 @@ public class PreferencesControllerShould {
   }
 
   @Test
-  void return_200_if_user_opted_out_successfully() {
+  void return_200_if_user_availability_changed_successfully() {
     String stubEmail = "foobar@gmail.com";
-    when(mockPreferencesService.optOut(stubEmail)).thenReturn(true);
-    ResponseEntity entity = preferencesController.optOut(stubEmail);
+    when(mockPreferencesService.changeAvailability(stubEmail)).thenReturn(true);
+    ResponseEntity entity = preferencesController.changeAvailability(stubEmail);
     assertEquals(HttpStatus.OK, entity.getStatusCode());
-  }
-
-  @Test
-  void return_500_if_issue_when_opting_out() {
-    String stubEmail = "foobar@gmail.com";
-    when(mockPreferencesService.optOut(stubEmail)).thenReturn(false);
-    ResponseEntity entity = preferencesController.optOut(stubEmail);
-    assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, entity.getStatusCode());
   }
 
   @Test

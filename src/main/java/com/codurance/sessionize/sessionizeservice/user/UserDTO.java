@@ -13,6 +13,6 @@ public class UserDTO {
   private String email;
   private String pictureURL;
   private String firstName;
-  private boolean optOut;
+  private boolean optIn;
 
 }

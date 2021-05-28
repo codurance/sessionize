@@ -28,7 +28,7 @@ public class SlackUserToUserMapShould {
     assertEquals(user.getEmail(), slackUserDTO.getEmail());
     assertEquals(user.getFirstName(), slackUserDTO.getFirstName());
     assertEquals(user.getLastName(), slackUserDTO.getLastName());
-    assertEquals(user.isOptOut(), slackUserDTO.isOptOut());
+    assertEquals(user.isOptIn(), slackUserDTO.isOptIn());
 
   }
 
@@ -38,7 +38,7 @@ public class SlackUserToUserMapShould {
     slackUserDTO.setEmail("foobar@foobar.com");
     slackUserDTO.setFirstName("a");
     slackUserDTO.setLastName("b");
-    slackUserDTO.setOptOut(true);
+    slackUserDTO.setOptIn(true);
     return slackUserDTO;
   }
 

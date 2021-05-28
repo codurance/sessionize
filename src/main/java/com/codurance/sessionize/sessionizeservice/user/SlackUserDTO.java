@@ -11,6 +11,6 @@ public class SlackUserDTO {
     String email;
     String firstName;
     String lastName;
-    boolean optOut;
+    boolean optIn;
 
 }

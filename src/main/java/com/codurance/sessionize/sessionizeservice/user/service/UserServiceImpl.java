@@ -28,6 +28,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserDTO webSignInOrRegister(WebUserDTO webUserDTO) {
     User user = mapper.map(webUserDTO, User.class);
+    user.setOptIn(true);
     User persistedUser = customUserRepository.findByEmailOrCreate(user);
     return mapper.map(persistedUser, UserDTO.class);
   }
@@ -36,7 +37,7 @@ public class UserServiceImpl implements UserService {
   public void slackRegister(SlackUserDTO slackUserDTO) {
     mapper.addMappings(new SlackUserToUserMap());
     User user = mapper.map(slackUserDTO, User.class);
-    user.setOptOut(false);
+    user.setOptIn(true);
     userRepository.save(user);
   }
 

@@ -16,11 +16,16 @@ public class CustomPreferencesRepositoryImpl implements CustomPreferencesReposit
 
 
   @Override
-  public boolean optOut(String email) {
+  public boolean changeAvailability(String email) {
     User user = userRepository.findUserByEmail(email);
-    user.setOptOut(true);
+
+    if (user.isOptIn()) {
+      user.setOptIn(false);
+    } else {
+      user.setOptIn(true);
+    }
     User updatedUser = userRepository.save(user);
-    return updatedUser.isOptOut();
+    return updatedUser.isOptIn();
   }
 
   @Override

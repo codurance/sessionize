@@ -12,6 +12,6 @@ public class SlackUserToUserMap extends PropertyMap<SlackUserDTO, User> {
     map(source.getSlackUser(), destination.getSlackUser());
     map(source.getFirstName(), destination.getFirstName());
     map(source.getLastName(), destination.getLastName());
-    map(source.isOptOut(),destination.isOptOut());
+    map(source.isOptIn(),destination.isOptIn());
   }
 }

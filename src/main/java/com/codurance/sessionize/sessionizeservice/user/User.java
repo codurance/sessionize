@@ -18,7 +18,7 @@ public class User {
   private String pictureURL;
   private String firstName;
   private String lastName;
-  private boolean optOut;
+  private boolean optIn;
   private LanguagesPreferences languagesPreferences;
 
 }

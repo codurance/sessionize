@@ -24,11 +24,11 @@ public class PreferencesController {
     this.preferencesService = preferencesService;
   }
 
-  @PutMapping(value = {SLACK + OPT_OUT, OPT_OUT})
-  public ResponseEntity<HttpStatus> optOut(@RequestParam String email) {
-    return preferencesService.optOut(email) ?
-      new ResponseEntity<>(HttpStatus.OK) :
-      new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+  @PutMapping(value = {SLACK + AVAILABILITY, AVAILABILITY})
+  public ResponseEntity changeAvailability(@RequestParam String email) {
+    return preferencesService.changeAvailability(email) ?
+      new ResponseEntity("User opted in", HttpStatus.OK) :
+      new ResponseEntity("User opted out",HttpStatus.OK);
   }
 
   @PutMapping( value = {SLACK + PREFERENCES + LANGUAGES}, consumes = MediaType.APPLICATION_JSON_VALUE)

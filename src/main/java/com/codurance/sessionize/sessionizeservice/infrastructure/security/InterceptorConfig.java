@@ -22,7 +22,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
             .excludePathPatterns(
               AUTH,
               SLACK + AUTH,
-              SLACK + OPT_OUT,
+              SLACK + AVAILABILITY,
               SLACK + PREFERENCES + LANGUAGES,
               SLACK + LANGUAGES
             );

@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public interface PreferencesService {
 
-  boolean optOut(String email);
+  boolean changeAvailability(String email);
   void setLanguagesForSlack(LanguagesPreferencesDTO languages, String slackUser);
   List<Language> getAvailableLanguages();
 }

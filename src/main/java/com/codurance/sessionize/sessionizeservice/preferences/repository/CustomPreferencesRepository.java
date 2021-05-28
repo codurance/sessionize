@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CustomPreferencesRepository {
 
-  boolean optOut(String email);
+  boolean changeAvailability(String email);
   void saveLanguagesForSlack(LanguagesPreferences languagesPreferences, String user);
 
 }

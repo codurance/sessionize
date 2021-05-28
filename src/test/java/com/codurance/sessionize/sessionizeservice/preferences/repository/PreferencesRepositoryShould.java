@@ -5,7 +5,7 @@ import com.codurance.sessionize.sessionizeservice.user.repository.UserRepository
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -24,12 +24,26 @@ public class PreferencesRepositoryShould {
   @Test
   void opt_out_user_from_pairings() {
     User user = new User();
+    user.setOptIn(true);
 
     when(mockUserRepository.findUserByEmail("foobar@codurance.com")).thenReturn(user);
     when(mockUserRepository.save(user)).thenReturn(user);
 
-    boolean isOptOut = customPreferencesRepository.optOut("foobar@codurance.com");
-    assertTrue(isOptOut);
+    boolean availability = customPreferencesRepository.changeAvailability("foobar@codurance.com");
+    assertFalse(availability);
   }
+
+  @Test
+  void opt_in_user_to_pairing() {
+    User user = new User();
+    user.setOptIn(false);
+
+    when(mockUserRepository.findUserByEmail("foobar@codurance.com")).thenReturn(user);
+    when(mockUserRepository.save(user)).thenReturn(user);
+
+    boolean availability = customPreferencesRepository.changeAvailability("foobar@codurance.com");
+    assertTrue(availability);
+  }
+
 
 }

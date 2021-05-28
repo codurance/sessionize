@@ -17,7 +17,7 @@ public class WebUserDTO {
   private String pictureURL;
   private String firstName;
   private String lastName;
-  private boolean optOut;
+  private boolean optIn;
 
   public WebUserDTO(GoogleIdToken.Payload payload) {
     this.email = payload.getEmail();

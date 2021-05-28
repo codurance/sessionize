@@ -22,8 +22,8 @@ public class PreferencesServiceImpl implements PreferencesService {
   }
 
   @Override
-  public boolean optOut(String email) {
-    return customPreferencesRepository.optOut(email);
+  public boolean changeAvailability(String email) {
+    return customPreferencesRepository.changeAvailability(email);
   }
 
   @Override

@@ -26,8 +26,8 @@ public class PreferencesServiceShould {
     User user = new User();
     user.setEmail("foobar@gmail.com");
 
-    when(mockCustomPreferencesRepository.optOut(user.getEmail())).thenReturn(true);
-    assertTrue(preferencesService.optOut("foobar@gmail.com"));
+    when(mockCustomPreferencesRepository.changeAvailability(user.getEmail())).thenReturn(true);
+    assertTrue(preferencesService.changeAvailability("foobar@gmail.com"));
   }
 
   @Test
