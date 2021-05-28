@@ -9,7 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static com.codurance.sessionize.sessionizeservice.infrastructure.constants.HttpConstants.*;
@@ -39,15 +38,7 @@ public class PreferencesController {
 
   @GetMapping(value = {SLACK + LANGUAGES })
   public ResponseEntity<List<Language>> preferredLanguages() {
-
-      List<Language> list = Arrays.asList(
-        new Language("JAVA", "Java"),
-        new Language("CSHARP", "C#"),
-        new Language("GOLANG", "Go"),
-        new Language("CPP", "C++")
-      );
-
-      return new ResponseEntity<>(list, HttpStatus.OK);
+      return new ResponseEntity<>(preferencesService.getAvailableLanguages(), HttpStatus.OK);
   }
 
 }

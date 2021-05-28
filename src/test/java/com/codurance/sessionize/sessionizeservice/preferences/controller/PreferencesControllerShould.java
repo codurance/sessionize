@@ -25,7 +25,6 @@ import java.util.List;
 import static com.codurance.sessionize.sessionizeservice.infrastructure.constants.HttpConstants.*;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
