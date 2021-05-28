@@ -16,7 +16,6 @@ public class CustomPreferencesRepositoryImpl implements CustomPreferencesReposit
     this.userRepository = userRepository;
   }
 
-
   @Override
   public boolean changeAvailability(String email) {
     User user = userRepository.findUserByEmail(email);

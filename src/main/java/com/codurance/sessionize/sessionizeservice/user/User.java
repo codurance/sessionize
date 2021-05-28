@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @Document(collection = "users")
 public class User {
-
   @Id
   private String id;
   private String slackUser;
@@ -20,5 +19,4 @@ public class User {
   private String lastName;
   private boolean optIn;
   private LanguagesPreferences languagesPreferences;
-
 }
