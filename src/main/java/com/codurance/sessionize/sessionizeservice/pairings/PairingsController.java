@@ -8,25 +8,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.codurance.sessionize.sessionizeservice.utils.Constants.AUTH_HEADER;
-import static com.codurance.sessionize.sessionizeservice.utils.Constants.PAIRINGS_URL;
+import static com.codurance.sessionize.sessionizeservice.infrastructure.constants.HttpConstants.AUTH_HEADER;
+import static com.codurance.sessionize.sessionizeservice.infrastructure.constants.HttpConstants.PAIRINGS;
+
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000")
 public class PairingsController {
 
-    private PairingRepository repository;
+  private final PairingRepository repository;
 
-    public PairingsController(PairingRepository repository) {
-        this.repository = repository;
-    }
+  public PairingsController(PairingRepository repository) {
+    this.repository = repository;
+  }
 
-    @GetMapping(value = PAIRINGS_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Pairing> getPairings(@RequestHeader(AUTH_HEADER) String authorizationHeader) {
+  @GetMapping(value = PAIRINGS, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Pairing> getPairings(@RequestHeader(AUTH_HEADER) String authorization) {
+    Pairing pairing = repository.getPairings("sophie.biber@codurance.com");
+    return new ResponseEntity<>(pairing, HttpStatus.OK);
 
-        Pairing pairing = repository.getPairings(authorizationHeader);
-
-        ResponseEntity entity = new ResponseEntity(pairing, HttpStatus.OK);
-        return entity;
-    }
+  }
 }

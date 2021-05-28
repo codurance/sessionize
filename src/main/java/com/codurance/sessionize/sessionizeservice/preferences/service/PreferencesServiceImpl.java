@@ -1,11 +1,14 @@
 package com.codurance.sessionize.sessionizeservice.preferences.service;
 
-import com.codurance.sessionize.sessionizeservice.infrastructure.mapper.LanguageMap;
-import com.codurance.sessionize.sessionizeservice.preferences.Languages;
-import com.codurance.sessionize.sessionizeservice.preferences.LanguagesDTO;
+import com.codurance.sessionize.sessionizeservice.preferences.Language;
+import com.codurance.sessionize.sessionizeservice.preferences.LanguagesPreferences;
+import com.codurance.sessionize.sessionizeservice.preferences.LanguagesPreferencesDTO;
 import com.codurance.sessionize.sessionizeservice.preferences.repository.CustomPreferencesRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class PreferencesServiceImpl implements PreferencesService {
 
@@ -24,9 +27,18 @@ public class PreferencesServiceImpl implements PreferencesService {
   }
 
   @Override
-  public void setLanguages(LanguagesDTO languagesDTO, String user) {
-    modelMapper.addMappings(new LanguageMap());
-    Languages languages = modelMapper.map(languagesDTO, Languages.class);
-    customPreferencesRepository.saveLanguagesForSlack(languages, user);
+  public void setLanguagesForSlack(LanguagesPreferencesDTO languagesPreferencesDTO, String user) {
+    LanguagesPreferences languagesPreferences = modelMapper.map(languagesPreferencesDTO, LanguagesPreferences.class);
+    customPreferencesRepository.saveLanguagesForSlack(languagesPreferences, user);
+  }
+
+  @Override
+  public List<Language> getAvailableLanguages() {
+    return Arrays.asList(
+      new Language("JAVA", "Java"),
+      new Language("CSHARP", "C#"),
+      new Language("GOLANG", "Go"),
+      new Language("CPP", "C++")
+    );
   }
 }

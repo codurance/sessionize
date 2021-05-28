@@ -58,14 +58,14 @@ public class AuthenticationControllerShould {
 
     wireMockServer
       .stubFor(
-        get(urlEqualTo(AUTH_URL))
+        get(urlEqualTo(AUTH))
       .willReturn(aResponse()
       .withHeader(AUTH_HEADER, "Bearer token")
       .withStatus(HttpStatus.UNAUTHORIZED.value())
       ));
 
     CloseableHttpClient httpClient = HttpClients.createDefault();
-    HttpGet request = new HttpGet(BASE_URL + AUTH_URL);
+    HttpGet request = new HttpGet(BASE_URL + AUTH);
     HttpResponse response = httpClient.execute(request);
 
     assertEquals(HttpStatus.UNAUTHORIZED.value(), response.getStatusLine().getStatusCode());
@@ -77,14 +77,14 @@ public class AuthenticationControllerShould {
 
     wireMockServer
       .stubFor(
-        get(urlEqualTo(AUTH_URL))
+        get(urlEqualTo(AUTH))
           .willReturn(aResponse()
             .withHeader(AUTH_HEADER, "Bearer token")
             .withStatus(HttpStatus.OK.value())
           ));
 
     CloseableHttpClient httpClient = HttpClients.createDefault();
-    HttpGet request = new HttpGet(BASE_URL + AUTH_URL);
+    HttpGet request = new HttpGet(BASE_URL + AUTH);
     HttpResponse response = httpClient.execute(request);
 
     assertEquals(HttpStatus.OK.value(), response.getStatusLine().getStatusCode());
@@ -95,13 +95,13 @@ public class AuthenticationControllerShould {
 
     wireMockServer
       .stubFor(
-        post(urlEqualTo(SLACK + AUTH_URL))
+        post(urlEqualTo(SLACK + AUTH))
           .willReturn(aResponse()
             .withStatus(HttpStatus.CREATED.value())
           ));
 
     CloseableHttpClient httpClient = HttpClients.createDefault();
-    HttpPost request = new HttpPost(BASE_URL + SLACK + AUTH_URL);
+    HttpPost request = new HttpPost(BASE_URL + SLACK + AUTH);
     HttpResponse response = httpClient.execute(request);
 
     assertEquals(HttpStatus.CREATED.value(), response.getStatusLine().getStatusCode());

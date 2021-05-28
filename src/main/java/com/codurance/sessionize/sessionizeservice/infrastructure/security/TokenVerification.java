@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 
+import static com.codurance.sessionize.sessionizeservice.infrastructure.constants.HttpConstants.AUTH_HEADER;
+
 public class TokenVerification implements HandlerInterceptor {
 
   @Value("${GOOGLE_CLIENT_ID}")
@@ -25,7 +27,7 @@ public class TokenVerification implements HandlerInterceptor {
     public boolean
     preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 
-        String token = request.getHeader("Authorization");
+        String token = request.getHeader(AUTH_HEADER);
 
          try {
            if (isValid(token)) {

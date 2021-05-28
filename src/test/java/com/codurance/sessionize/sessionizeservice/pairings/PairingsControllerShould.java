@@ -28,9 +28,9 @@ public class PairingsControllerShould {
     public void return_pairing_on_get_request() {
         PairingRepository repository = mock(PairingRepository.class);
         PairingsController controller = new PairingsController(repository);
-        when(repository.getPairings("blah")).thenReturn(
+        when(repository.getPairings("sophie.biber@codurance.com")).thenReturn(
                 new Pairing());
-        ResponseEntity<Pairing> response = controller.getPairings("blah");
+        ResponseEntity<Pairing> response = controller.getPairings("sophie.biber@codurance.com");
         Pairing pairing = response.getBody();
         assertThat(new Pairing()).isEqualToComparingFieldByField(pairing);
     }

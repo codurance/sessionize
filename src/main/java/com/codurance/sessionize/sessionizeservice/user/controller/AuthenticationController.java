@@ -31,7 +31,7 @@ public class AuthenticationController {
     this.userService = userService;
   }
 
-  @GetMapping(value = AUTH_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = AUTH, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<UserDTO> authenticate(@RequestHeader(AUTH_HEADER) String authorizationHeader) {
 
     try {
@@ -47,7 +47,7 @@ public class AuthenticationController {
     }
   }
 
-  @PostMapping(value = SLACK + AUTH_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(value = SLACK + AUTH, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<UserDTO> authenticate(@RequestBody SlackUserDTO slackUserDTO) {
 
     if (userService.isNewUser(slackUserDTO.getEmail())) {

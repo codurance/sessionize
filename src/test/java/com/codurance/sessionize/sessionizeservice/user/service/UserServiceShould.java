@@ -7,7 +7,9 @@ import com.codurance.sessionize.sessionizeservice.user.WebUserDTO;
 import com.codurance.sessionize.sessionizeservice.user.repository.CustomUserRepository;
 import com.codurance.sessionize.sessionizeservice.user.repository.UserRepository;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.modelmapper.ModelMapper;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -16,9 +18,19 @@ import static org.mockito.Mockito.*;
 
 public class UserServiceShould {
 
-  CustomUserRepository customUserRepository = mock(CustomUserRepository.class);
-  UserRepository userRepository = mock(UserRepository.class);
-  UserServiceImpl userService = new UserServiceImpl(customUserRepository, userRepository);
+  CustomUserRepository customUserRepository;
+  UserRepository userRepository;
+  ModelMapper modelMapper;
+  UserServiceImpl userService;
+
+  @BeforeEach
+  public void setup() {
+    customUserRepository = mock(CustomUserRepository.class);
+    userRepository = mock(UserRepository.class);
+    modelMapper = new ModelMapper();
+    userService = new UserServiceImpl(customUserRepository, userRepository, modelMapper);
+  }
+
 
   @Test
   public void return_the_mapped_persisted_web_authenticated_user() {
@@ -63,7 +75,7 @@ public class UserServiceShould {
     String stubEmail = "foobar@codurance.com";
     SlackUserDTO stubSlackUserDTO = new SlackUserDTO();
     stubSlackUserDTO.setEmail(stubEmail);
-    stubSlackUserDTO.setSlackId("123");
+    stubSlackUserDTO.setSlackUser("123");
     User stubUser = new User();
 
     when(userRepository.findUserByEmail(stubEmail)).thenReturn(stubUser);

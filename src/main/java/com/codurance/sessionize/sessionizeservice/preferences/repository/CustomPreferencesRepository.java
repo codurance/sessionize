@@ -1,12 +1,12 @@
 package com.codurance.sessionize.sessionizeservice.preferences.repository;
 
-import com.codurance.sessionize.sessionizeservice.preferences.Languages;
+import com.codurance.sessionize.sessionizeservice.preferences.LanguagesPreferences;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CustomPreferencesRepository {
 
   boolean optOut(String email);
-  void saveLanguagesForSlack( Languages languages, String user);
+  void saveLanguagesForSlack(LanguagesPreferences languagesPreferences, String user);
 
 }
