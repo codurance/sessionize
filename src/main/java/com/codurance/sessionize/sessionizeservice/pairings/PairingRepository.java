@@ -2,9 +2,11 @@ package com.codurance.sessionize.sessionizeservice.pairings;
 
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public interface PairingRepository {
 
-  public Pairing getPairings(String tokenId);
+  public List<Pairing> getPairings(String tokenId);
 
 }
