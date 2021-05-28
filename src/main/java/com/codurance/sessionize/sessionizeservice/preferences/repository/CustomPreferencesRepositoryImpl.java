@@ -5,6 +5,8 @@ import com.codurance.sessionize.sessionizeservice.user.User;
 import com.codurance.sessionize.sessionizeservice.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 public class CustomPreferencesRepositoryImpl implements CustomPreferencesRepository {
 
   private final UserRepository userRepository;
@@ -33,5 +35,10 @@ public class CustomPreferencesRepositoryImpl implements CustomPreferencesReposit
     User user = userRepository.findUserBySlackUser(id);
     user.setLanguagesPreferences(languagesPreferences);
     userRepository.save(user);
+  }
+
+  @Override
+  public List<UserLanguagePreferences> getUserLanguagePreferences() {
+    throw new UnsupportedOperationException();
   }
 }

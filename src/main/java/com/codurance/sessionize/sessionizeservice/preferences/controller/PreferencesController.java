@@ -26,9 +26,9 @@ public class PreferencesController {
 
   @PutMapping(value = {SLACK + AVAILABILITY, AVAILABILITY})
   public ResponseEntity changeAvailability(@RequestParam String email) {
-    return preferencesService.changeAvailability(email) ?
-      new ResponseEntity("User opted in", HttpStatus.OK) :
-      new ResponseEntity("User opted out",HttpStatus.OK);
+    return preferencesService.changeAvailability(email)
+            ? new ResponseEntity("User opted in", HttpStatus.OK)
+            : new ResponseEntity("User opted out", HttpStatus.OK);
   }
 
   @PutMapping( value = {SLACK + PREFERENCES + LANGUAGES}, consumes = MediaType.APPLICATION_JSON_VALUE)
