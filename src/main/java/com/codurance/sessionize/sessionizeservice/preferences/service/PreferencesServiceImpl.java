@@ -1,6 +1,5 @@
 package com.codurance.sessionize.sessionizeservice.preferences.service;
 
-import com.codurance.sessionize.sessionizeservice.infrastructure.mapper.LanguageMap;
 import com.codurance.sessionize.sessionizeservice.preferences.Language;
 import com.codurance.sessionize.sessionizeservice.preferences.LanguagesPreferences;
 import com.codurance.sessionize.sessionizeservice.preferences.LanguagesPreferencesDTO;
@@ -29,7 +28,6 @@ public class PreferencesServiceImpl implements PreferencesService {
 
   @Override
   public void setLanguagesForSlack(LanguagesPreferencesDTO languagesPreferencesDTO, String user) {
-    modelMapper.addMappings(new LanguageMap());
     LanguagesPreferences languagesPreferences = modelMapper.map(languagesPreferencesDTO, LanguagesPreferences.class);
     customPreferencesRepository.saveLanguagesForSlack(languagesPreferences, user);
   }
