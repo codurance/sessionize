@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class SlackUserDTO {
 
-    String slackId;
+    String slackUser;
     String email;
     String firstName;
     String lastName;

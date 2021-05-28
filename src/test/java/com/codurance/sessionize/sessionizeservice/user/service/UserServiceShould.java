@@ -75,7 +75,7 @@ public class UserServiceShould {
     String stubEmail = "foobar@codurance.com";
     SlackUserDTO stubSlackUserDTO = new SlackUserDTO();
     stubSlackUserDTO.setEmail(stubEmail);
-    stubSlackUserDTO.setSlackId("123");
+    stubSlackUserDTO.setSlackUser("123");
     User stubUser = new User();
 
     when(userRepository.findUserByEmail(stubEmail)).thenReturn(stubUser);

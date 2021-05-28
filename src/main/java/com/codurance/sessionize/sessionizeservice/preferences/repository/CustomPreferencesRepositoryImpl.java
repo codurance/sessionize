@@ -25,7 +25,7 @@ public class CustomPreferencesRepositoryImpl implements CustomPreferencesReposit
 
   @Override
   public void saveLanguagesForSlack(LanguagesPreferences languagesPreferences, String id) {
-    User user = userRepository.findUserBySlackId(id);
+    User user = userRepository.findUserBySlackUser(id);
     user.setLanguagesPreferences(languagesPreferences);
     userRepository.save(user);
   }

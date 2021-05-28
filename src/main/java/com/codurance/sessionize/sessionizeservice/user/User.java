@@ -13,7 +13,7 @@ public class User {
 
   @Id
   private String id;
-  private String slackId;
+  private String slackUser;
   private String email;
   private String pictureURL;
   private String firstName;
