@@ -7,8 +7,11 @@ import com.codurance.sessionize.sessionizeservice.user.repository.UserRepository
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
+import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -17,6 +20,11 @@ import static org.mockito.Mockito.when;
 class PreferencesRepositoryShould {
   CustomPreferencesRepository customPreferencesRepository;
   UserRepository mockUserRepository = mock(UserRepository.class);
+  LanguagesPreferences exampleLanguagesPreferences = new LanguagesPreferences(
+          new Language("RUST", "Rust"),
+          new Language("FSHARP", "F#"),
+          new Language("VISUALBASIC", "VB"));
+
 
   @BeforeEach
   void setup() {
@@ -49,19 +57,35 @@ class PreferencesRepositoryShould {
 
   @Test
   void save_a_slack_users_language_preferences() {
-    LanguagesPreferences languagesPreferences = new LanguagesPreferences(
-            new Language("RUST", "Rust"),
-            new Language("FSHARP", "F#"),
-            new Language("VISUALBASIC", "VB"));
-
     String slackUser = "slackUser";
     User andras = new User();
     when(mockUserRepository.findUserBySlackUser(slackUser)).thenReturn(andras);
     when(mockUserRepository.save(andras)).thenReturn(andras);
 
-    customPreferencesRepository.saveLanguagesForSlack(languagesPreferences, slackUser);
+    customPreferencesRepository.saveLanguagesForSlack(exampleLanguagesPreferences, slackUser);
 
-    assertEquals(languagesPreferences, andras.getLanguagesPreferences());
+    assertEquals(exampleLanguagesPreferences, andras.getLanguagesPreferences());
+  }
+
+  @Test
+  void map_a_list_of_user_language_preferences_from_users() {
+    List<User> users = Collections.singletonList(
+            new User("id",
+                    "slackUser",
+                    "ex@email.co",
+                    "url.co",
+                    "first",
+                    "last",
+                    true,
+                    exampleLanguagesPreferences));
+    when(mockUserRepository.findAll()).thenReturn(users);
+    List<UserLanguagePreferences> expectedUserLanguagePreferences = Collections.singletonList(
+            new UserLanguagePreferences("ex@email.co", exampleLanguagesPreferences)
+    );
+    List<UserLanguagePreferences> userLanguagePreferences = customPreferencesRepository.getUserLanguagePreferences();
+    for (UserLanguagePreferences userPreferences : userLanguagePreferences) {
+      assertEquals(exampleLanguagesPreferences, userPreferences.languagesPreferences);
+    }
   }
 
 }

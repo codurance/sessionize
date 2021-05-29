@@ -27,6 +27,4 @@ public class Pairing {
         this.date = LocalDate.parse("2021-05-25");
         this.status = Status.PENDING;
     }
-
-
 }
