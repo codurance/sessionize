@@ -1,4 +1,5 @@
 package com.codurance.sessionize.sessionizeservice.infrastructure.security;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -9,24 +10,21 @@ import static com.codurance.sessionize.sessionizeservice.infrastructure.constant
 @Configuration
 public class InterceptorConfig implements WebMvcConfigurer {
 
-  TokenVerification tokenVerification;
+    TokenVerification tokenVerification;
 
-  public InterceptorConfig(TokenVerification tokenVerification) {
-    this.tokenVerification = tokenVerification;
-  }
+    public InterceptorConfig(TokenVerification tokenVerification) {
+        this.tokenVerification = tokenVerification;
+    }
 
-  @Override
-  public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(tokenVerification)
-            .addPathPatterns("/**")
-            .excludePathPatterns(
-              AUTH,
-              SLACK + AUTH,
-              SLACK + AVAILABILITY,
-              SLACK + PREFERENCES + LANGUAGES,
-              SLACK + LANGUAGES
-            );
-  }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(tokenVerification)
+                .addPathPatterns(ALL_URLS)
+                .excludePathPatterns(
+                    AUTH,
+                    SLACK + ALL_URLS
+                );
+    }
 }
 
 
