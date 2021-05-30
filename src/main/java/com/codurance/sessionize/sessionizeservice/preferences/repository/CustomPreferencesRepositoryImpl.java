@@ -4,7 +4,6 @@ import com.codurance.sessionize.sessionizeservice.preferences.LanguagesPreferenc
 import com.codurance.sessionize.sessionizeservice.user.User;
 import com.codurance.sessionize.sessionizeservice.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,10 +11,12 @@ import java.util.stream.Collectors;
 public class CustomPreferencesRepositoryImpl implements CustomPreferencesRepository {
 
   private final UserRepository userRepository;
+  private final PreferencesRepository preferencesRepository;
 
   @Autowired
-  public CustomPreferencesRepositoryImpl(UserRepository userRepository) {
+  public CustomPreferencesRepositoryImpl(UserRepository userRepository, PreferencesRepository preferencesRepository) {
     this.userRepository = userRepository;
+    this.preferencesRepository = preferencesRepository;
   }
 
   @Override
@@ -39,12 +40,8 @@ public class CustomPreferencesRepositoryImpl implements CustomPreferencesReposit
   }
 
   @Override
-  @Query(value="{}", fields="{ 'email' : 1, 'languagesPreference' : 1}")
   public List<UserLanguagePreferences> getUserLanguagePreferences() {
-    // TODO: Need to test this returns the data we want
-    // We may have to have a method on the interface that returns a list of users
-    // And then map that onto our custom object
-    List<User> users = userRepository.findAll();
+    List<User> users = preferencesRepository.findByLanguagesPreferencesIsNotNull();
     return mapUserLanguagePreferences(users);
   }
 

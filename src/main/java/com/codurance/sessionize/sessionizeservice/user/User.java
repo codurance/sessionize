@@ -23,4 +23,15 @@ public class User {
   private String lastName;
   private boolean optIn;
   private LanguagesPreferences languagesPreferences;
+
+  @Override
+  public String toString() {
+    return "SlackId: " + slackUser + "\n" +
+            "email: " + email + "\n" +
+            "firstName: " + firstName + "\n" +
+            "lastName: " + lastName + "\n" +
+            "Languages: \n" + (this.languagesPreferences == null
+              ? "null"
+              : languagesPreferences.toString()) + "\n";
+  }
 }
