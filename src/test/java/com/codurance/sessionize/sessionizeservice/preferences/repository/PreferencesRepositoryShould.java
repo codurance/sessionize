@@ -28,7 +28,7 @@ class PreferencesRepositoryShould {
 
   @BeforeEach
   void setup() {
-    customPreferencesRepository = new CustomPreferencesRepositoryImpl(mockUserRepository);
+    customPreferencesRepository = new CustomPreferencesRepositoryImpl(mockUserRepository, mock(PreferencesRepository.class));
   }
 
   @Test

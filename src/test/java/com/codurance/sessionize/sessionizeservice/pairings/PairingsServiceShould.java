@@ -1,5 +1,7 @@
 package com.codurance.sessionize.sessionizeservice.pairings;
 
+import com.codurance.sessionize.sessionizeservice.pairings.service.PairingsService;
+import com.codurance.sessionize.sessionizeservice.pairings.service.PairingsServiceImpl;
 import com.codurance.sessionize.sessionizeservice.preferences.Language;
 import com.codurance.sessionize.sessionizeservice.preferences.LanguagesPreferences;
 import com.codurance.sessionize.sessionizeservice.preferences.repository.CustomPreferencesRepository;
@@ -7,6 +9,7 @@ import com.codurance.sessionize.sessionizeservice.preferences.repository.UserLan
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -25,7 +28,7 @@ class PairingsServiceShould {
     }
 
     @Test
-    void call_the_matching_function() {
+    void call_the_matching_function() throws IOException {
         LanguagesPreferences languagesPreferences = new LanguagesPreferences(
                 new Language("RUST", "Rust"),
                 new Language("FSHARP", "F#"),

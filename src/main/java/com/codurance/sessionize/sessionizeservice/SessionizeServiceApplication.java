@@ -3,8 +3,13 @@ package com.codurance.sessionize.sessionizeservice;
 import com.codurance.sessionize.sessionizeservice.infrastructure.health.SlackRestClient;
 import com.codurance.sessionize.sessionizeservice.infrastructure.security.TokenVerification;
 import com.codurance.sessionize.sessionizeservice.pairings.*;
+import com.codurance.sessionize.sessionizeservice.pairings.repository.PairingRepository;
+import com.codurance.sessionize.sessionizeservice.pairings.repository.PairingRepositoryImpl;
+import com.codurance.sessionize.sessionizeservice.pairings.service.PairingsService;
+import com.codurance.sessionize.sessionizeservice.pairings.service.PairingsServiceImpl;
 import com.codurance.sessionize.sessionizeservice.preferences.repository.CustomPreferencesRepository;
 import com.codurance.sessionize.sessionizeservice.preferences.repository.CustomPreferencesRepositoryImpl;
+import com.codurance.sessionize.sessionizeservice.preferences.repository.PreferencesRepository;
 import com.codurance.sessionize.sessionizeservice.preferences.service.PreferencesService;
 import com.codurance.sessionize.sessionizeservice.preferences.service.PreferencesServiceImpl;
 import com.codurance.sessionize.sessionizeservice.user.repository.CustomUserRepository;
@@ -44,8 +49,8 @@ public class SessionizeServiceApplication {
     }
 
     @Bean
-    public CustomPreferencesRepository preferencesRepository(UserRepository userRepository) {
-        return new CustomPreferencesRepositoryImpl(userRepository);
+    public CustomPreferencesRepository customPreferencesRepository(UserRepository userRepository, PreferencesRepository preferencesRepository) {
+        return new CustomPreferencesRepositoryImpl(userRepository, preferencesRepository);
     }
 
     @Bean
@@ -55,7 +60,7 @@ public class SessionizeServiceApplication {
 
     @Bean
     public MatchingClient matchingClient() {
-        return new MatchingClient();
+        return new MatchingClient("https://pythonmatcher.azurewebsites.net"); // parameterize
     }
 
     @Bean

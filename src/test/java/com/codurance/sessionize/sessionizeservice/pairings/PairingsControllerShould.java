@@ -1,14 +1,15 @@
 package com.codurance.sessionize.sessionizeservice.pairings;
 
+import com.codurance.sessionize.sessionizeservice.pairings.controller.PairingsController;
+import com.codurance.sessionize.sessionizeservice.pairings.repository.PairingRepository;
+import com.codurance.sessionize.sessionizeservice.preferences.repository.CustomPreferencesRepository;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 import static java.util.Arrays.asList;
@@ -33,7 +34,7 @@ class PairingsControllerShould {
     @Test
     void return_pairing_on_get_request() {
         PairingRepository repository = mock(PairingRepository.class);
-        PairingsController controller = new PairingsController(repository);
+        PairingsController controller = new PairingsController(repository, mock(CustomPreferencesRepository.class));
         List<Pairing> pairings = asList(new Pairing(), new Pairing());
         when(repository.getPairings("sophie.biber@codurance.com")).thenReturn(pairings);
 
