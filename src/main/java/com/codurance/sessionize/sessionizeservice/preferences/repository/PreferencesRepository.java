@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface PreferencesRepository extends MongoRepository<User, String> {
 //  @Query(value="{}", fields="{ 'email' : 1, 'languagesPreferences' : {'$ne': null}}")
-  List<User> findByLanguagesPreferencesIsNotNull();
 }
+// move this to user repo

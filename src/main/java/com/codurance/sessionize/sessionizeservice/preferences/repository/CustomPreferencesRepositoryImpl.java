@@ -11,12 +11,10 @@ import java.util.stream.Collectors;
 public class CustomPreferencesRepositoryImpl implements CustomPreferencesRepository {
 
   private final UserRepository userRepository;
-  private final PreferencesRepository preferencesRepository;
 
   @Autowired
-  public CustomPreferencesRepositoryImpl(UserRepository userRepository, PreferencesRepository preferencesRepository) {
+  public CustomPreferencesRepositoryImpl(UserRepository userRepository) {
     this.userRepository = userRepository;
-    this.preferencesRepository = preferencesRepository;
   }
 
   @Override
@@ -41,7 +39,7 @@ public class CustomPreferencesRepositoryImpl implements CustomPreferencesReposit
 
   @Override
   public List<UserLanguagePreferences> getUserLanguagePreferences() {
-    List<User> users = preferencesRepository.findByLanguagesPreferencesIsNotNull();
+    List<User> users = userRepository.findByLanguagesPreferencesIsNotNull();
     return mapUserLanguagePreferences(users);
   }
 

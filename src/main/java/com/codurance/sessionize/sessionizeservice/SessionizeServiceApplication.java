@@ -49,8 +49,8 @@ public class SessionizeServiceApplication {
     }
 
     @Bean
-    public CustomPreferencesRepository customPreferencesRepository(UserRepository userRepository, PreferencesRepository preferencesRepository) {
-        return new CustomPreferencesRepositoryImpl(userRepository, preferencesRepository);
+    public CustomPreferencesRepository customPreferencesRepository(UserRepository userRepository) {
+        return new CustomPreferencesRepositoryImpl(userRepository);
     }
 
     @Bean
