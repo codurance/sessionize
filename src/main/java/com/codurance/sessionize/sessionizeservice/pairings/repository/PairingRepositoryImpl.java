@@ -1,4 +1,6 @@
-package com.codurance.sessionize.sessionizeservice.pairings;
+package com.codurance.sessionize.sessionizeservice.pairings.repository;
+
+import com.codurance.sessionize.sessionizeservice.pairings.Pairing;
 
 import java.util.ArrayList;
 import java.util.List;

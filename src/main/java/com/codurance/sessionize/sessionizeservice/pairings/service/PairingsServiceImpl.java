@@ -1,10 +1,13 @@
-package com.codurance.sessionize.sessionizeservice.pairings;
+package com.codurance.sessionize.sessionizeservice.pairings.service;
 
+import com.codurance.sessionize.sessionizeservice.pairings.MatchingClient;
+import com.codurance.sessionize.sessionizeservice.pairings.PairingsResponse;
 import com.codurance.sessionize.sessionizeservice.preferences.repository.CustomPreferencesRepository;
 import com.codurance.sessionize.sessionizeservice.preferences.repository.UserLanguagePreferences;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -18,7 +21,7 @@ public class PairingsServiceImpl implements PairingsService {
         this.preferencesRepository = preferencesRepository;
     }
 
-    public List<PairingsResponse> generate() {
+    public List<PairingsResponse> generate() throws IOException {
         List<UserLanguagePreferences> userLanguagePreferences = preferencesRepository.getUserLanguagePreferences();
         return matchingClient.getPairings(userLanguagePreferences);
     }
