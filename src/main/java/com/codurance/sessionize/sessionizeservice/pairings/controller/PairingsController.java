@@ -35,11 +35,4 @@ public class PairingsController {
     List<Pairing> pairings = repository.getPairings("sophie.biber@codurance.com");
     return new ResponseEntity<>(pairings, HttpStatus.OK);
   }
-
-  @GetMapping(value = PAIRINGS + "/match", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<List<UserLanguagePreferences>> getUserLanguagePreferences() {
-    return new ResponseEntity<>(
-            preferencesRepository.getUserLanguagePreferences(),
-            HttpStatus.OK);
-  }
 }
