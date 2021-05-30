@@ -79,10 +79,9 @@ class PreferencesRepositoryShould {
                     true,
                     exampleLanguagesPreferences));
     when(mockUserRepository.findAll()).thenReturn(users);
-    List<UserLanguagePreferences> expectedUserLanguagePreferences = Collections.singletonList(
-            new UserLanguagePreferences("ex@email.co", exampleLanguagesPreferences)
-    );
+
     List<UserLanguagePreferences> userLanguagePreferences = customPreferencesRepository.getUserLanguagePreferences();
+
     for (UserLanguagePreferences userPreferences : userLanguagePreferences) {
       assertEquals(exampleLanguagesPreferences, userPreferences.languagesPreferences);
     }
