@@ -1,12 +1,8 @@
 package com.codurance.sessionize.sessionizeservice.user.repository;
 
-import com.codurance.sessionize.sessionizeservice.preferences.LanguagesPreferences;
 import com.codurance.sessionize.sessionizeservice.user.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface UserRepository extends MongoRepository<User, String> {

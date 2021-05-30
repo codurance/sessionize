@@ -3,7 +3,6 @@ package com.codurance.sessionize.sessionizeservice.user.repository;
 import com.codurance.sessionize.sessionizeservice.user.User;
 import org.junit.jupiter.api.Test;
 
-
 import static org.mockito.Mockito.*;
 
 public class CustomUserRepositoryShould {

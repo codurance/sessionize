@@ -3,7 +3,6 @@ package com.codurance.sessionize.sessionizeservice.pairings.controller;
 import com.codurance.sessionize.sessionizeservice.pairings.Pairing;
 import com.codurance.sessionize.sessionizeservice.pairings.repository.PairingRepository;
 import com.codurance.sessionize.sessionizeservice.preferences.repository.CustomPreferencesRepository;
-import com.codurance.sessionize.sessionizeservice.preferences.repository.UserLanguagePreferences;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

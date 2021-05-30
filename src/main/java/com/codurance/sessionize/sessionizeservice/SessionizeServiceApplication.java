@@ -2,7 +2,7 @@ package com.codurance.sessionize.sessionizeservice;
 
 import com.codurance.sessionize.sessionizeservice.infrastructure.health.SlackRestClient;
 import com.codurance.sessionize.sessionizeservice.infrastructure.security.TokenVerification;
-import com.codurance.sessionize.sessionizeservice.pairings.*;
+import com.codurance.sessionize.sessionizeservice.pairings.MatchingClient;
 import com.codurance.sessionize.sessionizeservice.pairings.repository.PairingRepository;
 import com.codurance.sessionize.sessionizeservice.pairings.repository.PairingRepositoryImpl;
 import com.codurance.sessionize.sessionizeservice.pairings.service.PairingsService;

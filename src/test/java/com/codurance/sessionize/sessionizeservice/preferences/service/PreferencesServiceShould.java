@@ -6,7 +6,6 @@ import com.codurance.sessionize.sessionizeservice.user.User;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 
-
 import java.util.Arrays;
 import java.util.List;
 
