@@ -31,16 +31,10 @@ class PairingsControllerShould {
 
     @BeforeEach
     public void setup() {
-        wireMockServer.start();
         mockPairingsRepository = mock(PairingsRepository.class);
         mockUserRepository = mock(UserRepository.class);
         pairingsService = new PairingsServiceImpl(mockPairingsRepository, mockUserRepository);
         controller = new PairingsController(pairingsService);
-    }
-
-    @AfterEach
-    public void teardown() {
-        wireMockServer.stop();
     }
 
     @Test

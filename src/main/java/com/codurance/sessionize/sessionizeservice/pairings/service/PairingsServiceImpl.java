@@ -23,11 +23,7 @@ public class PairingsServiceImpl implements PairingsService {
 
     public List<Pairing> getPairings(String email) {
         User loggedInUser = userRepository.findUserByEmail(email);
-        System.out.print(loggedInUser.toString());
-        System.out.print(loggedInUser.getId());
         List<Pairing> rawPairings = pairingsRepository.findPairingsByUserId(loggedInUser.getId());
-        System.out.print(rawPairings);
-        System.out.println();
         return setPartnerUserId(rawPairings, loggedInUser.getId());
     }
 
