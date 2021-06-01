@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,10 +20,9 @@ import java.time.LocalTime;
 public class Pairing {
     @Id private String id;
     @Transient private String partnerUserId;
-    private String userOneId;
-    private String userTwoId;
+    private List<String> users;
     private Language language;
-    private LocalTime time;
-    private LocalDate date;
+    private String time;
+    private String date;
     private Status status;
 }

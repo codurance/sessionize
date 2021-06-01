@@ -31,4 +31,10 @@ public class PairingsController {
     List<Pairing> pairings = pairingsService.getPairings(email);
     return new ResponseEntity<>(pairings, HttpStatus.OK);
   }
+
+  @GetMapping(value = "/pairings/test", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<List<Pairing>> getPairings() {
+    List<Pairing> pairings = pairingsService.getPairings("sophie.biber@codurance.com");
+    return new ResponseEntity<>(pairings, HttpStatus.OK);
+  }
 }

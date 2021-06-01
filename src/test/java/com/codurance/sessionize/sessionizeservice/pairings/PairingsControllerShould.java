@@ -46,12 +46,10 @@ class PairingsControllerShould {
     @Test
     void return_pairing_on_get_request() {
         Pairing firstPairing = new Pairing();
-        firstPairing.setUserOneId("sophieId");
-        firstPairing.setUserTwoId("partnerId");
+        firstPairing.setUsers(asList("sophieId", "partnerId"));
 
         Pairing secondPairing = new Pairing();
-        secondPairing.setUserOneId("partnerId");
-        secondPairing.setUserTwoId("sophieId");
+        secondPairing.setUsers(asList("sophieId", "partnerId"));
 
         List<Pairing> pairings = asList(firstPairing, secondPairing);
         User sophie = new User("sophieId",
@@ -72,4 +70,5 @@ class PairingsControllerShould {
         Pairing first = pairing.stream().findFirst().orElseThrow();
         assertThat(firstPairing).usingRecursiveComparison().isEqualTo(first);
     }
+
 }

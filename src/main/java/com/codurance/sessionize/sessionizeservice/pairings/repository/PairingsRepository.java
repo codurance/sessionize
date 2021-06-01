@@ -10,6 +10,6 @@ import java.util.List;
 @Component
 public interface PairingsRepository extends MongoRepository<Pairing, String> {
 
-  @Query("{$or : [{userOneId: ?0}, {userTwoId : ?0}]}")
+  @Query("{ users: { $in: [ObjectId(?0)] } }")
   List<Pairing> findPairingsByUserId(String userId);
 }
