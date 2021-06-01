@@ -39,12 +39,13 @@ public class CustomPreferencesRepositoryImpl implements CustomPreferencesReposit
 
   @Override
   public List<UserLanguagePreferences> getUserLanguagePreferences() {
-    List<User> users = userRepository.findByLanguagesPreferencesIsNotNull();
+    List<User> users = userRepository.getLanguagesPreferences();
     return mapUserLanguagePreferences(users);
   }
 
   private List<UserLanguagePreferences> mapUserLanguagePreferences(List<User> users) {
     return users.stream()
+            .filter(user -> user.getLanguagesPreferences() != null)
             .map(user -> new UserLanguagePreferences(user.getEmail(), user.getLanguagesPreferences()))
             .collect(Collectors.toList());
   }
