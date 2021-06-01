@@ -1,9 +1,7 @@
 package com.codurance.sessionize.sessionizeservice.pairings.controller;
 
 import com.codurance.sessionize.sessionizeservice.pairings.Pairing;
-import com.codurance.sessionize.sessionizeservice.pairings.repository.PairingRepository;
-import com.codurance.sessionize.sessionizeservice.preferences.repository.CustomPreferencesRepository;
-import com.codurance.sessionize.sessionizeservice.preferences.repository.UserLanguagePreferences;
+import com.codurance.sessionize.sessionizeservice.pairings.service.PairingsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,17 +20,15 @@ import static com.codurance.sessionize.sessionizeservice.infrastructure.constant
 @CrossOrigin(origins = "http://localhost:3000")
 public class PairingsController {
 
-  private final PairingRepository repository;
-  private final CustomPreferencesRepository preferencesRepository;
+  private final PairingsService pairingsService;
 
-  public PairingsController(PairingRepository repository, CustomPreferencesRepository preferencesRepository) {
-    this.repository = repository;
-    this.preferencesRepository = preferencesRepository;
+  public PairingsController(PairingsService pairingsService) {
+    this.pairingsService = pairingsService;
   }
 
   @GetMapping(value = PAIRINGS, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<List<Pairing>> getPairings(@RequestHeader(AUTH_HEADER) String authorization) {
-    List<Pairing> pairings = repository.getPairings("sophie.biber@codurance.com");
+  public ResponseEntity<List<Pairing>> getPairings(@RequestHeader(AUTH_HEADER) String email) {
+    List<Pairing> pairings = pairingsService.getPairings(email);
     return new ResponseEntity<>(pairings, HttpStatus.OK);
   }
 }

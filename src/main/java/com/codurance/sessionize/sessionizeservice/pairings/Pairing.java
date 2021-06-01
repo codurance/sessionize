@@ -1,30 +1,28 @@
 package com.codurance.sessionize.sessionizeservice.pairings;
 
 
+import com.codurance.sessionize.sessionizeservice.preferences.Language;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@Document(collection = "pairings")
 public class Pairing {
-    private String familyName;
-    private String givenName;
-    private String imageUrl;
-    private String language;
+    @Id private String id;
+    @Transient private String partnerUserId;
+    private String userOneId;
+    private String userTwoId;
+    private Language language;
     private LocalTime time;
     private LocalDate date;
     private Status status;
-
-    public Pairing() {
-        this.familyName = "Dako";
-        this.givenName = "Andras";
-        this.imageUrl = "https://lh3.googleusercontent.com/a/AATXAJwGqOSdJZfqW9qCy7v-0M-ohyoEqHHZDSFV8FPQ=s96-c";
-        this.language = "Java";
-        this.time = LocalTime.parse("13:00");
-        this.date = LocalDate.parse("2021-05-25");
-        this.status = Status.PENDING;
-    }
 }

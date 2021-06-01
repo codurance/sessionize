@@ -1,28 +1,39 @@
 package com.codurance.sessionize.sessionizeservice.pairings.service;
 
-import com.codurance.sessionize.sessionizeservice.pairings.MatchingClient;
-import com.codurance.sessionize.sessionizeservice.pairings.PairingsResponse;
-import com.codurance.sessionize.sessionizeservice.preferences.repository.CustomPreferencesRepository;
-import com.codurance.sessionize.sessionizeservice.preferences.repository.UserLanguagePreferences;
+import com.codurance.sessionize.sessionizeservice.pairings.Pairing;
+import com.codurance.sessionize.sessionizeservice.pairings.repository.PairingsRepository;
+import com.codurance.sessionize.sessionizeservice.user.User;
+import com.codurance.sessionize.sessionizeservice.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PairingsServiceImpl implements PairingsService {
-    private final MatchingClient matchingClient;
-    private final CustomPreferencesRepository preferencesRepository;
+    private final PairingsRepository pairingsRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public PairingsServiceImpl(MatchingClient matchingClient, CustomPreferencesRepository preferencesRepository) {
-        this.matchingClient = matchingClient;
-        this.preferencesRepository = preferencesRepository;
+    public PairingsServiceImpl(PairingsRepository pairingsRepository, UserRepository userRepository) {
+        this.pairingsRepository = pairingsRepository;
+        this.userRepository = userRepository;
     }
 
-    public List<PairingsResponse> generate() throws IOException {
-        List<UserLanguagePreferences> userLanguagePreferences = preferencesRepository.getUserLanguagePreferences();
-        return matchingClient.getPairings(userLanguagePreferences);
+    public List<Pairing> getPairings(String email) {
+        User loggedInUser = userRepository.findUserByEmail(email);
+        List<Pairing> rawPairings = pairingsRepository.findPairingsByUserId(loggedInUser.getId());
+        return setPartnerUserId(rawPairings, loggedInUser.getId());
+    }
+
+    private List<Pairing> setPartnerUserId(List<Pairing> rawPairings, String loggedInUserId) {
+        return rawPairings.stream().map(pairing -> {
+            String partnerId = pairing.getUserOneId().equals(loggedInUserId)
+                    ? pairing.getUserTwoId()
+                    : pairing.getUserOneId();
+            pairing.setPartnerUserId(partnerId);
+            return pairing;
+        }).collect(Collectors.toList());
     }
 }

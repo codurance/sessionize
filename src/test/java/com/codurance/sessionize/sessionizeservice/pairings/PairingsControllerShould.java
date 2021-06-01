@@ -1,8 +1,12 @@
 package com.codurance.sessionize.sessionizeservice.pairings;
 
 import com.codurance.sessionize.sessionizeservice.pairings.controller.PairingsController;
-import com.codurance.sessionize.sessionizeservice.pairings.repository.PairingRepository;
-import com.codurance.sessionize.sessionizeservice.preferences.repository.CustomPreferencesRepository;
+import com.codurance.sessionize.sessionizeservice.pairings.repository.PairingsRepository;
+import com.codurance.sessionize.sessionizeservice.pairings.service.PairingsService;
+import com.codurance.sessionize.sessionizeservice.pairings.service.PairingsServiceImpl;
+import com.codurance.sessionize.sessionizeservice.preferences.LanguagesPreferences;
+import com.codurance.sessionize.sessionizeservice.user.User;
+import com.codurance.sessionize.sessionizeservice.user.repository.UserRepository;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,10 +24,18 @@ import static org.mockito.Mockito.when;
 class PairingsControllerShould {
 
     WireMockServer wireMockServer = new WireMockServer(options().port(8080));
+    private PairingsRepository mockPairingsRepository;
+    private UserRepository mockUserRepository;
+    private PairingsService pairingsService;
+    private PairingsController controller;
 
     @BeforeEach
     public void setup() {
         wireMockServer.start();
+        mockPairingsRepository = mock(PairingsRepository.class);
+        mockUserRepository = mock(UserRepository.class);
+        pairingsService = new PairingsServiceImpl(mockPairingsRepository, mockUserRepository);
+        controller = new PairingsController(pairingsService);
     }
 
     @AfterEach
@@ -33,15 +45,31 @@ class PairingsControllerShould {
 
     @Test
     void return_pairing_on_get_request() {
-        PairingRepository repository = mock(PairingRepository.class);
-        PairingsController controller = new PairingsController(repository, mock(CustomPreferencesRepository.class));
-        List<Pairing> pairings = asList(new Pairing(), new Pairing());
-        when(repository.getPairings("sophie.biber@codurance.com")).thenReturn(pairings);
+        Pairing firstPairing = new Pairing();
+        firstPairing.setUserOneId("sophieId");
+        firstPairing.setUserTwoId("partnerId");
+
+        Pairing secondPairing = new Pairing();
+        secondPairing.setUserOneId("partnerId");
+        secondPairing.setUserTwoId("sophieId");
+
+        List<Pairing> pairings = asList(firstPairing, secondPairing);
+        User sophie = new User("sophieId",
+                "sophieSlackId",
+                "sophie.biber@codurance.com",
+                "url.co",
+                "sophie",
+                "biber",
+                true,
+                new LanguagesPreferences());
+
+        when(mockUserRepository.findUserByEmail("sophie.biber@codurance.com")).thenReturn(sophie);
+        when(mockPairingsRepository.findPairingsByUserId("sophieId")).thenReturn(pairings);
 
         ResponseEntity<List<Pairing>> response = controller.getPairings("sophie.biber@codurance.com");
         List<Pairing> pairing = response.getBody();
 
         Pairing first = pairing.stream().findFirst().orElseThrow();
-        assertThat(new Pairing()).usingRecursiveComparison().isEqualTo(first);
+        assertThat(firstPairing).usingRecursiveComparison().isEqualTo(first);
     }
 }

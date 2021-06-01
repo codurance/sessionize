@@ -1,10 +1,9 @@
 package com.codurance.sessionize.sessionizeservice.pairings.service;
 
-import com.codurance.sessionize.sessionizeservice.pairings.PairingsResponse;
+import com.codurance.sessionize.sessionizeservice.pairings.Pairing;
 
-import java.io.IOException;
 import java.util.List;
 
 public interface PairingsService {
-    List<PairingsResponse> generate() throws IOException;
+    List<Pairing> getPairings(String email);
 }

@@ -2,14 +2,14 @@ package com.codurance.sessionize.sessionizeservice;
 
 import com.codurance.sessionize.sessionizeservice.infrastructure.health.SlackRestClient;
 import com.codurance.sessionize.sessionizeservice.infrastructure.security.TokenVerification;
+import com.codurance.sessionize.sessionizeservice.match.service.MatchingService;
+import com.codurance.sessionize.sessionizeservice.match.service.MatchingServiceImpl;
 import com.codurance.sessionize.sessionizeservice.pairings.MatchingClient;
-import com.codurance.sessionize.sessionizeservice.pairings.repository.PairingRepository;
-import com.codurance.sessionize.sessionizeservice.pairings.repository.PairingRepositoryImpl;
+import com.codurance.sessionize.sessionizeservice.pairings.repository.PairingsRepository;
 import com.codurance.sessionize.sessionizeservice.pairings.service.PairingsService;
 import com.codurance.sessionize.sessionizeservice.pairings.service.PairingsServiceImpl;
 import com.codurance.sessionize.sessionizeservice.preferences.repository.CustomPreferencesRepository;
 import com.codurance.sessionize.sessionizeservice.preferences.repository.CustomPreferencesRepositoryImpl;
-import com.codurance.sessionize.sessionizeservice.preferences.repository.PreferencesRepository;
 import com.codurance.sessionize.sessionizeservice.preferences.service.PreferencesService;
 import com.codurance.sessionize.sessionizeservice.preferences.service.PreferencesServiceImpl;
 import com.codurance.sessionize.sessionizeservice.user.repository.CustomUserRepository;
@@ -64,12 +64,12 @@ public class SessionizeServiceApplication {
     }
 
     @Bean
-    public PairingsService pairingsService(MatchingClient matchingClient, CustomPreferencesRepository preferencesRepository) {
-        return new PairingsServiceImpl(matchingClient, preferencesRepository);
+    public MatchingService matchingService(MatchingClient matchingClient, CustomPreferencesRepository preferencesRepository) {
+        return new MatchingServiceImpl(matchingClient, preferencesRepository);
     }
 
     @Bean
-    public PairingRepository pairingRepository() {
-        return new PairingRepositoryImpl();
+    public PairingsService pairingsService(PairingsRepository pairingsRepository, UserRepository userRepository) {
+        return new PairingsServiceImpl(pairingsRepository, userRepository);
     }
 }
