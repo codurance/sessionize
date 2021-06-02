@@ -4,6 +4,7 @@ import com.codurance.sessionize.sessionizeservice.pairings.Status;
 import com.codurance.sessionize.sessionizeservice.pairings.repository.PairingsRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.modelmapper.ModelMapper;
 
 import static org.mockito.Mockito.*;
 
@@ -11,11 +12,13 @@ public class PairingsServiceShould {
 
   PairingsRepository mockPairingsRepository;
   PairingsService pairingsService;
+  ModelMapper modelMapper;
 
   @BeforeEach
   void setup() {
     mockPairingsRepository = mock(PairingsRepository.class);
-    pairingsService = new PairingsServiceImpl(mockPairingsRepository);
+    modelMapper = new ModelMapper();
+    pairingsService = new PairingsServiceImpl(mockPairingsRepository, modelMapper);
 
   }
 

@@ -1,21 +1,27 @@
 package com.codurance.sessionize.sessionizeservice.pairings.service;
 
 import com.codurance.sessionize.sessionizeservice.pairings.Pairing;
+import com.codurance.sessionize.sessionizeservice.pairings.PairingDTO;
 import com.codurance.sessionize.sessionizeservice.pairings.Status;
 import com.codurance.sessionize.sessionizeservice.pairings.repository.PairingsRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class PairingsServiceImpl implements PairingsService {
+
     private final PairingsRepository pairingsRepository;
+    private final ModelMapper mapper;
 
     @Autowired
-    public PairingsServiceImpl(PairingsRepository pairingsRepository) {
+    public PairingsServiceImpl(PairingsRepository pairingsRepository, ModelMapper mapper) {
         this.pairingsRepository = pairingsRepository;
+        this.mapper = mapper;
     }
 
     public List<Pairing> getPairings(String email) {
@@ -24,9 +30,11 @@ public class PairingsServiceImpl implements PairingsService {
     }
 
     @Override
-    public List<Pairing> getPairingsBy(Status status, String email) {
+    public List<PairingDTO> getPairingsBy(Status status, String email) {
         List<Pairing> rawPairings = pairingsRepository.findPairingsByUsersContainsAndStatus(email, status);
-        return setPartnerUserId(rawPairings, email);
+        List<Pairing> withPartnerUserId = setPartnerUserId(rawPairings, email);
+        return mapToDTO(withPartnerUserId);
+
     }
 
     private List<Pairing> setPartnerUserId(List<Pairing> rawPairings, String loggedInUserId) {
@@ -37,5 +45,17 @@ public class PairingsServiceImpl implements PairingsService {
             pairing.setPartnerUserId(partnerId);
             return pairing;
         }).collect(Collectors.toList());
+    }
+
+    private List<PairingDTO> mapToDTO(List<Pairing> withPartnerUserId) {
+        List<PairingDTO> mappedPairings = new ArrayList<>();
+        //TODO: change this to modelmapper
+        for (Pairing p: withPartnerUserId) {
+            PairingDTO pairingDTO = new PairingDTO();
+            pairingDTO.setLanguage(p.getLanguage());
+            pairingDTO.setUserEmails(p.getUsers());
+            mappedPairings.add(pairingDTO);
+        }
+        return mappedPairings;
     }
 }
