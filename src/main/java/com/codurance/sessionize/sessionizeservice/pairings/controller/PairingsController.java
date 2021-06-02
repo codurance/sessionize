@@ -39,8 +39,6 @@ public class PairingsController {
 
   @GetMapping(value = SLACK + PAIRINGS, params = {"email", "status"}, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<PairingDTO>> getPairingsByStatus(@RequestParam String email, @RequestParam Status status) {
-    //get upcoming/current pairing
-    //map domain to DTO
     List<PairingDTO> pairings = pairingsService.getPairingsBy(status, email);
     return new ResponseEntity<>(pairings, HttpStatus.OK);
   }
