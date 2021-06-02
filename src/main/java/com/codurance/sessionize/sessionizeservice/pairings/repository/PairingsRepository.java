@@ -10,6 +10,7 @@ import java.util.List;
 @Component
 public interface PairingsRepository extends MongoRepository<Pairing, String> {
 
-  @Query("{ users: { $in: [ObjectId(?0)] } }")
-  List<Pairing> findPairingsByUserId(String userId);
+  @Query("{ users: { $in: [?0] } }")
+  List<Pairing> findPairingsByEmail(String userId);
+
 }

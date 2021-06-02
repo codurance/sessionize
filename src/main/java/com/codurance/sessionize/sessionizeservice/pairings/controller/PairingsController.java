@@ -1,6 +1,7 @@
 package com.codurance.sessionize.sessionizeservice.pairings.controller;
 
 import com.codurance.sessionize.sessionizeservice.pairings.Pairing;
+import com.codurance.sessionize.sessionizeservice.pairings.Status;
 import com.codurance.sessionize.sessionizeservice.pairings.service.PairingsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,6 +32,15 @@ public class PairingsController {
   @GetMapping(value = SLACK + PAIRINGS, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<Pairing>> getPairingsForSlack(@RequestParam String email) {
     List<Pairing> pairings = pairingsService.getPairings(email);
+
+    return new ResponseEntity<>(pairings, HttpStatus.OK);
+  }
+
+  @GetMapping(SLACK + PAIRINGS)
+  public ResponseEntity<List<Pairing>> getPairingsByStatus(@RequestParam String email, @RequestParam Status status) {
+    //get upcoming/current pairing
+    //map domain to DTO
+    List<Pairing> pairings = pairingsService.getPairingsBy(status, email);
     return new ResponseEntity<>(pairings, HttpStatus.OK);
   }
 }

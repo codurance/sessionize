@@ -70,6 +70,6 @@ public class SessionizeServiceApplication {
 
     @Bean
     public PairingsService pairingsService(PairingsRepository pairingsRepository, UserRepository userRepository) {
-        return new PairingsServiceImpl(pairingsRepository, userRepository);
+        return new PairingsServiceImpl(pairingsRepository);
     }
 }
