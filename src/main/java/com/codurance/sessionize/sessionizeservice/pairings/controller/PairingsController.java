@@ -29,14 +29,14 @@ public class PairingsController {
     return new ResponseEntity<>(pairings, HttpStatus.OK);
   }
 
-  @GetMapping(value = SLACK + PAIRINGS, produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = SLACK + PAIRINGS, params = {"email"}, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<Pairing>> getPairingsForSlack(@RequestParam String email) {
     List<Pairing> pairings = pairingsService.getPairings(email);
 
     return new ResponseEntity<>(pairings, HttpStatus.OK);
   }
 
-  @GetMapping(SLACK + PAIRINGS)
+  @GetMapping(value = SLACK + PAIRINGS, params = {"email", "status"}, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<Pairing>> getPairingsByStatus(@RequestParam String email, @RequestParam Status status) {
     //get upcoming/current pairing
     //map domain to DTO

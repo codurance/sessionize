@@ -19,13 +19,14 @@ public class PairingsServiceImpl implements PairingsService {
     }
 
     public List<Pairing> getPairings(String email) {
-        List<Pairing> rawPairings = pairingsRepository.findPairingsByEmail(email);
+        List<Pairing> rawPairings = pairingsRepository.findPairingByUsersContaining(email);
         return setPartnerUserId(rawPairings, email);
     }
 
     @Override
     public List<Pairing> getPairingsBy(Status status, String email) {
-        return null;
+        List<Pairing> rawPairings = pairingsRepository.findPairingsByUsersContainsAndStatus(email, status);
+        return setPartnerUserId(rawPairings, email);
     }
 
     private List<Pairing> setPartnerUserId(List<Pairing> rawPairings, String loggedInUserId) {

@@ -1,5 +1,6 @@
-package com.codurance.sessionize.sessionizeservice.pairings;
+package com.codurance.sessionize.sessionizeservice.pairings.controller;
 
+import com.codurance.sessionize.sessionizeservice.pairings.Status;
 import com.codurance.sessionize.sessionizeservice.pairings.controller.PairingsController;
 import com.codurance.sessionize.sessionizeservice.pairings.service.PairingsService;
 import org.junit.jupiter.api.BeforeEach;
