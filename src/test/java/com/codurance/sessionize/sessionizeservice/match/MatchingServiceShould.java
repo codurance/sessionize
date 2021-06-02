@@ -2,7 +2,6 @@ package com.codurance.sessionize.sessionizeservice.match;
 
 import com.codurance.sessionize.sessionizeservice.match.service.MatchingService;
 import com.codurance.sessionize.sessionizeservice.match.service.MatchingServiceImpl;
-import com.codurance.sessionize.sessionizeservice.pairings.MatchingClient;
 import com.codurance.sessionize.sessionizeservice.pairings.PairingsResponse;
 import com.codurance.sessionize.sessionizeservice.preferences.Language;
 import com.codurance.sessionize.sessionizeservice.preferences.LanguagesPreferences;

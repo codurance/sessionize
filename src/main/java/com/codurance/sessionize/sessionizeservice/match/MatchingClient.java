@@ -1,5 +1,6 @@
-package com.codurance.sessionize.sessionizeservice.pairings;
+package com.codurance.sessionize.sessionizeservice.match;
 
+import com.codurance.sessionize.sessionizeservice.pairings.PairingsResponse;
 import com.codurance.sessionize.sessionizeservice.preferences.repository.UserLanguagePreferences;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

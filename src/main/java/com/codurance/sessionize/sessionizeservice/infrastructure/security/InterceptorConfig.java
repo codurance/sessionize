@@ -22,8 +22,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .addPathPatterns(ALL_URLS)
                 .excludePathPatterns(
                     AUTH,
-                    SLACK + ALL_URLS,
-                        "/pairings/test"
+                    SLACK + ALL_URLS
                 );
     }
 }
