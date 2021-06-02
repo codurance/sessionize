@@ -4,7 +4,7 @@ import com.codurance.sessionize.sessionizeservice.infrastructure.health.SlackRes
 import com.codurance.sessionize.sessionizeservice.infrastructure.security.TokenVerification;
 import com.codurance.sessionize.sessionizeservice.match.service.MatchingService;
 import com.codurance.sessionize.sessionizeservice.match.service.MatchingServiceImpl;
-import com.codurance.sessionize.sessionizeservice.pairings.MatchingClient;
+import com.codurance.sessionize.sessionizeservice.match.MatchingClient;
 import com.codurance.sessionize.sessionizeservice.pairings.repository.PairingsRepository;
 import com.codurance.sessionize.sessionizeservice.pairings.service.PairingsService;
 import com.codurance.sessionize.sessionizeservice.pairings.service.PairingsServiceImpl;
