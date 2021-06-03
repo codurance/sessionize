@@ -5,5 +5,5 @@ RUN mvn -f /home/app/pom.xml clean package
 
 FROM openjdk:11-jre-slim
 COPY --from=prod-build /home/app/target/*.jar /home/app/app.jar
-EXPOSE 8080 9000
+EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/home/app/app.jar"]
