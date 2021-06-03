@@ -1,6 +1,8 @@
 package com.codurance.sessionize.sessionizeservice.preferences.repository;
 
+import com.codurance.sessionize.sessionizeservice.matching.client.AzureLanguagePreferencesRequest;
 import com.codurance.sessionize.sessionizeservice.preferences.LanguagesPreferences;
+import com.codurance.sessionize.sessionizeservice.preferences.UserLanguagePreferences;
 import com.codurance.sessionize.sessionizeservice.user.User;
 import com.codurance.sessionize.sessionizeservice.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,18 +46,16 @@ public class CustomPreferencesRepositoryImpl implements CustomPreferencesReposit
   }
 
   private List<UserLanguagePreferences> mapUserLanguagePreferences(List<User> users) {
-    //TODO: this needs to be changed to the following DTO:
-    /*
-    List<UserPreferences> whenre UP is:
-    String user(email)
-    Preferences.class
-      String pref1
-      String pref2
-      String pref3
-     */
     return users.stream()
             .filter(user -> user.getLanguagesPreferences() != null)
-            .map(user -> new UserLanguagePreferences(user.getEmail(), user.getLanguagesPreferences()))
+            .map(user -> {
+              LanguagesPreferences preferences = new LanguagesPreferences(
+                user.getLanguagesPreferences().getPrimary(),
+                user.getLanguagesPreferences().getSecondary(),
+                user.getLanguagesPreferences().getTertiary()
+              );
+              return new UserLanguagePreferences(user.getEmail(), preferences);
+            })
             .collect(Collectors.toList());
   }
 }

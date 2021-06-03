@@ -2,6 +2,7 @@ package com.codurance.sessionize.sessionizeservice.preferences.repository;
 
 import com.codurance.sessionize.sessionizeservice.preferences.Language;
 import com.codurance.sessionize.sessionizeservice.preferences.LanguagesPreferences;
+import com.codurance.sessionize.sessionizeservice.preferences.UserLanguagePreferences;
 import com.codurance.sessionize.sessionizeservice.user.User;
 import com.codurance.sessionize.sessionizeservice.user.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -80,7 +81,7 @@ class PreferencesRepositoryShould {
     List<UserLanguagePreferences> userLanguagePreferences = customPreferencesRepository.getUserLanguagePreferences();
 
     for (UserLanguagePreferences userPreferences : userLanguagePreferences) {
-      assertEquals(exampleLanguagesPreferences, userPreferences.languagesPreferences);
+      assertEquals(exampleLanguagesPreferences, userPreferences.getLanguagesPreferences());
     }
   }
 

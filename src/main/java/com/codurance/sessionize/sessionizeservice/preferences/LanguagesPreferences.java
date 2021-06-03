@@ -12,16 +12,10 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LanguagesPreferences {
+
     Language primary;
     Language secondary;
     Language tertiary;
-
-    @Override
-    public String toString() {
-        return "Primary: " + primary.displayName + "\n" +
-                "Secondary: " + secondary.displayName + "\n" +
-                "Tertiary: " + tertiary.displayName + "\n";
-    }
 
     @Override
     public boolean equals(Object obj) {

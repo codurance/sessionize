@@ -1,6 +1,5 @@
-package com.codurance.sessionize.sessionizeservice.preferences.repository;
+package com.codurance.sessionize.sessionizeservice.preferences;
 
-import com.codurance.sessionize.sessionizeservice.preferences.LanguagesPreferences;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
