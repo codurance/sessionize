@@ -1,5 +1,6 @@
 package com.codurance.sessionize.sessionizeservice.pairing.controller;
 
+import com.codurance.sessionize.sessionizeservice.matching.service.MatchingService;
 import com.codurance.sessionize.sessionizeservice.pairing.Status;
 import com.codurance.sessionize.sessionizeservice.pairing.service.PairingsService;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,11 +12,12 @@ class PairingsControllerShould {
 
     private PairingsService mockPairingService;
     private PairingsController controller;
+    private MatchingService mockMatchingService;
 
     @BeforeEach
     public void setup() {
         mockPairingService = mock(PairingsService.class);
-        controller = new PairingsController(mockPairingService);
+        controller = new PairingsController(mockPairingService, mockMatchingService);
 
     }
 

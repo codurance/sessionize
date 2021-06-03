@@ -16,7 +16,7 @@ public class MatchingClient {
     public MatchesDTO match(List<UserLanguagePreferences> userLanguagePreferences) {
 
         HttpEntity<List<UserLanguagePreferences>> request = new HttpEntity<>(userLanguagePreferences);
-        String matchingUri = "https://pythonmatcher.azurewebsites.net";
+        String matchingUri = "https://pythonmatchertestfn.azurewebsites.net/api/SessionizeMatching?";
 
         ResponseEntity<MatchesDTO> response = restTemplate.exchange(matchingUri, HttpMethod.POST, request, MatchesDTO.class);
 

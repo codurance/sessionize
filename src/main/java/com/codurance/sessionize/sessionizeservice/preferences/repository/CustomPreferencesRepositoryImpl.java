@@ -44,6 +44,15 @@ public class CustomPreferencesRepositoryImpl implements CustomPreferencesReposit
   }
 
   private List<UserLanguagePreferences> mapUserLanguagePreferences(List<User> users) {
+    //TODO: this needs to be changed to the following DTO:
+    /*
+    List<UserPreferences> whenre UP is:
+    String user(email)
+    Preferences.class
+      String pref1
+      String pref2
+      String pref3
+     */
     return users.stream()
             .filter(user -> user.getLanguagesPreferences() != null)
             .map(user -> new UserLanguagePreferences(user.getEmail(), user.getLanguagesPreferences()))

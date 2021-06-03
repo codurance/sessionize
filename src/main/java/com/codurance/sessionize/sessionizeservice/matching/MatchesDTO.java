@@ -1,5 +1,6 @@
 package com.codurance.sessionize.sessionizeservice.matching;
 
+import com.codurance.sessionize.sessionizeservice.pairing.PairingDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,6 @@ import java.util.List;
 @Setter
 public class MatchesDTO {
 
-  List<MatchDTO> matches;
+  List<PairingDTO> matches;
 
 }

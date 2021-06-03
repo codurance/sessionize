@@ -60,7 +60,7 @@ public class SessionizeServiceApplication {
 
     @Bean
     public MatchingClient matchingClient() {
-        return new MatchingClient(); // parameterize
+        return new MatchingClient();
     }
 
     @Bean

@@ -44,7 +44,7 @@ class MatchingServiceShould {
         );
         when(mockedPreferencesRepository.getUserLanguagePreferences()).thenReturn(userLanguagePreferences);
 
-        MatchesDTO pairings = matchingService.generate();
+        MatchesDTO pairings = matchingService.getMatches();
 
         verify(mockedPreferencesRepository, times(1)).getUserLanguagePreferences();
         verify(mockedMatchingClient, times(1)).match(userLanguagePreferences);

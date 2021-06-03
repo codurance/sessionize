@@ -1,9 +1,11 @@
 package com.codurance.sessionize.sessionizeservice.pairing.controller;
 
+import com.codurance.sessionize.sessionizeservice.matching.service.MatchingService;
 import com.codurance.sessionize.sessionizeservice.pairing.Pairing;
 import com.codurance.sessionize.sessionizeservice.pairing.PairingDTO;
 import com.codurance.sessionize.sessionizeservice.pairing.Status;
 import com.codurance.sessionize.sessionizeservice.pairing.service.PairingsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +21,12 @@ import static com.codurance.sessionize.sessionizeservice.infrastructure.constant
 public class PairingsController {
 
   private final PairingsService pairingsService;
+  private final MatchingService matchingService;
 
-  public PairingsController(PairingsService pairingsService) {
+  @Autowired
+  public PairingsController(PairingsService pairingsService, MatchingService matchingService) {
     this.pairingsService = pairingsService;
+    this.matchingService = matchingService;
   }
 
   @GetMapping(value = PAIRINGS, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -41,5 +46,11 @@ public class PairingsController {
   public ResponseEntity<List<PairingDTO>> getPairingsByStatus(@RequestParam String email, @RequestParam Status status) {
     List<PairingDTO> pairings = pairingsService.getPairingsBy(status, email);
     return new ResponseEntity<>(pairings, HttpStatus.OK);
+  }
+
+  //this endpoint is for testing, delete when scheduled jobs implemented
+  @GetMapping(value = "/test-matching", produces = MediaType.APPLICATION_JSON_VALUE)
+  public void test() {
+    matchingService.generate();
   }
 }
