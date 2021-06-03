@@ -5,6 +5,7 @@ import com.codurance.sessionize.sessionizeservice.infrastructure.security.TokenV
 import com.codurance.sessionize.sessionizeservice.matching.service.MatchingService;
 import com.codurance.sessionize.sessionizeservice.matching.service.MatchingServiceImpl;
 import com.codurance.sessionize.sessionizeservice.matching.client.MatchingClient;
+import com.codurance.sessionize.sessionizeservice.pairing.client.SlackClient;
 import com.codurance.sessionize.sessionizeservice.pairing.repository.PairingsRepository;
 import com.codurance.sessionize.sessionizeservice.pairing.service.PairingsService;
 import com.codurance.sessionize.sessionizeservice.pairing.service.PairingsServiceImpl;
@@ -19,6 +20,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 
 @SpringBootApplication
@@ -72,4 +75,9 @@ public class SessionizeServiceApplication {
     public PairingsService pairingsService(PairingsRepository pairingsRepository, ModelMapper modelMapper) {
         return new PairingsServiceImpl(pairingsRepository, modelMapper);
     }
+
+//    @Bean
+//    public SlackClient slackClient(MatchingService matchingService) {
+//        return new SlackClient(matchingService);
+//    }
 }

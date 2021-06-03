@@ -1,6 +1,7 @@
 package com.codurance.sessionize.sessionizeservice.infrastructure.security;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -8,6 +9,7 @@ import static com.codurance.sessionize.sessionizeservice.infrastructure.constant
 
 
 @Configuration
+@EnableScheduling
 public class InterceptorConfig implements WebMvcConfigurer {
 
     TokenVerification tokenVerification;

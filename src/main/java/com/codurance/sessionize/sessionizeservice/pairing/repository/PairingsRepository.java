@@ -13,6 +13,7 @@ public interface PairingsRepository extends MongoRepository<Pairing, String> {
 
   List<Pairing> findPairingByUsersContaining(String userId);
   List<Pairing> findPairingsByUsersContainsAndStatus(String email, Status status);
+  List<Pairing> findAllByStatus(Status status);
 
   Pairing save(Pairing pairing);
 }
