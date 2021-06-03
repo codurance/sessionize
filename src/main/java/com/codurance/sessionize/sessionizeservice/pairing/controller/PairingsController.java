@@ -1,9 +1,9 @@
-package com.codurance.sessionize.sessionizeservice.pairings.controller;
+package com.codurance.sessionize.sessionizeservice.pairing.controller;
 
-import com.codurance.sessionize.sessionizeservice.pairings.Pairing;
-import com.codurance.sessionize.sessionizeservice.pairings.PairingDTO;
-import com.codurance.sessionize.sessionizeservice.pairings.Status;
-import com.codurance.sessionize.sessionizeservice.pairings.service.PairingsService;
+import com.codurance.sessionize.sessionizeservice.pairing.Pairing;
+import com.codurance.sessionize.sessionizeservice.pairing.PairingDTO;
+import com.codurance.sessionize.sessionizeservice.pairing.Status;
+import com.codurance.sessionize.sessionizeservice.pairing.service.PairingsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

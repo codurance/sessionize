@@ -2,12 +2,12 @@ package com.codurance.sessionize.sessionizeservice;
 
 import com.codurance.sessionize.sessionizeservice.infrastructure.health.SlackRestClient;
 import com.codurance.sessionize.sessionizeservice.infrastructure.security.TokenVerification;
-import com.codurance.sessionize.sessionizeservice.match.service.MatchingService;
-import com.codurance.sessionize.sessionizeservice.match.service.MatchingServiceImpl;
-import com.codurance.sessionize.sessionizeservice.match.MatchingClient;
-import com.codurance.sessionize.sessionizeservice.pairings.repository.PairingsRepository;
-import com.codurance.sessionize.sessionizeservice.pairings.service.PairingsService;
-import com.codurance.sessionize.sessionizeservice.pairings.service.PairingsServiceImpl;
+import com.codurance.sessionize.sessionizeservice.matching.service.MatchingService;
+import com.codurance.sessionize.sessionizeservice.matching.service.MatchingServiceImpl;
+import com.codurance.sessionize.sessionizeservice.matching.client.MatchingClient;
+import com.codurance.sessionize.sessionizeservice.pairing.repository.PairingsRepository;
+import com.codurance.sessionize.sessionizeservice.pairing.service.PairingsService;
+import com.codurance.sessionize.sessionizeservice.pairing.service.PairingsServiceImpl;
 import com.codurance.sessionize.sessionizeservice.preferences.repository.CustomPreferencesRepository;
 import com.codurance.sessionize.sessionizeservice.preferences.repository.CustomPreferencesRepositoryImpl;
 import com.codurance.sessionize.sessionizeservice.preferences.service.PreferencesService;
@@ -60,12 +60,12 @@ public class SessionizeServiceApplication {
 
     @Bean
     public MatchingClient matchingClient() {
-        return new MatchingClient("https://pythonmatcher.azurewebsites.net"); // parameterize
+        return new MatchingClient(); // parameterize
     }
 
     @Bean
-    public MatchingService matchingService(MatchingClient matchingClient, CustomPreferencesRepository preferencesRepository) {
-        return new MatchingServiceImpl(matchingClient, preferencesRepository);
+    public MatchingService matchingService(MatchingClient matchingClient, CustomPreferencesRepository preferencesRepository, PairingsRepository pairingsRepository) {
+        return new MatchingServiceImpl(matchingClient, preferencesRepository, pairingsRepository);
     }
 
     @Bean

@@ -1,4 +1,4 @@
-package com.codurance.sessionize.sessionizeservice.pairings;
+package com.codurance.sessionize.sessionizeservice.pairing;
 
 
 import com.codurance.sessionize.sessionizeservice.preferences.Language;

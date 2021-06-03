@@ -1,8 +1,9 @@
-package com.codurance.sessionize.sessionizeservice.match;
+package com.codurance.sessionize.sessionizeservice.matching;
 
-import com.codurance.sessionize.sessionizeservice.match.service.MatchingService;
-import com.codurance.sessionize.sessionizeservice.match.service.MatchingServiceImpl;
-import com.codurance.sessionize.sessionizeservice.pairings.PairingsResponse;
+import com.codurance.sessionize.sessionizeservice.matching.client.MatchingClient;
+import com.codurance.sessionize.sessionizeservice.matching.service.MatchingService;
+import com.codurance.sessionize.sessionizeservice.matching.service.MatchingServiceImpl;
+import com.codurance.sessionize.sessionizeservice.pairing.repository.PairingsRepository;
 import com.codurance.sessionize.sessionizeservice.preferences.Language;
 import com.codurance.sessionize.sessionizeservice.preferences.LanguagesPreferences;
 import com.codurance.sessionize.sessionizeservice.preferences.repository.CustomPreferencesRepository;
@@ -20,12 +21,14 @@ class MatchingServiceShould {
     private MatchingService matchingService;
     private CustomPreferencesRepository mockedPreferencesRepository;
     private MatchingClient mockedMatchingClient;
+    private PairingsRepository mockedPairingsRepository;
 
     @BeforeEach
     void setUp() {
         mockedMatchingClient = mock(MatchingClient.class);
         mockedPreferencesRepository = mock(CustomPreferencesRepository.class);
-        matchingService = new MatchingServiceImpl(mockedMatchingClient, mockedPreferencesRepository);
+        mockedPairingsRepository = mock(PairingsRepository.class);
+        matchingService = new MatchingServiceImpl(mockedMatchingClient, mockedPreferencesRepository, mockedPairingsRepository);
     }
 
     @Test
@@ -41,9 +44,9 @@ class MatchingServiceShould {
         );
         when(mockedPreferencesRepository.getUserLanguagePreferences()).thenReturn(userLanguagePreferences);
 
-        List<PairingsResponse> pairings = matchingService.generate();
+        MatchesDTO pairings = matchingService.generate();
 
         verify(mockedPreferencesRepository, times(1)).getUserLanguagePreferences();
-        verify(mockedMatchingClient, times(1)).getPairings(userLanguagePreferences);
+        verify(mockedMatchingClient, times(1)).match(userLanguagePreferences);
     }
 }

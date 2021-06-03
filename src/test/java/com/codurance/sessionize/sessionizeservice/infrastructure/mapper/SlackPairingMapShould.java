@@ -1,7 +1,7 @@
 package com.codurance.sessionize.sessionizeservice.infrastructure.mapper;
 
-import com.codurance.sessionize.sessionizeservice.pairings.Pairing;
-import com.codurance.sessionize.sessionizeservice.pairings.PairingDTO;
+import com.codurance.sessionize.sessionizeservice.pairing.Pairing;
+import com.codurance.sessionize.sessionizeservice.pairing.PairingDTO;
 import com.codurance.sessionize.sessionizeservice.preferences.Language;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

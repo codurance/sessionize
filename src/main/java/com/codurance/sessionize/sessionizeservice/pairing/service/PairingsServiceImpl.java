@@ -1,9 +1,9 @@
-package com.codurance.sessionize.sessionizeservice.pairings.service;
+package com.codurance.sessionize.sessionizeservice.pairing.service;
 
-import com.codurance.sessionize.sessionizeservice.pairings.Pairing;
-import com.codurance.sessionize.sessionizeservice.pairings.PairingDTO;
-import com.codurance.sessionize.sessionizeservice.pairings.Status;
-import com.codurance.sessionize.sessionizeservice.pairings.repository.PairingsRepository;
+import com.codurance.sessionize.sessionizeservice.pairing.Pairing;
+import com.codurance.sessionize.sessionizeservice.pairing.PairingDTO;
+import com.codurance.sessionize.sessionizeservice.pairing.Status;
+import com.codurance.sessionize.sessionizeservice.pairing.repository.PairingsRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

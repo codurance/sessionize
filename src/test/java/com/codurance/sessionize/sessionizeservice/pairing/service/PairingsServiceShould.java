@@ -1,7 +1,7 @@
-package com.codurance.sessionize.sessionizeservice.pairings.service;
+package com.codurance.sessionize.sessionizeservice.pairing.service;
 
-import com.codurance.sessionize.sessionizeservice.pairings.Status;
-import com.codurance.sessionize.sessionizeservice.pairings.repository.PairingsRepository;
+import com.codurance.sessionize.sessionizeservice.pairing.Status;
+import com.codurance.sessionize.sessionizeservice.pairing.repository.PairingsRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;

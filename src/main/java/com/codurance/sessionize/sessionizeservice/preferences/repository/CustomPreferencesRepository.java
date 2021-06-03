@@ -10,6 +10,5 @@ public interface CustomPreferencesRepository {
 
   boolean changeAvailability(String email);
   void saveLanguagesForSlack(LanguagesPreferences languagesPreferences, String user);
-
   List<UserLanguagePreferences> getUserLanguagePreferences();
 }
