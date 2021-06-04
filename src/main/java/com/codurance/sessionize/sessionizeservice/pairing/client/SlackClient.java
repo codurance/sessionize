@@ -20,7 +20,7 @@ import java.util.List;
 @EnableScheduling
 public class SlackClient {
 
-  private static final String WEEKLY_CRON_SCHEDULE = "0 30 8 * * MON";
+  private static final String WEEKLY_CRON_SCHEDULE = "0 25 14 * * MON";
   public static final String SLACKBOT_MATCHLIST_URL = "https://077d0be6e34b.ngrok.io/match-list";
   private static final String EUROPE_LONDON = "Europe/London";
   RestTemplate restTemplate;
@@ -47,8 +47,8 @@ public class SlackClient {
   }
 
   private List<SlackPairingRequest> generateSlackPairingHttpRequest() {
-    matchingService.generate();     //generate matches to create pairing by contacting the azure function and persist to db
-    List<Pairing> pairings = pairingsRepository.findAllByStatus(Status.PENDING);     // get all pairings with pending status from the db
+    matchingService.generate();
+    List<Pairing> pairings = pairingsRepository.findAllByStatus(Status.PENDING);
     return mapAsSlackPairingRequest(pairings);
   }
 

@@ -5,6 +5,7 @@ import com.codurance.sessionize.sessionizeservice.matching.client.MatchingClient
 import com.codurance.sessionize.sessionizeservice.pairing.Pairing;
 import com.codurance.sessionize.sessionizeservice.pairing.Status;
 import com.codurance.sessionize.sessionizeservice.pairing.repository.PairingsRepository;
+import com.codurance.sessionize.sessionizeservice.preferences.AvailableLanguages;
 import com.codurance.sessionize.sessionizeservice.preferences.Language;
 import com.codurance.sessionize.sessionizeservice.preferences.repository.CustomPreferencesRepository;
 import com.codurance.sessionize.sessionizeservice.preferences.UserLanguagePreferences;
@@ -39,7 +40,7 @@ public class MatchingServiceImpl implements MatchingService {
         matches.forEach(
           matchResponse -> {
               Pairing pairing = new Pairing();
-              pairing.setLanguage(new Language(matchResponse.getLanguage(), "Java"));
+              pairing.setLanguage(new Language(matchResponse.getLanguage(), getDisplayNameForLanguage(matchResponse.getLanguage())));
               pairing.setUsers(matchResponse.getUsers());
               pairing.setStatus(Status.PENDING);
               pairings.add(pairing);
@@ -48,7 +49,11 @@ public class MatchingServiceImpl implements MatchingService {
         return pairings;
     }
 
-    public void generate() throws HttpServerErrorException {
+  private String getDisplayNameForLanguage(String language) {
+    return AvailableLanguages.get().stream().filter(l -> l.getValue().equals(language)).findFirst().get().getDisplayName();
+  }
+
+  public void generate() throws HttpServerErrorException {
         List<MatchResponse> matches = getMatchesForUserPreferences();
         List<Pairing> pairings = mapAsPairing(matches);
         pairings.forEach(pairingsRepository::save);

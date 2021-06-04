@@ -19,7 +19,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
@@ -53,12 +52,12 @@ class MatchingServiceShould {
     @Test
     void maps_pairing_from_response() {
 
-        List<MatchResponse> matches = Collections.singletonList(new MatchResponse(Collections.singletonList("andras"), "JavaScript"));
+        List<MatchResponse> matches = Collections.singletonList(new MatchResponse(Collections.singletonList("andras"), "JAVA"));
 
         List<Pairing> pairings = matchingService.mapAsPairing(matches);
 
         assertTrue(pairings.get(0).getUsers().contains("andras"));
-        assertEquals("JavaScript", pairings.get(0).getLanguage().getValue());
+        assertEquals("JAVA", pairings.get(0).getLanguage().getValue());
     }
 
 
