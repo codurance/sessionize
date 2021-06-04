@@ -21,23 +21,27 @@ import java.util.List;
 public class SlackClient {
 
   private static final String WEEKLY_CRON_SCHEDULE = "0 30 8 * * MON";
-  private static final String SLACKBOT_MATCHLIST_URL = "https://077d0be6e34b.ngrok.io/match-list";
+  public static final String SLACKBOT_MATCHLIST_URL = "https://077d0be6e34b.ngrok.io/match-list";
   private static final String EUROPE_LONDON = "Europe/London";
-  RestTemplate restTemplate = new RestTemplate();
+  RestTemplate restTemplate;
   MatchingService matchingService;
   PairingsRepository pairingsRepository;
   UserRepository userRepository;
 
 
-  public SlackClient(MatchingService matchingService, PairingsRepository pairingsRepository, UserRepository userRepository) {
+  public SlackClient(MatchingService matchingService,
+                     PairingsRepository pairingsRepository,
+                     UserRepository userRepository,
+                     RestTemplate restTemplate
+  ) {
     this.matchingService = matchingService;
     this.pairingsRepository = pairingsRepository;
     this.userRepository = userRepository;
+    this.restTemplate = restTemplate;
   }
 
   @Scheduled(cron = WEEKLY_CRON_SCHEDULE, zone = EUROPE_LONDON)
   public void pushNewPairings() throws HttpServerErrorException {
-    System.out.println("Cron Ran");
     List<SlackPairingRequest> slackPairingRequests = generateSlackPairingHttpRequest();
     restTemplate.postForObject(SLACKBOT_MATCHLIST_URL, slackPairingRequests, Void.class);
   }
@@ -61,6 +65,4 @@ public class SlackClient {
     pairing.getUsers().forEach(user -> slackUsersIds.add(userRepository.findUserByEmail(user).getSlackUser()));
     return slackUsersIds;
   }
-
-
 }
