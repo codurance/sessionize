@@ -9,7 +9,6 @@ import static com.codurance.sessionize.sessionizeservice.infrastructure.constant
 
 
 @Configuration
-@EnableScheduling
 public class InterceptorConfig implements WebMvcConfigurer {
 
     TokenVerification tokenVerification;

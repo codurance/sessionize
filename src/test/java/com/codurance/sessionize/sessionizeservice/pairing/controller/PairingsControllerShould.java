@@ -2,6 +2,7 @@ package com.codurance.sessionize.sessionizeservice.pairing.controller;
 
 import com.codurance.sessionize.sessionizeservice.matching.service.MatchingService;
 import com.codurance.sessionize.sessionizeservice.pairing.Status;
+import com.codurance.sessionize.sessionizeservice.pairing.client.SlackClient;
 import com.codurance.sessionize.sessionizeservice.pairing.service.PairingsService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,11 +14,13 @@ class PairingsControllerShould {
     private PairingsService mockPairingService;
     private PairingsController controller;
     private MatchingService mockMatchingService;
+    private SlackClient mockSlackClient;
 
     @BeforeEach
     public void setup() {
         mockPairingService = mock(PairingsService.class);
-        controller = new PairingsController(mockPairingService, mockMatchingService);
+        mockSlackClient = mock(SlackClient.class);
+        controller = new PairingsController(mockPairingService, mockMatchingService, mockSlackClient);
 
     }
 

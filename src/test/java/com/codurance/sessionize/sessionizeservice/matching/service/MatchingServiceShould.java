@@ -1,4 +1,4 @@
-package com.codurance.sessionize.sessionizeservice.matching;
+package com.codurance.sessionize.sessionizeservice.matching.service;
 
 import com.codurance.sessionize.sessionizeservice.matching.client.MatchResponse;
 import com.codurance.sessionize.sessionizeservice.matching.client.MatchingClient;

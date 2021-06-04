@@ -9,6 +9,7 @@ import com.codurance.sessionize.sessionizeservice.preferences.Language;
 import com.codurance.sessionize.sessionizeservice.preferences.repository.CustomPreferencesRepository;
 import com.codurance.sessionize.sessionizeservice.preferences.UserLanguagePreferences;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.client.HttpServerErrorException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class MatchingServiceImpl implements MatchingService {
         this.pairingsRepository = pairingsRepository;
     }
 
-    public List<MatchResponse> getMatchesForUserPreferences() {
+    public List<MatchResponse> getMatchesForUserPreferences() throws HttpServerErrorException {
         List<UserLanguagePreferences> userLanguagePreferences = preferencesRepository.getUserLanguagePreferences();
         return matchingClient.match(userLanguagePreferences);
     }
@@ -38,7 +39,7 @@ public class MatchingServiceImpl implements MatchingService {
         matches.forEach(
           matchResponse -> {
               Pairing pairing = new Pairing();
-              pairing.setLanguage(new Language(matchResponse.getLanguage(), "NotSureIfShouldAddDisplayNameHere?"));
+              pairing.setLanguage(new Language(matchResponse.getLanguage(), "Java"));
               pairing.setUsers(matchResponse.getUsers());
               pairing.setStatus(Status.PENDING);
               pairings.add(pairing);
@@ -47,7 +48,7 @@ public class MatchingServiceImpl implements MatchingService {
         return pairings;
     }
 
-    public void generate() {
+    public void generate() throws HttpServerErrorException {
         List<MatchResponse> matches = getMatchesForUserPreferences();
         List<Pairing> pairings = mapAsPairing(matches);
         pairings.forEach(pairingsRepository::save);

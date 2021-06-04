@@ -4,6 +4,7 @@ import com.codurance.sessionize.sessionizeservice.matching.service.MatchingServi
 import com.codurance.sessionize.sessionizeservice.pairing.Pairing;
 import com.codurance.sessionize.sessionizeservice.pairing.PairingDTO;
 import com.codurance.sessionize.sessionizeservice.pairing.Status;
+import com.codurance.sessionize.sessionizeservice.pairing.client.SlackClient;
 import com.codurance.sessionize.sessionizeservice.pairing.service.PairingsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,11 +23,13 @@ public class PairingsController {
 
   private final PairingsService pairingsService;
   private final MatchingService matchingService;
+  private final SlackClient slackClient;
 
   @Autowired
-  public PairingsController(PairingsService pairingsService, MatchingService matchingService) {
+  public PairingsController(PairingsService pairingsService, MatchingService matchingService, SlackClient slackClient) {
     this.pairingsService = pairingsService;
     this.matchingService = matchingService;
+    this.slackClient = slackClient;
   }
 
   @GetMapping(value = PAIRINGS, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -51,6 +54,7 @@ public class PairingsController {
   //this endpoint is for testing, delete when scheduled jobs implemented
   @GetMapping(value = "/test-matching", produces = MediaType.APPLICATION_JSON_VALUE)
   public void test() {
-    matchingService.generate();
+      slackClient.pushNewPairings();
+//    matchingService.generate();
   }
 }
