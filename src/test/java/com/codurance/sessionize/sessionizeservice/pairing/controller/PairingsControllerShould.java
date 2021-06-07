@@ -13,11 +13,13 @@ class PairingsControllerShould {
 
     private PairingsService mockPairingService;
     private PairingsController controller;
+    private SlackClient slackClient;
 
     @BeforeEach
     public void setup() {
         mockPairingService = mock(PairingsService.class);
-        controller = new PairingsController(mockPairingService);
+        slackClient = mock(SlackClient.class);
+        controller = new PairingsController(mockPairingService, slackClient);
 
     }
 

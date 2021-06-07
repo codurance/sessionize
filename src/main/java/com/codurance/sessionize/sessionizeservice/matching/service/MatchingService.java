@@ -9,5 +9,5 @@ import java.util.List;
 public interface MatchingService {
     List<MatchResponse> getMatchesForUserPreferences() throws IOException;
     List<Pairing> mapAsPairing(List<MatchResponse> matches);
-    void generate();
+    List<Pairing> generate();
 }

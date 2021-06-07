@@ -47,14 +47,14 @@ public class SlackClient {
   }
 
   private List<SlackPairingRequest> generateSlackPairingHttpRequest() {
-    matchingService.generate();
-    List<Pairing> pairings = pairingsRepository.findAllByStatus(Status.PENDING);
-    return mapAsSlackPairingRequest(pairings);
+    List<Pairing> currentPairings = matchingService.generate();
+    return mapAsSlackPairingRequest(currentPairings);
   }
 
   private List<SlackPairingRequest> mapAsSlackPairingRequest(List<Pairing> pairings) {
     List<SlackPairingRequest> slackPairingRequests = new ArrayList<>();
     pairings.forEach(pairing ->
+
       slackPairingRequests
         .add(new SlackPairingRequest(pairing.getLanguage(), findSlackIdsFor(pairing))));
     return slackPairingRequests;

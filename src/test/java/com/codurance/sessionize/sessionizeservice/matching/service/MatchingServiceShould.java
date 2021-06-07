@@ -5,6 +5,7 @@ import com.codurance.sessionize.sessionizeservice.matching.client.MatchingClient
 import com.codurance.sessionize.sessionizeservice.matching.service.MatchingService;
 import com.codurance.sessionize.sessionizeservice.matching.service.MatchingServiceImpl;
 import com.codurance.sessionize.sessionizeservice.pairing.Pairing;
+import com.codurance.sessionize.sessionizeservice.pairing.Status;
 import com.codurance.sessionize.sessionizeservice.pairing.repository.PairingsRepository;
 import com.codurance.sessionize.sessionizeservice.preferences.Language;
 import com.codurance.sessionize.sessionizeservice.preferences.LanguagesPreferences;
@@ -50,14 +51,25 @@ class MatchingServiceShould {
     }
 
     @Test
-    void maps_pairing_from_response() {
+    void flag_the_pairing_as_unsuccessful_if_there_is_only_one_user() {
 
         List<MatchResponse> matches = Collections.singletonList(new MatchResponse(Collections.singletonList("andras"), "JAVA"));
 
         List<Pairing> pairings = matchingService.mapAsPairing(matches);
 
         assertTrue(pairings.get(0).getUsers().contains("andras"));
-        assertEquals("JAVA", pairings.get(0).getLanguage().getValue());
+        assertEquals(Status.UNSUCCESSFUL, pairings.get(0).getStatus());
+    }
+
+    @Test
+    void maps_pairing_from_response() {
+
+        List<MatchResponse> matches = Arrays.asList(new MatchResponse(Collections.singletonList("andras"), "JAVA"), new MatchResponse(Collections.singletonList("cameron"), "JAVA"));
+
+        List<Pairing> pairings = matchingService.mapAsPairing(matches);
+
+        assertTrue(pairings.get(0).getUsers().contains("andras"));
+        assertTrue(pairings.get(1).getUsers().contains("cameron"));
     }
 
 

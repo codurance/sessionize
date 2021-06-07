@@ -1,7 +1,7 @@
 package com.codurance.sessionize.sessionizeservice.infrastructure.security;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableScheduling;
+
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -24,7 +24,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .excludePathPatterns(
                     AUTH,
                     SLACK + ALL_URLS,
-                  "/test-matching"
+                    "/test-matching"
                 );
     }
 }

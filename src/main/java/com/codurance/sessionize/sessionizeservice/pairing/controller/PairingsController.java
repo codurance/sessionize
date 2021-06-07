@@ -22,10 +22,12 @@ import static com.codurance.sessionize.sessionizeservice.infrastructure.constant
 public class PairingsController {
 
   private final PairingsService pairingsService;
+  SlackClient slackClient;
 
   @Autowired
-  public PairingsController(PairingsService pairingsService) {
+  public PairingsController(PairingsService pairingsService, SlackClient slackClient) {
     this.pairingsService = pairingsService;
+    this.slackClient = slackClient;
   }
 
   @GetMapping(value = PAIRINGS, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -46,4 +48,12 @@ public class PairingsController {
     List<PairingDTO> pairings = pairingsService.getPairingsBy(status, email);
     return new ResponseEntity<>(pairings, HttpStatus.OK);
   }
+
+
+  //this endpoint is for testing, delete when scheduled jobs implemented
+  @GetMapping(value = "/test-matching", produces = MediaType.APPLICATION_JSON_VALUE)
+  public void test() {
+    slackClient.pushNewPairings();
+  }
+
 }

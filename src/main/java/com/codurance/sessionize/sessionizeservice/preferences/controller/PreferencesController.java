@@ -36,7 +36,7 @@ public class PreferencesController {
     preferencesService.setLanguagesForSlack(languages, slackUser);
   }
 
-  @GetMapping(value = {SLACK + LANGUAGES })
+  @GetMapping(value = {SLACK + LANGUAGES }, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<Language>> preferredLanguages() {
       return new ResponseEntity<>(preferencesService.getAvailableLanguages(), HttpStatus.OK);
   }

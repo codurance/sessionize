@@ -39,23 +39,37 @@ public class MatchingServiceImpl implements MatchingService {
 
         matches.forEach(
           matchResponse -> {
+
               Pairing pairing = new Pairing();
-              pairing.setLanguage(new Language(matchResponse.getLanguage(), getDisplayNameForLanguage(matchResponse.getLanguage())));
-              pairing.setUsers(matchResponse.getUsers());
-              pairing.setStatus(Status.PENDING);
-              pairings.add(pairing);
+
+              if (matchResponse.getUsers().size() == 1) { //TODO: split to util method
+                pairing.setUsers(matchResponse.getUsers());
+                pairing.setStatus(Status.UNSUCCESSFUL);
+                pairing.setLanguage(new Language("N/A", "N/A"));
+                pairings.add(pairing);
+              } else {
+                pairing.setLanguage(new Language(matchResponse.getLanguage(), getDisplayNameForLanguage(matchResponse.getLanguage())));
+                pairing.setStatus(Status.PENDING);
+                pairings.add(pairing); //TODO: create helper methods for success/not success mapping
+              }
           }
         );
         return pairings;
     }
 
   private String getDisplayNameForLanguage(String language) {
-    return AvailableLanguages.get().stream().filter(l -> l.getValue().equals(language)).findFirst().get().getDisplayName();
+    for (Language l: AvailableLanguages.get()) {
+      if (l.getValue().equals(language)) {
+        return l.getDisplayName();
+      }
+    }
+    return "N/A";
   }
 
-  public void generate() throws HttpServerErrorException {
-        List<MatchResponse> matches = getMatchesForUserPreferences();
-        List<Pairing> pairings = mapAsPairing(matches);
-        pairings.forEach(pairingsRepository::save);
-    }
+  public List<Pairing> generate() throws HttpServerErrorException {
+    List<MatchResponse> matches = getMatchesForUserPreferences();
+    List<Pairing> pairings = mapAsPairing(matches);
+    pairings.forEach(pairingsRepository::save);
+    return pairings;
+  }
 }
