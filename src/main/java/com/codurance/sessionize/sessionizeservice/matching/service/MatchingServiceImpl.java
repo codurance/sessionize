@@ -9,6 +9,7 @@ import com.codurance.sessionize.sessionizeservice.preferences.AvailableLanguages
 import com.codurance.sessionize.sessionizeservice.preferences.Language;
 import com.codurance.sessionize.sessionizeservice.preferences.repository.CustomPreferencesRepository;
 import com.codurance.sessionize.sessionizeservice.preferences.UserLanguagePreferences;
+import com.codurance.sessionize.sessionizeservice.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.HttpServerErrorException;
 
@@ -17,48 +18,53 @@ import java.util.List;
 
 public class MatchingServiceImpl implements MatchingService {
 
-    private final MatchingClient matchingClient;
-    private final CustomPreferencesRepository preferencesRepository;
-    private final PairingsRepository pairingsRepository;
+  private final MatchingClient matchingClient;
+  private final CustomPreferencesRepository preferencesRepository;
+  private final PairingsRepository pairingsRepository;
 
-    @Autowired
-    public MatchingServiceImpl(MatchingClient matchingClient, CustomPreferencesRepository preferencesRepository, PairingsRepository pairingsRepository) {
-        this.matchingClient = matchingClient;
-        this.preferencesRepository = preferencesRepository;
-        this.pairingsRepository = pairingsRepository;
-    }
+  @Autowired
+  public MatchingServiceImpl(MatchingClient matchingClient, CustomPreferencesRepository preferencesRepository, PairingsRepository pairingsRepository) {
+    this.matchingClient = matchingClient;
+    this.preferencesRepository = preferencesRepository;
+    this.pairingsRepository = pairingsRepository;
+  }
 
-    public List<MatchResponse> getMatchesForUserPreferences() throws HttpServerErrorException {
-        List<UserLanguagePreferences> userLanguagePreferences = preferencesRepository.getUserLanguagePreferences();
-        return matchingClient.match(userLanguagePreferences);
-    }
+  public List<MatchResponse> getMatchesForUserPreferences() throws HttpServerErrorException {
+    List<UserLanguagePreferences> userLanguagePreferences = preferencesRepository.getUserLanguagePreferences();
+    return matchingClient.match(userLanguagePreferences);
+  }
 
-    public List<Pairing> mapAsPairing(List<MatchResponse> matches) {
+  public List<Pairing> mapAsPairing(List<MatchResponse> matches) {
 
-        List<Pairing> pairings = new ArrayList<>();
+    List<Pairing> pairings = new ArrayList<>();
 
-        matches.forEach(
-          matchResponse -> {
+    matches.forEach(
+      matchResponse -> {
 
-              Pairing pairing = new Pairing();
+        Pairing pairing;
+        if (matchResponse.getUsers().size() == 1) {
+          pairing =
+            createPairing(matchResponse.getUsers(), Status.UNSUCCESSFUL, new Language("N/A", "N/A"));
+        } else {
+          pairing =
+            createPairing(matchResponse.getUsers(), Status.PENDING, new Language(matchResponse.getLanguage(), getDisplayNameForLanguage(matchResponse.getLanguage())));
+        }
+        pairings.add(pairing);
+      }
+    );
+    return pairings;
+  }
 
-              if (matchResponse.getUsers().size() == 1) { //TODO: split to util method
-                pairing.setUsers(matchResponse.getUsers());
-                pairing.setStatus(Status.UNSUCCESSFUL);
-                pairing.setLanguage(new Language("N/A", "N/A"));
-                pairings.add(pairing);
-              } else {
-                pairing.setLanguage(new Language(matchResponse.getLanguage(), getDisplayNameForLanguage(matchResponse.getLanguage())));
-                pairing.setStatus(Status.PENDING);
-                pairings.add(pairing); //TODO: create helper methods for success/not success mapping
-              }
-          }
-        );
-        return pairings;
-    }
+  private Pairing createPairing(List<String> users, Status status, Language language) {
+    Pairing pairing = new Pairing();
+    pairing.setUsers(users);
+    pairing.setStatus(status);
+    pairing.setLanguage(language);
+    return pairing;
+  }
 
   private String getDisplayNameForLanguage(String language) {
-    for (Language l: AvailableLanguages.get()) {
+    for (Language l : AvailableLanguages.get()) {
       if (l.getValue().equals(language)) {
         return l.getDisplayName();
       }
