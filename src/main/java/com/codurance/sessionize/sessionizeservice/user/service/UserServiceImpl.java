@@ -35,8 +35,12 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void slackRegister(SlackUserDTO slackUserDTO) {
-    mapper.addMappings(new SlackUserToUserMap());
-    User user = mapper.map(slackUserDTO, User.class);
+
+    User user = new User();
+    user.setEmail(slackUserDTO.getEmail());
+    user.setSlackUser(slackUserDTO.getSlackUser());
+    user.setFirstName(slackUserDTO.getFirstName());
+    user.setLastName(slackUserDTO.getLastName());
     user.setOptIn(true);
     userRepository.save(user);
   }
