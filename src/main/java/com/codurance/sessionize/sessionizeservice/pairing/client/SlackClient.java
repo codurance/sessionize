@@ -2,7 +2,6 @@ package com.codurance.sessionize.sessionizeservice.pairing.client;
 
 import com.codurance.sessionize.sessionizeservice.matching.service.MatchingService;
 import com.codurance.sessionize.sessionizeservice.pairing.Pairing;
-import com.codurance.sessionize.sessionizeservice.pairing.Status;
 import com.codurance.sessionize.sessionizeservice.pairing.repository.PairingsRepository;
 import com.codurance.sessionize.sessionizeservice.user.repository.UserRepository;
 import org.springframework.context.annotation.Configuration;
@@ -56,7 +55,7 @@ public class SlackClient {
     pairings.forEach(pairing ->
 
       slackPairingRequests
-        .add(new SlackPairingRequest(pairing.getLanguage(), findSlackIdsFor(pairing))));
+        .add(new SlackPairingRequest(pairing.getLanguage(), findSlackIdsFor(pairing), pairing.getStatus())));
     return slackPairingRequests;
   }
 
