@@ -54,7 +54,7 @@ public class AuthenticationController {
       userService.slackRegister(slackUserDTO);
       return new ResponseEntity<>(HttpStatus.CREATED);
     } else {
-      userService.updateSlackIdFor(slackUserDTO);
+      userService.handleExistingUserLogin(slackUserDTO);
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
   }

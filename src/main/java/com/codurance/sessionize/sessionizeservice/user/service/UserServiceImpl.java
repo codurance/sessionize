@@ -4,7 +4,6 @@ import com.codurance.sessionize.sessionizeservice.preferences.LanguagesPreferenc
 import com.codurance.sessionize.sessionizeservice.user.*;
 import com.codurance.sessionize.sessionizeservice.user.repository.CustomUserRepository;
 import com.codurance.sessionize.sessionizeservice.user.repository.UserRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,12 +56,15 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void updateSlackIdFor(SlackUserDTO slackUserDTO) {
-    String email = slackUserDTO.getEmail();
-    String slackId = slackUserDTO.getSlackUser();
+  public void handleExistingUserLogin(SlackUserDTO slackUserDTO) {
 
+    String email = slackUserDTO.getEmail();
     User existingUser = userRepository.findUserByEmail(email);
+
+    String slackId = slackUserDTO.getSlackUser();
     existingUser.setSlackUser(slackId);
+    existingUser.setOptIn(true);
+
     userRepository.save(existingUser);
   }
 

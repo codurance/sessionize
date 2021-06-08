@@ -76,7 +76,7 @@ public class UserServiceShould {
     User stubUser = new User();
 
     when(userRepository.findUserByEmail(stubEmail)).thenReturn(stubUser);
-    userService.updateSlackIdFor(stubSlackUserDTO);
+    userService.handleExistingUserLogin(stubSlackUserDTO);
 
     verify(userRepository, times(1)).save(any(User.class));
   }

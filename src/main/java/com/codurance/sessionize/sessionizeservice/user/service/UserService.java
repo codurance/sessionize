@@ -10,5 +10,5 @@ public interface UserService {
   UserDTO webSignInOrRegister(WebUserDTO webUserDTO);
   boolean isNewUser(String email);
   void slackRegister(SlackUserDTO slackUserDTO);
-  void updateSlackIdFor(SlackUserDTO slackUserDTO);
+  void handleExistingUserLogin(SlackUserDTO slackUserDTO);
 }
