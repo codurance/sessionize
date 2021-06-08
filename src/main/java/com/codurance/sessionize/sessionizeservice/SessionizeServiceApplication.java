@@ -6,6 +6,8 @@ import com.codurance.sessionize.sessionizeservice.matching.service.MatchingServi
 import com.codurance.sessionize.sessionizeservice.matching.service.MatchingServiceImpl;
 import com.codurance.sessionize.sessionizeservice.matching.client.MatchingClient;
 import com.codurance.sessionize.sessionizeservice.pairing.client.SlackClient;
+import com.codurance.sessionize.sessionizeservice.pairing.repository.CustomPairingRepository;
+import com.codurance.sessionize.sessionizeservice.pairing.repository.CustomPairingRepositoryImpl;
 import com.codurance.sessionize.sessionizeservice.pairing.repository.PairingsRepository;
 import com.codurance.sessionize.sessionizeservice.pairing.service.PairingsService;
 import com.codurance.sessionize.sessionizeservice.pairing.service.PairingsServiceImpl;
@@ -78,5 +80,10 @@ public class SessionizeServiceApplication {
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
+    }
+
+    @Bean
+    public CustomPairingRepository customPairingRepository(PairingsRepository pairingsRepository) {
+        return new CustomPairingRepositoryImpl(pairingsRepository);
     }
 }

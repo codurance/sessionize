@@ -1,6 +1,5 @@
 package com.codurance.sessionize.sessionizeservice.pairing.controller;
 
-import com.codurance.sessionize.sessionizeservice.matching.service.MatchingService;
 import com.codurance.sessionize.sessionizeservice.pairing.Pairing;
 import com.codurance.sessionize.sessionizeservice.pairing.PairingDTO;
 import com.codurance.sessionize.sessionizeservice.pairing.Status;
@@ -53,7 +52,7 @@ public class PairingsController {
   //this endpoint is for testing, delete when scheduled jobs implemented
   @GetMapping(value = "/test-matching", produces = MediaType.APPLICATION_JSON_VALUE)
   public void test() {
-    slackClient.pushNewPairings();
+    slackClient.handleNewSchedule();
   }
 
 }

@@ -2,6 +2,8 @@ package com.codurance.sessionize.sessionizeservice.pairing.client;
 
 import com.codurance.sessionize.sessionizeservice.matching.service.MatchingService;
 import com.codurance.sessionize.sessionizeservice.pairing.Pairing;
+import com.codurance.sessionize.sessionizeservice.pairing.Status;
+import com.codurance.sessionize.sessionizeservice.pairing.repository.CustomPairingRepository;
 import com.codurance.sessionize.sessionizeservice.pairing.repository.PairingsRepository;
 import com.codurance.sessionize.sessionizeservice.user.repository.UserRepository;
 import org.springframework.context.annotation.Configuration;
@@ -25,22 +27,26 @@ public class SlackClient {
   RestTemplate restTemplate;
   MatchingService matchingService;
   PairingsRepository pairingsRepository;
+  CustomPairingRepository customPairingRepository;
   UserRepository userRepository;
 
 
   public SlackClient(MatchingService matchingService,
                      PairingsRepository pairingsRepository,
                      UserRepository userRepository,
+                     CustomPairingRepository customPairingRepository,
                      RestTemplate restTemplate
   ) {
     this.matchingService = matchingService;
     this.pairingsRepository = pairingsRepository;
     this.userRepository = userRepository;
     this.restTemplate = restTemplate;
+    this.customPairingRepository = customPairingRepository;
   }
 
   @Scheduled(cron = WEEKLY_CRON_SCHEDULE, zone = EUROPE_LONDON)
-  public void pushNewPairings() throws HttpServerErrorException {
+  public void handleNewSchedule() throws HttpServerErrorException {
+    customPairingRepository.updateStatusForAll(Status.PENDING, Status.ARCHIVED);
     List<SlackPairingRequest> slackPairingRequests = generateSlackPairingHttpRequest();
     restTemplate.postForObject(SLACKBOT_MATCHLIST_URL, slackPairingRequests, Void.class);
   }
