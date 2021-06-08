@@ -25,4 +25,5 @@ public class WebUserDTO {
     this.firstName = (String) payload.get("given_name");
     this.lastName = (String) payload.get("family_name");
   }
+
 }

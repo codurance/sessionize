@@ -9,7 +9,6 @@ import com.codurance.sessionize.sessionizeservice.user.repository.UserRepository
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.modelmapper.ModelMapper;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -20,15 +19,13 @@ public class UserServiceShould {
 
   CustomUserRepository customUserRepository;
   UserRepository userRepository;
-  ModelMapper modelMapper;
   UserServiceImpl userService;
 
   @BeforeEach
   public void setup() {
     customUserRepository = mock(CustomUserRepository.class);
     userRepository = mock(UserRepository.class);
-    modelMapper = new ModelMapper();
-    userService = new UserServiceImpl(customUserRepository, userRepository, modelMapper);
+    userService = new UserServiceImpl(customUserRepository, userRepository);
   }
 
 

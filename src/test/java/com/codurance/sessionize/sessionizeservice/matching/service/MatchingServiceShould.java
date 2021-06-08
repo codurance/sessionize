@@ -7,14 +7,11 @@ import com.codurance.sessionize.sessionizeservice.matching.service.MatchingServi
 import com.codurance.sessionize.sessionizeservice.pairing.Pairing;
 import com.codurance.sessionize.sessionizeservice.pairing.Status;
 import com.codurance.sessionize.sessionizeservice.pairing.repository.PairingsRepository;
-import com.codurance.sessionize.sessionizeservice.preferences.Language;
-import com.codurance.sessionize.sessionizeservice.preferences.LanguagesPreferences;
 import com.codurance.sessionize.sessionizeservice.preferences.repository.CustomPreferencesRepository;
 import com.codurance.sessionize.sessionizeservice.preferences.UserLanguagePreferences;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;

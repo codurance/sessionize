@@ -24,14 +24,18 @@ public class User {
   private boolean optIn;
   private LanguagesPreferences languagesPreferences;
 
-  @Override
-  public String toString() {
-    return "SlackId: " + slackUser + "\n" +
-            "email: " + email + "\n" +
-            "firstName: " + firstName + "\n" +
-            "lastName: " + lastName + "\n" +
-            "Languages: \n" + (this.languagesPreferences == null
-              ? "null"
-              : languagesPreferences.toString()) + "\n";
+
+  public void map(WebUserDTO webUserDTO) {
+    this.email = webUserDTO.getEmail();
+    this.firstName = webUserDTO.getFirstName();
+    this.lastName = webUserDTO.getLastName();
+    this.pictureURL = webUserDTO.getPictureURL();
+  }
+
+  public void map(SlackUserDTO slackUserDTO) {
+    this.email = slackUserDTO.getEmail();
+    this.firstName = slackUserDTO.getFirstName();
+    this.lastName = slackUserDTO.getLastName();
+    this.slackUser = slackUserDTO.getSlackUser();
   }
 }

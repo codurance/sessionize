@@ -15,4 +15,11 @@ public class UserDTO {
   private String firstName;
   private boolean optIn;
 
+
+  public void map(User user) {
+    this.email = user.getEmail();
+    this.pictureURL = user.getPictureURL();
+    this.firstName = user.getFirstName();
+    this.optIn = user.isOptIn();
+  }
 }

@@ -40,7 +40,6 @@ public class MatchingServiceImpl implements MatchingService {
 
     matches.forEach(
       matchResponse -> {
-
         Pairing pairing;
         if (matchResponse.getUsers().size() == 1) {
           pairing =
