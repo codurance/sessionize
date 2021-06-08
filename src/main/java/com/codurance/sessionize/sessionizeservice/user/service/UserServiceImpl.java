@@ -1,10 +1,7 @@
 package com.codurance.sessionize.sessionizeservice.user.service;
 
 import com.codurance.sessionize.sessionizeservice.preferences.LanguagesPreferences;
-import com.codurance.sessionize.sessionizeservice.user.SlackUserDTO;
-import com.codurance.sessionize.sessionizeservice.user.User;
-import com.codurance.sessionize.sessionizeservice.user.UserDTO;
-import com.codurance.sessionize.sessionizeservice.user.WebUserDTO;
+import com.codurance.sessionize.sessionizeservice.user.*;
 import com.codurance.sessionize.sessionizeservice.user.repository.CustomUserRepository;
 import com.codurance.sessionize.sessionizeservice.user.repository.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -25,25 +22,33 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserDTO webSignInOrRegister(WebUserDTO webUserDTO) {
-    User user = new User();
+    User user = setInitialPreferences(webUserDTO);
     UserDTO userDTO = new UserDTO();
-
-    user.map(webUserDTO);
-    user.setOptIn(true);
-
     User persistedUser = customUserRepository.findByEmailOrCreate(user);
-
     userDTO.map(persistedUser);
     return userDTO;
   }
 
   @Override
   public void slackRegister(SlackUserDTO slackUserDTO) {
+    User user = setInitialPreferences(slackUserDTO);
+    userRepository.save(user);
+  }
+
+  private User setInitialPreferences(SlackUserDTO slackUserDTO) {
     User user = new User();
     user.map(slackUserDTO);
-    user.setLanguagesPreferences(new LanguagesPreferences());
     user.setOptIn(true);
-    userRepository.save(user);
+    user.setLanguagesPreferences(new LanguagesPreferences());
+    return user;
+  }
+
+  private User setInitialPreferences(WebUserDTO webUserDTO) {
+    User user = new User();
+    user.map(webUserDTO);
+    user.setOptIn(true);
+    user.setLanguagesPreferences(new LanguagesPreferences());
+    return user;
   }
 
   @Override
