@@ -22,7 +22,6 @@ public class AvailableLanguages {
                 new Language("SCALA", "Scala"),
                 new Language("HASKELL", "Haskell"),
                 new Language("RACKET", "Racket"),
-                new Language("RACKET", "Racket"),
                 new Language("CP", "Common Lisp"),
                 new Language("VB", "Visual Basic"),
                 new Language("RUBY", "Ruby"),
