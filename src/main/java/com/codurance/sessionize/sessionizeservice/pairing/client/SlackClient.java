@@ -22,7 +22,7 @@ import java.util.List;
 public class SlackClient {
 
   private static final String WEEKLY_CRON_SCHEDULE = "0 25 14 * * MON";
-  public static final String SLACKBOT_MATCHLIST_URL = "https://sessionize-test-slackbot.codurance.io";
+  public static final String SLACKBOT_MATCHLIST_URL = "https://sessionize-test-slackbot.codurance.io/match-list";
   private static final String EUROPE_LONDON = "Europe/London";
   RestTemplate restTemplate;
   MatchingService matchingService;

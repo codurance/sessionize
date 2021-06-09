@@ -50,7 +50,7 @@ public class PairingsController {
 
 
   //this endpoint is for testing, delete when scheduled jobs implemented
-  @GetMapping(value = "/test-matching", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/test-matching")
   public void test() {
     slackClient.handleNewSchedule();
   }

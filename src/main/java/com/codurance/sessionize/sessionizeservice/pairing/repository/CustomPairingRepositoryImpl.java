@@ -16,7 +16,11 @@ public class CustomPairingRepositoryImpl implements CustomPairingRepository {
   @Override
   public void updateStatusForAll(Status oldStatus, Status newStatus) {
     List<Pairing> toUpdate = pairingsRepository.findAllByStatus(oldStatus);
-    toUpdate.forEach(pairing -> pairing.setStatus(newStatus));
-    toUpdate.forEach(pairingsRepository::save);
+
+    if (!toUpdate.isEmpty()) {
+      toUpdate.forEach(pairing -> pairing.setStatus(newStatus));
+      toUpdate.forEach(pairingsRepository::save);
+    }
+
   }
 }
