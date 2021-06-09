@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -41,14 +42,13 @@ public class UserServiceShould {
 
     User user = new User();
     user.setEmail("foobar@codurance.com");
-    user.setLastName("Foo");
-    user.setFirstName( "Bar");
+    user.setName("Bar Foo");
     user.setPictureURL("http://url");
 
     when(customUserRepository.findByEmailOrCreate(any(User.class))).thenReturn(user);
     UserDTO expectedUser = userService.webSignInOrRegister(receivedUser);
 
-    assertThat(expectedUser).isEqualToComparingFieldByField(receivedUser);
+    assertEquals(expectedUser.getName(), user.getName());
   }
 
   @Test

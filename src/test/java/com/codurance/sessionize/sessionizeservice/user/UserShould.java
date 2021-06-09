@@ -20,8 +20,7 @@ public class UserShould {
     user.map(webUserDTO);
 
     assertEquals(user.getEmail(), webUserDTO.getEmail());
-    assertEquals(user.getFirstName(), webUserDTO.getFirstName());
-    assertEquals(user.getLastName(), webUserDTO.getLastName());
+    assertEquals(user.getName(), webUserDTO.getFirstName() + " " + webUserDTO.getLastName());
     assertEquals(user.getPictureURL(), webUserDTO.getPictureURL());
   }
 
@@ -30,15 +29,13 @@ public class UserShould {
     User user = new User();
     SlackUserDTO slackUserDTO = new SlackUserDTO();
     slackUserDTO.setEmail("foobar@foobar.com");
-    slackUserDTO.setFirstName("foo");
-    slackUserDTO.setLastName("bar");
+    slackUserDTO.setName("foo bar");
     slackUserDTO.setSlackUser("123ABC");
 
     user.map(slackUserDTO);
 
     assertEquals(user.getEmail(), slackUserDTO.getEmail());
-    assertEquals(user.getFirstName(), slackUserDTO.getFirstName());
-    assertEquals(user.getLastName(), slackUserDTO.getLastName());
+    assertEquals(user.getName(), slackUserDTO.getName());
     assertEquals(user.getSlackUser(), slackUserDTO.getSlackUser());
   }
 

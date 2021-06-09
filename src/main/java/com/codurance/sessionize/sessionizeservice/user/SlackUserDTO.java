@@ -9,8 +9,7 @@ public class SlackUserDTO {
 
     String slackUser;
     String email;
-    String firstName;
-    String lastName;
+    String name;
     boolean optIn;
 
 }

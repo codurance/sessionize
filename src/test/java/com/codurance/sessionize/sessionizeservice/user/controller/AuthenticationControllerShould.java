@@ -132,7 +132,7 @@ public class AuthenticationControllerShould {
 
     UserDTO userDTO = new UserDTO();
     userDTO.setEmail("foobar@codurance.com");
-    userDTO.setFirstName("Bar");
+    userDTO.setName("Foo Bar");
     userDTO.setPictureURL("http://url");
 
     when(mockUserService.webSignInOrRegister(ArgumentMatchers.any(WebUserDTO.class))).thenReturn(userDTO);

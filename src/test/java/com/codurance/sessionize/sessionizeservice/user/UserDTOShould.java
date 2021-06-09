@@ -12,13 +12,13 @@ public class UserDTOShould {
     UserDTO userDTO = new UserDTO();
     userDTO.setPictureURL("url://foobar");
     userDTO.setEmail("foobar@foobar.com");
-    userDTO.setFirstName("foobar");
+    userDTO.setName("Testy McTester");
     userDTO.setOptIn(true);
 
     userDTO.map(user);
 
     assertEquals(user.getEmail(), userDTO.getEmail());
-    assertEquals(user.getFirstName(), userDTO.getFirstName());
+    assertEquals(user.getName(), userDTO.getName());
     assertEquals(user.getPictureURL(), user.getPictureURL());
     assertEquals(user.isOptIn(), userDTO.isOptIn());
   }

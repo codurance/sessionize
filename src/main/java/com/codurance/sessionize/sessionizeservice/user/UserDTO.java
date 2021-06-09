@@ -12,14 +12,14 @@ public class UserDTO {
 
   private String email;
   private String pictureURL;
-  private String firstName;
+  private String name;
   private boolean optIn;
 
 
   public void map(User user) {
     this.email = user.getEmail();
     this.pictureURL = user.getPictureURL();
-    this.firstName = user.getFirstName();
+    this.name = user.getName();
     this.optIn = user.isOptIn();
   }
 }

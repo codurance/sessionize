@@ -72,8 +72,7 @@ class PreferencesRepositoryShould {
                     "slackUser",
                     "ex@email.co",
                     "url.co",
-                    "first",
-                    "last",
+                    "first and last",
                     true,
                     exampleLanguagesPreferences));
     when(mockUserRepository.findAll()).thenReturn(users);

@@ -1,13 +1,11 @@
 package com.codurance.sessionize.sessionizeservice.matching.client;
 
 import com.codurance.sessionize.sessionizeservice.matching.service.MatchingService;
-import com.codurance.sessionize.sessionizeservice.pairing.Pairing;
 import com.codurance.sessionize.sessionizeservice.pairing.Status;
 import com.codurance.sessionize.sessionizeservice.pairing.client.SlackClient;
 import com.codurance.sessionize.sessionizeservice.pairing.client.SlackPairingRequest;
 import com.codurance.sessionize.sessionizeservice.pairing.repository.CustomPairingRepository;
 import com.codurance.sessionize.sessionizeservice.pairing.repository.PairingsRepository;
-import com.codurance.sessionize.sessionizeservice.user.User;
 import com.codurance.sessionize.sessionizeservice.user.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestTemplate;

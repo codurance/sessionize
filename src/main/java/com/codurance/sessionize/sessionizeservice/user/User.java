@@ -19,23 +19,20 @@ public class User {
   private String slackUser;
   private String email;
   private String pictureURL;
-  private String firstName;
-  private String lastName;
+  private String name;
   private boolean optIn;
   private LanguagesPreferences languagesPreferences;
 
 
   public void map(WebUserDTO webUserDTO) {
     this.email = webUserDTO.getEmail();
-    this.firstName = webUserDTO.getFirstName();
-    this.lastName = webUserDTO.getLastName();
+    this.name = webUserDTO.getFirstName() + " " + webUserDTO.getLastName();
     this.pictureURL = webUserDTO.getPictureURL();
   }
 
   public void map(SlackUserDTO slackUserDTO) {
     this.email = slackUserDTO.getEmail();
-    this.firstName = slackUserDTO.getFirstName();
-    this.lastName = slackUserDTO.getLastName();
+    this.name = slackUserDTO.getName();
     this.slackUser = slackUserDTO.getSlackUser();
   }
 }
