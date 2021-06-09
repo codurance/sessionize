@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import static com.codurance.sessionize.sessionizeservice.infrastructure.constants.HttpConstants.*;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://sessionize.codurance.io")
 public class AuthenticationController {
 
   private static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);

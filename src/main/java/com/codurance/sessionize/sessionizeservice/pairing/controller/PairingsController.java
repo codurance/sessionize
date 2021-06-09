@@ -17,7 +17,7 @@ import static com.codurance.sessionize.sessionizeservice.infrastructure.constant
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://sessionize.codurance.io/")
 public class PairingsController {
 
   private final PairingsService pairingsService;
