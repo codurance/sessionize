@@ -14,7 +14,7 @@ import java.util.List;
 import static com.codurance.sessionize.sessionizeservice.infrastructure.constants.HttpConstants.*;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins ="https://sessionize-coreapi.codurance.io")
 public class PreferencesController {
 
     PreferencesService preferencesService;

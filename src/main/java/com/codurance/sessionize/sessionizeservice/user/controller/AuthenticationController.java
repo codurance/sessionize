@@ -20,7 +20,7 @@ import java.security.GeneralSecurityException;
 import static com.codurance.sessionize.sessionizeservice.infrastructure.constants.HttpConstants.*;
 
 @RestController
-@CrossOrigin(origins = "https://sessionize.codurance.io")
+@CrossOrigin(origins = "https://sessionize-coreapi.codurance.io")
 public class AuthenticationController {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationController.class);

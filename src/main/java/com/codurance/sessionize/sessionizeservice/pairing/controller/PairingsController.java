@@ -23,7 +23,7 @@ import static com.codurance.sessionize.sessionizeservice.infrastructure.constant
 
 
 @RestController
-@CrossOrigin(origins = "https://sessionize.codurance.io")
+@CrossOrigin(origins = "https://sessionize-coreapi.codurance.io")
 public class PairingsController {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(PairingsController.class);

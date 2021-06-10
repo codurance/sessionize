@@ -40,8 +40,8 @@ public class PairingsServiceImpl implements PairingsService {
     private List<Pairing> setPartnerUserId(List<Pairing> rawPairings, String loggedInUserId) {
         return rawPairings.stream().map(pairing -> {
             String partnerId = pairing.getUsers().stream().
-                    filter(userId -> !userId.equals(loggedInUserId)).
-                    findFirst().orElseThrow();
+                    filter(userId -> !userId.equals(loggedInUserId) && pairing.getUsers().size() > 1).
+                    findFirst().orElse(null);
             pairing.setPartnerUserId(partnerId);
             return pairing;
         }).collect(Collectors.toList());
@@ -49,7 +49,6 @@ public class PairingsServiceImpl implements PairingsService {
 
     private List<PairingDTO> mapToDTO(List<Pairing> withPartnerUserId) {
         List<PairingDTO> mappedPairings = new ArrayList<>();
-        //TODO: change this to modelmapper
         for (Pairing p: withPartnerUserId) {
             PairingDTO pairingDTO = new PairingDTO();
             pairingDTO.setLanguage(p.getLanguage());
