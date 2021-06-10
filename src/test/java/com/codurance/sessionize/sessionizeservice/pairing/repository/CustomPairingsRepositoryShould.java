@@ -29,13 +29,13 @@ public class CustomPairingsRepositoryShould {
     Pairing stubPairing = new Pairing();
     stubPairing.setStatus(Status.PENDING);
     Pairing stubPairing2 = new Pairing();
-    stubPairing.setStatus(Status.PENDING);
+    stubPairing.setStatus(Status.UNSUCCESSFUL);
     List<Pairing> stubPairings = Arrays.asList(stubPairing, stubPairing2);
 
     when(mockPairingsRepository.findAllByStatus(Status.PENDING)).thenReturn(stubPairings);
     when(mockPairingsRepository.save(any(Pairing.class))).thenReturn(new Pairing());
 
-    customPairingRepository.updateStatusForAll(Status.PENDING, Status.ARCHIVED);
+    customPairingRepository.updateStatusForAll(Arrays.asList(Status.PENDING, Status.UNSUCCESSFUL), Status.ARCHIVED);
 
     verify(mockPairingsRepository, times(2)).save(any(Pairing.class));
     assertEquals(Status.ARCHIVED, stubPairing.getStatus());

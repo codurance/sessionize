@@ -14,6 +14,7 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -46,7 +47,7 @@ public class SlackClient {
 
   @Scheduled(cron = WEEKLY_CRON_SCHEDULE, zone = EUROPE_LONDON)
   public void handleNewSchedule() throws HttpServerErrorException {
-    customPairingRepository.updateStatusForAll(Status.PENDING, Status.ARCHIVED);
+    customPairingRepository.updateStatusForAll(Arrays.asList(Status.PENDING, Status.UNSUCCESSFUL), Status.ARCHIVED);
     List<SlackPairingRequest> slackPairingRequests = generateSlackPairingHttpRequest();
     restTemplate.postForObject(SLACKBOT_MATCHLIST_URL, slackPairingRequests, Void.class);
   }

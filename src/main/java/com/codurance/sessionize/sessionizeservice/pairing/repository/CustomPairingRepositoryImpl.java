@@ -3,6 +3,7 @@ package com.codurance.sessionize.sessionizeservice.pairing.repository;
 import com.codurance.sessionize.sessionizeservice.pairing.Pairing;
 import com.codurance.sessionize.sessionizeservice.pairing.Status;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomPairingRepositoryImpl implements CustomPairingRepository {
@@ -14,8 +15,13 @@ public class CustomPairingRepositoryImpl implements CustomPairingRepository {
   }
 
   @Override
-  public void updateStatusForAll(Status oldStatus, Status newStatus) {
-    List<Pairing> toUpdate = pairingsRepository.findAllByStatus(oldStatus);
+  public void updateStatusForAll(List<Status> oldStatuses, Status newStatus) {
+
+    List<Pairing> toUpdate = new ArrayList<>();
+
+    for (Status s: oldStatuses) {
+      toUpdate.addAll(pairingsRepository.findAllByStatus(s));
+    }
 
     if (!toUpdate.isEmpty()) {
       toUpdate.forEach(pairing -> pairing.setStatus(newStatus));
