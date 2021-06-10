@@ -17,10 +17,16 @@ public class UserLanguagePreferencesRequest {
 
   public UserLanguagePreferencesRequest(UserLanguagePreferences userLanguagePreferences) {
     this.user = userLanguagePreferences.getUser();
-    this.preferences = new AzureLanguagePreferencesRequest(
-      userLanguagePreferences.getLanguagesPreferences().getPrimary().getValue(),
-      userLanguagePreferences.getLanguagesPreferences().getSecondary().getValue(),
-      userLanguagePreferences.getLanguagesPreferences().getTertiary().getValue()
-    );
+
+    if (userLanguagePreferences.getLanguagesPreferences().getPrimary() == null) {
+      this.preferences = new AzureLanguagePreferencesRequest();
+    } else {
+      this.preferences = new AzureLanguagePreferencesRequest(
+        userLanguagePreferences.getLanguagesPreferences().getPrimary().getValue(),
+        userLanguagePreferences.getLanguagesPreferences().getSecondary().getValue(),
+        userLanguagePreferences.getLanguagesPreferences().getTertiary().getValue()
+      );
+    }
+
   }
 }
