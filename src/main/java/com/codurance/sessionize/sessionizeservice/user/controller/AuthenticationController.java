@@ -14,13 +14,16 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+
 import static com.codurance.sessionize.sessionizeservice.infrastructure.constants.HttpConstants.*;
 
 @RestController
 @CrossOrigin(origins = "https://sessionize.codurance.io")
 public class AuthenticationController {
 
-  private static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationController.class);
 
   private final TokenVerification tokenVerification;
   private final UserService userService;
@@ -41,8 +44,8 @@ public class AuthenticationController {
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
       }
       return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-    } catch (Exception e) {
-      logger.error(e.getMessage());
+    } catch (GeneralSecurityException | IOException | IllegalArgumentException e) {
+      LOGGER.error(e.getMessage());
       return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
   }
