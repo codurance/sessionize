@@ -6,9 +6,6 @@ import com.codurance.sessionize.sessionizeservice.pairing.PairingDTO;
 import com.codurance.sessionize.sessionizeservice.pairing.Status;
 import com.codurance.sessionize.sessionizeservice.pairing.client.SlackClient;
 import com.codurance.sessionize.sessionizeservice.pairing.service.PairingsService;
-import com.codurance.sessionize.sessionizeservice.user.UserDTO;
-import com.codurance.sessionize.sessionizeservice.user.WebUserDTO;
-import com.codurance.sessionize.sessionizeservice.user.controller.AuthenticationController;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +23,7 @@ import static com.codurance.sessionize.sessionizeservice.infrastructure.constant
 
 
 @RestController
-@CrossOrigin(origins = "https://sessionize.codurance.io/")
+@CrossOrigin(origins = "https://sessionize.codurance.io")
 public class PairingsController {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(PairingsController.class);
